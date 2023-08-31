@@ -68,6 +68,7 @@ export const EmailBlock = styled.div`
 export const MainFooter = styled.div`
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
   background-color: #2d3f24;
   color: white;
   padding: 80px;
