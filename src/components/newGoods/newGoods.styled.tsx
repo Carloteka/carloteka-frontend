@@ -8,9 +8,19 @@ export const MainGoodsBlock = styled.div`
 export const GoodsItemsBlock = styled.div`
   display: flex;
   flex-direction: column;
+  margin: 100px 0px;
+  h1 {
+    margin-left: 10px;
+    color: #101010;
+    font-size: 36px;
+    font-family: "Rubik";
+    font-weight: 600px;
+    margin-top: 43px;
+  }
 `;
 export const GoodsCards = styled.div`
   display: flex;
+  justify-content: space-around;
 `;
 
 export const GoodsCardItem = styled.div`
@@ -30,11 +40,25 @@ export const GoodsCardItem = styled.div`
       padding: 5px;
     }
   }
-  h6{
+  h6 {
     color: #101010;
     font-size: 18px;
     font-family: "Rubik";
-    font-weight: 600;
-    line-height: 23px;
+    font-weight: 600px;
+    margin-top: 15px;
+  }
+  .rating {
+    span {
+      font-size: 18px;
+      font-family: "Rubik";
+      margin-left: 10px;
+    }
+  }
+  .price {
+    font-size: 18px;
+    font-family: "Rubik";
+    margin-top: 15px;
+    margin-top: 15px;
+    font-weight: 400px;
   }
 `;
