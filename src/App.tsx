@@ -1,11 +1,14 @@
 import React from "react";
-import {Footer} from "./components/footer"
-import { Goods } from "./components/goods";
+import { Footer } from "./components/footer";
+import { NewGoods } from "./components/newGoods";
 
 function App() {
-  return <div className="App">
-    <Goods/>
-    <Footer/> </div>;
+  return (
+    <div className="App">
+      <NewGoods />
+      <Footer />{" "}
+    </div>
+  );
 }
 
 export default App;
