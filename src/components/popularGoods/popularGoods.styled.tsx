@@ -8,7 +8,6 @@ export const MainGoodsBlock = styled.div`
 export const GoodsItemsBlock = styled.div`
   display: flex;
   flex-direction: column;
-
   h1 {
     margin-left: 10px;
     color: #101010;
@@ -20,10 +19,24 @@ export const GoodsItemsBlock = styled.div`
 `;
 export const GoodsCards = styled.div`
   display: flex;
-  justify-content: space-around;
+  .slider-button-prev {
+    position: absolute;
+    width: 50px;
+    height: 70px;
+    border: none;
+    left: 1%;
+  }
+  .slider-button-next {
+    position: absolute;
+    width: 50px;
+    height: 70px;
+    border: none;
+    right: 1%;
+  }
 `;
 
 export const GoodsCardItem = styled.div`
+  margin: 0px 11px;
   .cardImg {
     background-image: url(img/vaza.png);
     background-color: #dad4c8;
@@ -61,4 +74,14 @@ export const GoodsCardItem = styled.div`
     margin-top: 15px;
     font-weight: 400px;
   }
+`;
+
+export const SliderButton = styled.button`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
 `;
