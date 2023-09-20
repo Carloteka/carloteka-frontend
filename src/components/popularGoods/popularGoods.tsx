@@ -30,9 +30,9 @@ export const PopularGoods = () => {
           <GoodsCards
             style={{
               display: "flex",
-              width: "400%", // Змінюємо ширину каруселі для відображення всіх елементів
+              width: "400%", 
               transition: "transform 0.5s ease",
-              transform: `translateX(-${activeIndex * 25}%)`, // Змінюємо позицію каруселі в залежності від активного елемента
+              transform: `translateX(-${activeIndex * 25}%)`, 
               position: "relative",
             }}
           >
@@ -134,22 +134,22 @@ export const PopularGoods = () => {
           style={{
             position: "absolute",
             left: 0,
-            top: "50%", // Вирівнюємо кнопку по центру відносно висоти
-            transform: "translateY(-50%)", // Вирівнюємо кнопку по вертикалі
+            top: "45%", 
+            transform: "translateY(-50%)", 
           }}
         >
-          Попередній
+          <img src="./img/Vectorleft.png"/>
         </button>
         <button
           onClick={handleNextClick}
           style={{
             position: "absolute",
             right: 0,
-            top: "50%",
+            top: "45%",
             transform: "translateY(-50%)",
           }}
         >
-          Наступний
+          <img src="./img/VectorRight.png"/>
         </button>
       </GoodsItemsBlock>
     </MainGoodsBlock>

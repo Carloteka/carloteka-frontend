@@ -16,6 +16,18 @@ export const GoodsItemsBlock = styled.div`
     font-weight: 600px;
     margin-top: 43px;
   }
+  button {
+    background-color: #F2F0EC;
+    border: none;
+    width: 40px;
+    height: 60px;
+    margin: 0px 25px;
+    cursor: pointer;
+    img{
+      height: 15px;
+      height: 15px;
+    }
+  }
   
 `;
 export const GoodsCards = styled.div`
