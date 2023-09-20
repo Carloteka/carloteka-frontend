@@ -16,6 +16,7 @@ export const GoodsItemsBlock = styled.div`
     font-weight: 600px;
     margin-top: 43px;
   }
+  
 `;
 export const GoodsCards = styled.div`
   display: flex;
