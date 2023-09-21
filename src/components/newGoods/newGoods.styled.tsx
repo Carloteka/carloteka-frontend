@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const MainGoodsBlock = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 50px;
 `;
 
 export const GoodsItemsBlock = styled.div`
