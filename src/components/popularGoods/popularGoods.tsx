@@ -4,6 +4,7 @@ import {
   GoodsItemsBlock,
   GoodsCards,
   GoodsCardItem,
+  CarouselButtons
 } from "./popularGoods.styled";
 
 export const PopularGoods = () => {
@@ -30,9 +31,9 @@ export const PopularGoods = () => {
           <GoodsCards
             style={{
               display: "flex",
-              width: "400%", 
+              width: "400%",
               transition: "transform 0.5s ease",
-              transform: `translateX(-${activeIndex * 25}%)`, 
+              transform: `translateX(-${activeIndex * 25}%)`,
               position: "relative",
             }}
           >
@@ -61,96 +62,16 @@ export const PopularGoods = () => {
                 <div className="price">$10</div>
               </GoodsCardItem>
             ))}
-            <GoodsCardItem>
-              <div className="cardImg">
-                <div className="card_details">
-                  <div className="stock">Out of Stock</div>
-                  <img
-                    width={24}
-                    height={24}
-                    src="img/heart.png"
-                    alt="like"
-                  ></img>
-                </div>
-              </div>
-              <h6>
-                Декоративна ваза з <br /> натурального дерева
-              </h6>
-              <div className="rating">
-                <img alt="stars" src="img/star.png"></img>
-                <span>10</span>
-              </div>
-              <div className="price">$10</div>
-            </GoodsCardItem>
-            <GoodsCardItem>
-              <div className="cardImg">
-                <div className="card_details">
-                  <div className="stock">Out of Stock</div>
-                  <img
-                    width={24}
-                    height={24}
-                    src="img/heart.png"
-                    alt="like"
-                  ></img>
-                </div>
-              </div>
-              <h6>
-                Декоративна ваза з <br /> натурального дерева
-              </h6>
-              <div className="rating">
-                <img alt="stars" src="img/star.png"></img>
-                <span>10</span>
-              </div>
-              <div className="price">$10</div>
-            </GoodsCardItem>
-            <GoodsCardItem>
-              <div className="cardImg">
-                <div className="card_details">
-                  <div className="stock">Out of Stock</div>
-                  <img
-                    width={24}
-                    height={24}
-                    src="img/heart.png"
-                    alt="like"
-                  ></img>
-                </div>
-              </div>
-              <h6>
-                Декоративна ваза з <br /> натурального дерева
-              </h6>
-              <div className="rating">
-                <img alt="stars" src="img/star.png"></img>
-                <img alt="stars" src="img/star.png"></img>
-                <img alt="stars" src="img/star.png"></img>
-                <img alt="stars" src="img/star.png"></img>
-                <span>10</span>
-              </div>
-              <div className="price">$10</div>
-            </GoodsCardItem>
           </GoodsCards>
         </div>
-        <button
-          onClick={handlePrevClick}
-          style={{
-            position: "absolute",
-            left: 0,
-            top: "45%", 
-            transform: "translateY(-50%)", 
-          }}
-        >
-          <img src="./img/Vectorleft.png"/>
+        <CarouselButtons>
+        <button onClick={handlePrevClick}>
+          <img src="./img/Vectorleft.png" />
         </button>
-        <button
-          onClick={handleNextClick}
-          style={{
-            position: "absolute",
-            right: 0,
-            top: "45%",
-            transform: "translateY(-50%)",
-          }}
-        >
-          <img src="./img/VectorRight.png"/>
+        <button onClick={handleNextClick}>
+          <img src="./img/VectorRight.png" />
         </button>
+        </CarouselButtons>
       </GoodsItemsBlock>
     </MainGoodsBlock>
   );

@@ -98,3 +98,7 @@ export const SliderButton = styled.button`
   font-size: 18px;
   cursor: pointer;
 `;
+export const CarouselButtons = styled.div `
+  display: flex;
+  justify-content: space-between;
+`

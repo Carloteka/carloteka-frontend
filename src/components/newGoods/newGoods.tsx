@@ -4,6 +4,7 @@ import {
   GoodsItemsBlock,
   GoodsCards,
   GoodsCardItem,
+  CarouselButtons,
 } from "./newGoods.styled";
 
 export const NewGoods = () => {
@@ -61,96 +62,16 @@ export const NewGoods = () => {
                 <div className="price">$10</div>
               </GoodsCardItem>
             ))}
-            <GoodsCardItem>
-              <div className="cardImg">
-                <div className="card_details">
-                  <div className="stock">Out of Stock</div>
-                  <img
-                    width={24}
-                    height={24}
-                    src="img/heart.png"
-                    alt="like"
-                  ></img>
-                </div>
-              </div>
-              <h6>
-                Декоративна ваза з <br /> натурального дерева
-              </h6>
-              <div className="rating">
-                <img alt="stars" src="img/star.png"></img>
-                <span>10</span>
-              </div>
-              <div className="price">$10</div>
-            </GoodsCardItem>
-            <GoodsCardItem>
-              <div className="cardImg">
-                <div className="card_details">
-                  <div className="stock">Out of Stock</div>
-                  <img
-                    width={24}
-                    height={24}
-                    src="img/heart.png"
-                    alt="like"
-                  ></img>
-                </div>
-              </div>
-              <h6>
-                Декоративна ваза з <br /> натурального дерева
-              </h6>
-              <div className="rating">
-                <img alt="stars" src="img/star.png"></img>
-                <span>10</span>
-              </div>
-              <div className="price">$10</div>
-            </GoodsCardItem>
-            <GoodsCardItem>
-              <div className="cardImg">
-                <div className="card_details">
-                  <div className="stock">Out of Stock</div>
-                  <img
-                    width={24}
-                    height={24}
-                    src="img/heart.png"
-                    alt="like"
-                  ></img>
-                </div>
-              </div>
-              <h6>
-                Декоративна ваза з <br /> натурального дерева
-              </h6>
-              <div className="rating">
-                <img alt="stars" src="img/star.png"></img>
-                <img alt="stars" src="img/star.png"></img>
-                <img alt="stars" src="img/star.png"></img>
-                <img alt="stars" src="img/star.png"></img>
-                <span>10</span>
-              </div>
-              <div className="price">$10</div>
-            </GoodsCardItem>
           </GoodsCards>
         </div>
-        <button
-          onClick={handlePrevClick}
-          style={{
-            position: "absolute",
-            left: 0,
-            top: "130%",
-            transform: "translateY(-50%)",
-          }}
-        >
+        <CarouselButtons>
+        <button onClick={handlePrevClick}>
           <img src="./img/Vectorleft.png" />
         </button>
-        <button
-          onClick={handleNextClick}
-          style={{
-            position: "absolute",
-            right: 0,
-            top: "130%",
-            transform: "translateY(-50%)",
-          }}
-        >
+        <button onClick={handleNextClick}>
           <img src="./img/VectorRight.png" />
         </button>
+        </CarouselButtons>
       </GoodsItemsBlock>
     </MainGoodsBlock>
   );
