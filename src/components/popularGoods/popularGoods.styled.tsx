@@ -4,6 +4,7 @@ export const MainGoodsBlock = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 50px;
+  margin-bottom: 30%;
 `;
 
 export const GoodsItemsBlock = styled.div`
@@ -18,18 +19,17 @@ export const GoodsItemsBlock = styled.div`
     margin-top: 43px;
   }
   button {
-    background-color: #F2F0EC;
+    background-color: #f2f0ec;
     border: none;
     width: 40px;
     height: 60px;
     margin: 0px 25px;
     cursor: pointer;
-    img{
+    img {
       height: 15px;
       height: 15px;
     }
   }
-  
 `;
 export const GoodsCards = styled.div`
   display: flex;
@@ -100,7 +100,9 @@ export const SliderButton = styled.button`
   cursor: pointer;
 `;
 
-export const CarouselButtons = styled.div `
+export const CarouselButtons = styled.div`
   display: flex;
   justify-content: space-between;
-`
+  z-index: 1;
+  margin-top: -25%;
+`;

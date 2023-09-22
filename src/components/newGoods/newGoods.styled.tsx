@@ -4,6 +4,7 @@ export const MainGoodsBlock = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 50px;
+  margin-bottom: 30%;
 `;
 
 export const GoodsItemsBlock = styled.div`
@@ -98,7 +99,9 @@ export const SliderButton = styled.button`
   font-size: 18px;
   cursor: pointer;
 `;
-export const CarouselButtons = styled.div `
+export const CarouselButtons = styled.div`
   display: flex;
   justify-content: space-between;
-`
+  z-index: 1;
+  margin-top: -25%;
+`;

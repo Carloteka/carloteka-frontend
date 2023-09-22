@@ -4,7 +4,7 @@ import {
   GoodsItemsBlock,
   GoodsCards,
   GoodsCardItem,
-  CarouselButtons
+  CarouselButtons,
 } from "./popularGoods.styled";
 
 export const PopularGoods = () => {
@@ -65,12 +65,12 @@ export const PopularGoods = () => {
           </GoodsCards>
         </div>
         <CarouselButtons>
-        <button onClick={handlePrevClick}>
-          <img src="./img/Vectorleft.png" />
-        </button>
-        <button onClick={handleNextClick}>
-          <img src="./img/VectorRight.png" />
-        </button>
+          <button className="leftBut" onClick={handlePrevClick}>
+            <img src="./img/Vectorleft.png" />
+          </button>
+          <button className="rightBut" onClick={handleNextClick}>
+            <img src="./img/VectorRight.png" />
+          </button>
         </CarouselButtons>
       </GoodsItemsBlock>
     </MainGoodsBlock>
