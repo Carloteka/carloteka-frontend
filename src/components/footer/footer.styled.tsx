@@ -4,6 +4,7 @@ export const FooterMainBlock = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  margin-top: 130px;
 `;
 
 export const FooterEmailBlock = styled.div`
