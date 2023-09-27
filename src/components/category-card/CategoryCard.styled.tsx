@@ -32,6 +32,9 @@ export const ImgContainer = styled.div<{ order: number }>`
     top: 50%;
     right: 0px;
   }
+  .category_img {
+    height: 512px;
+  }
 `
 
 export const TextContainer = styled.div`
@@ -74,7 +77,7 @@ export const Title = styled.div`
 `
 export const Description = styled.div`
   color: #363535;
-  font-family: Rubik;
+  font-family: 'Rubik';
   font-size: 18px;
   font-style: normal;
   font-weight: 400;

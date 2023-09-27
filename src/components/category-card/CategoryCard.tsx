@@ -6,27 +6,36 @@ import {
   Title,
   Description,
 } from './CategoryCard.styled'
-type Props = { order: number }
+type Props = {
+  order: number
+  title: string
+  description: string
+  image: string
+  key: number
+}
 
-export const CategoryCard = ({ order }: Props) => {
+export const CategoryCard = ({ order, image, description, title }: Props) => {
+  console.log(image);
   return (
     <CategoryCardContainer>
       <ImgContainer order={order}>
-        <button className='btn_left'>
+        <button className="btn_left">
           <img src="img/left.png" alt="left" />
         </button>
-        <img src={`img/chess.png`} alt="img першої категорії" />
-        <button className='btn_right'>
+        <img className='category_img' src={`http://138.68.90.11/${image}`} alt="img категорії" />
+
+
+        <button className="btn_right">
           <img src="img/right.png" alt="right" />
         </button>
       </ImgContainer>
       <TextContainer>
         <Title>
-          ШАХИ, НАРДИ, ШАШКИ
+          {title}
           <div className="title_line"></div>
         </Title>
         <Description>
-          Бездоганні шахові фігури, різні розміри, види та вподобання.
+          {description}
         </Description>
         <button className="card_btn" type="submit">
           Переглянути
