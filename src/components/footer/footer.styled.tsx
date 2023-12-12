@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const FooterMainBlock = styled.div`
+export const FooterMainBlock = styled.footer`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;

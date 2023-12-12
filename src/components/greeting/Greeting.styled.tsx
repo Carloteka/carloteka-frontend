@@ -1,27 +1,32 @@
 import styled from 'styled-components'
 
 export const GreetingContainer = styled.section`
+padding: 71px 64px;
   display: flex;
   justify-content: center;
-  width: 1440px;
+  width: 100%;
   height: 788px;
   flex-shrink: 0;
   background: #dad4c8;
-  box-sizing: border-box;
 `
-export const Box = styled.div({
-  height: '646px',
-  width: '1312px',
-  display: 'flex',
-  alignItems: 'center',
-})
-export const Text = styled.div`
-  display: block;
+export const Box = styled.div`
+  height:646px;
+  width: 288px;
+  display: flex;
+  flex-direction:row;
   align-items: center;
-  gap: 32px;
+    @media screen and (min-width: 768px) {
+      width: 960px;
+  }
+
+  @media screen and (min-width: 1440px) {
+    width: 1312px;
+  }
 `
 
-export const Title = styled.div`
+
+
+export const Title = styled.h1`
   width: 640px;
   color: #101010;
   font-family: Rubik;
@@ -31,7 +36,8 @@ export const Title = styled.div`
   line-height: 63px;
 `
 
-export const Description = styled.div`
+export const Description = styled.p`
+margin: 56px 0 40px;
   width: 640px;
   color: #363535;
   font-family: Rubik;
@@ -39,11 +45,9 @@ export const Description = styled.div`
   font-style: normal;
   font-weight: 500;
   line-height: 23px;
-  margin-top: 56px;
 `
-export const Button = styled.div`
-  margin-top: 40px;
-  button {
+export const Button = styled.button`
+position : relative;
     background-color: #2d3f24;
     color: white;
     border: none;
@@ -54,15 +58,11 @@ export const Button = styled.div`
     line-height: 19px;
     font-weight: 400;
     text-transform: uppercase;
-  }
-  img {
-    height: 16px;
-    position: relative;
-    right: 35px;
-    top: 3px;
+  
+  img {position: absolute;
+   
+    right: 24px;
+    top: 16px;
   }
 `
-export const Img = styled.div`
-  width: 640px;
-  height: 646px;
-`
+

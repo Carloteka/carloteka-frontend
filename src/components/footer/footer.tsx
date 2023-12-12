@@ -1,3 +1,4 @@
+
 import {
   FooterMainBlock,
   FooterEmailBlock,
@@ -10,8 +11,7 @@ import {
 
 export const Footer = () => {
   return (
-    <FooterMainBlock>
-      <FooterEmailBlock>
+    <FooterMainBlock><FooterEmailBlock>
         <h1>Приєднуйтеся до нашої розсилки</h1>
         <p>Та отримуйте інформацію про акції та розпродажі нашої компанії</p>
         <EmailBlock>
@@ -54,6 +54,7 @@ export const Footer = () => {
           <p>Написати нам</p>
         </Help>
       </MainFooter>
+      
     </FooterMainBlock>
   );
 };

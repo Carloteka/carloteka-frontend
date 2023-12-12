@@ -1,15 +1,32 @@
 import styled from 'styled-components'
+import { NavLink } from 'react-router-dom';
 
-export const HeaderContainer = styled.header({
-  maxWidth: '1440px',
-  height: '112px',
-  boxSizing: 'border-box',
-  display: 'flex',
-  backgroundColor: '#DAD4C8',
-  alignItems: 'center',
-  paddingInline: '64px',
+export const HeaderContainer = styled.header`
+padding-inline: 32px;
 
-})
+width:100%;
+height: 133px;
+background-color: #DAD4C8;
+
+   @media screen and (min-width: 1440px) {
+     padding-inline: 64px;
+    height: 112px;
+  }
+  `
+
+export const LimiterConatiner = styled.div`    
+margin: 0 auto;
+    width: 288px;
+    display: flex;
+align-items: center;
+
+  @media screen and (min-width: 768px) {
+      width: 960px;
+  }
+
+  @media screen and (min-width: 1440px) {
+    width: 1312px;
+  }`
 
 export const Logo = styled.div({
   background: '#143F18',
@@ -24,16 +41,18 @@ export const Logo = styled.div({
   marginRight: '182px',
 })
 
-export const Catalog = styled.div({
+export const Catalog = styled(NavLink)({
   fontFamily: 'Rubik',
   fontSize: '18px',
   fontStyle: 'normal',
   fontWeight: '400',
   lineHeight: '25px',
   marginRight: '80px',
+  textDecoration: "none",
 })
 
 export const Search = styled.div`
+margin-right: 148px;
   display: flex;
   input {
     width: 390px;
@@ -53,8 +72,7 @@ export const Search = styled.div`
     position: relative;
     right: 35px;
     width: 24px;
-    height: 24px;
-    margin-right: 148px;
+    height: 24px;    
   }
 `
 export const Actions = styled.div`
@@ -64,4 +82,11 @@ export const Actions = styled.div`
   .icon{
     height:24px
   }
+  button{
+    background-color: inherit;
+    border: none;
+  }
+`
+export const NavigationLink = styled(NavLink)`
+textDecoration: "none",
 `
