@@ -1,78 +1,61 @@
-import { useState } from "react";
-import {
-  MainGoodsBlock,
-  GoodsItemsBlock,
+import { useState, useEffect } from "react";
+import {Title,
+  SliderContainer,
   GoodsCards,
   GoodsCardItem,
   CarouselButtons,
 } from "./popularGoods.styled";
+import { fetchPopularGoods } from "../../api/api";
+import { SliderPopulars } from "./sliderPopulars/SliderPopulars";
+
+type Popular = { mini_image: string , name: string, price: number, id_name: string}
 
 export const PopularGoods = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
+  
+  const [arrayPopulars, setArray] = useState([]);
 
-  const handlePrevClick = () => {
-    setActiveIndex((prevIndex) => (prevIndex === 0 ? 3 : prevIndex - 1));
-  };
+    useEffect(() => {
+        async function getPopulars() {
+    try {
+      const data = await fetchPopularGoods();
+     
+      setArray(data.slice(0, 12)) ;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  getPopulars()
+  }, []);
 
-  const handleNextClick = () => {
-    setActiveIndex((prevIndex) => (prevIndex === 3 ? 0 : prevIndex + 1));
-  };
+
+  const width: number = 4;
+  
+  let arrayToRender:array = []
+  if
+    (arrayPopulars?.length > 0) {arrayToRender = arrayPopulars.slice(0, width); } 
+  
+  function sliderHandler(payload: 1 | -1) {
+    if (arrayPopulars.length <= width) { return };
+    const newArray = [...arrayPopulars];
+
+    if (payload===-1) {
+      const lastEl:Popular = newArray.pop();
+      newArray.unshift(lastEl);}
+      
+      if (payload=== 1) {
+        const firstEl:Popular = newArray.shift();
+  
+newArray.push(firstEl);
+}
+
+setArray(newArray);
+}
 
   return (
-    <MainGoodsBlock>
-      <GoodsItemsBlock>
-        <h1>Популярні товари</h1>
-        <div
-          style={{
-            position: "relative",
-            overflow: "hidden",
-          }}
-        >
-          <GoodsCards
-            style={{
-              display: "flex",
-              width: "400%",
-              transition: "transform 0.5s ease",
-              transform: `translateX(-${activeIndex * 25}%)`,
-              position: "relative",
-            }}
-          >
-            {Array.from({ length: 4 }).map((_, index) => (
-              <GoodsCardItem>
-                <div className="cardImg">
-                  <div className="card_details">
-                    <div className="stock">Out of Stock</div>
-                    <img
-                      width={24}
-                      height={24}
-                      src="img/heart.png"
-                      alt="like"
-                    ></img>
-                  </div>
-                </div>
-                <h6>
-                  Декоративна ваза з <br /> натурального дерева
-                </h6>
-                <div className="rating">
-                  <img alt="stars" src="img/star.png"></img>
-                  <img alt="stars" src="img/star.png"></img>
-                  <img alt="stars" src="img/star.png"></img>
-                  <span>10</span>
-                </div>
-                <div className="price">$10</div>
-              </GoodsCardItem>
-            ))}
-          </GoodsCards>
-        </div>
-        <CarouselButtons>
-          <button className="leftBut" onClick={handlePrevClick}>
-            <img src="./img/Vectorleft.png" />
-          </button>
-          <button className="rightBut" onClick={handleNextClick}>
-            <img src="./img/VectorRight.png" />
-          </button>
-        </CarouselButtons>
-      </GoodsItemsBlock>
-    </MainGoodsBlock>
+    <section>
+      <Title>Популярні товари</Title>
+      <SliderPopulars arrayToRender={ arrayToRender} sliderHandler={sliderHandler} />
+      
+    </section>
   );
 };

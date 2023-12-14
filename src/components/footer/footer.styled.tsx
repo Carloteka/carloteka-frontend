@@ -14,7 +14,7 @@ export const FooterEmailBlock = styled.div`
   align-items: center;
   padding: 40px 0px;
 
-  h1 {
+  h2 {
     color: #101010;
     font-family: "Rubik";
     font-size: 55px;

@@ -6,7 +6,7 @@ padding: 71px 64px;
   justify-content: center;
   width: 100%;
   height: 788px;
-  flex-shrink: 0;
+  // flex-shrink: 0;
   background: #dad4c8;
 `
 export const Box = styled.div`
@@ -28,12 +28,6 @@ export const Box = styled.div`
 
 export const Title = styled.h1`
   width: 640px;
-  color: #101010;
-  font-family: Rubik;
-  font-size: 55px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 63px;
 `
 
 export const Description = styled.p`

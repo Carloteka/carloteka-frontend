@@ -12,7 +12,7 @@ import {
 export const Footer = () => {
   return (
     <FooterMainBlock><FooterEmailBlock>
-        <h1>Приєднуйтеся до нашої розсилки</h1>
+        <h2>Приєднуйтеся до нашої розсилки</h2>
         <p>Та отримуйте інформацію про акції та розпродажі нашої компанії</p>
         <EmailBlock>
           {/* <img alt="email" src="img/email.png"></img> */}

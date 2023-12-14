@@ -28,18 +28,22 @@ align-items: center;
     width: 1312px;
   }`
 
-export const Logo = styled.div({
-  background: '#143F18',
-  width: '80px',
-  height: '80px',
-  color: '#EDEAE9',
-  borderRadius: '50px',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  textAlign: 'center',
-  marginRight: '182px',
-})
+export const Logo = styled.a`
+  background: #143F18;
+  min-width: 60px;
+  height: 60px;
+  color: #EDEAE9;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-right: 182px;
+  @media screen and (min-width: 1440px) {
+    width: 80px;
+    height: 80px;
+  }`
+
 
 export const Catalog = styled(NavLink)({
   fontFamily: 'Rubik',
@@ -68,17 +72,18 @@ margin-right: 148px;
     font-weight: 400;
     line-height: 25px;
   }
-  .search_icon {
+  button {
     position: relative;
     right: 35px;
     width: 24px;
     height: 24px;    
+    
   }
 `
 export const Actions = styled.div`
   width: 336px;
   display: flex;
-  gap: 80px;
+  gap: 132px;
   .icon{
     height:24px
   }

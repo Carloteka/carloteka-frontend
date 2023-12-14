@@ -2,11 +2,13 @@
 import { HeaderContainer, LimiterConatiner, Logo, Catalog, Search, Actions,NavigationLink } from './Header.styled'
 export const Header = () => {
   return (
-    <HeaderContainer><LimiterConatiner>     <Logo>Brand logo</Logo>
+    <HeaderContainer><LimiterConatiner>     <Logo href='./index.htnl'>BrandLogo</Logo>
       <Catalog>Каталог</Catalog>
       <Search>
-        <input type={'text'} placeholder="Пошук товарів"></input>
-        <img className="search_icon" src="img/search.png" alt="search" />
+        <input type={'search'} placeholder="Пошук товарів"/><button type='submit' onClick={() => {
+          return false;
+        }}><img className="search_icon" src="img/search.png" alt="search" width={24} height={24}/></button>
+        
       </Search>
       <Actions>
         <NavigationLink to={'/favorites'}><img className="heart icon" src="img/heart.png" alt="heart" /></NavigationLink>

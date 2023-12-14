@@ -1,50 +1,25 @@
 import styled from "styled-components";
 
-export const MainGoodsBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 50px;
-  margin-bottom: 30%;
+export const Title = styled.h2`
+margin-bottom:32px; 
 `;
 
-export const GoodsItemsBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-  h1 {
-    margin-left: 10px;
-    color: #101010;
-    font-size: 36px;
-    font-family: "Rubik";
-    font-weight: 600px;
-    margin-top: 43px;
-  }
-  button {
-    background-color: #f2f0ec;
-    border: none;
-    width: 40px;
-    height: 60px;
-    margin: 0px 25px;
-    cursor: pointer;
-    img {
-      height: 15px;
-      height: 15px;
-    }
-  }
-`;
+
+
+
+
 export const GoodsCards = styled.div`
   display: flex;
   .slider-button-prev {
     position: absolute;
     width: 50px;
     height: 70px;
-    border: none;
     left: 1%;
   }
   .slider-button-next {
     position: absolute;
     width: 50px;
     height: 70px;
-    border: none;
     right: 1%;
   }
 `;
