@@ -1,23 +1,53 @@
+import {
+  HeaderContainer,
+  LimiterConatiner,
+  Logo,
+  Catalog,
+  Search,
+  Actions,
+  NavigationLink,
+} from './Header.styled';
+import sprite from '../../images/sprite.svg';
 
-import { HeaderContainer, LimiterConatiner, Logo, Catalog, Search, Actions,NavigationLink } from './Header.styled'
 export const Header = () => {
   return (
-    <HeaderContainer><LimiterConatiner>     <Logo href='./index.htnl'>BrandLogo</Logo>
-      <Catalog>Каталог</Catalog>
-      <Search>
-        <input type={'search'} placeholder="Пошук товарів"/><button type='submit' onClick={() => {
-          return false;
-        }}><img className="search_icon" src="img/search.png" alt="search" width={24} height={24}/></button>
-        
-      </Search>
-      <Actions>
-        <NavigationLink to={'/favorites'}><img className="heart icon" src="img/heart.png" alt="heart" /></NavigationLink>
-      <NavigationLink to={'/cart'}><img className="basket icon" src="img/basket.png" alt="basket" /></NavigationLink>
-      <button type="button"> <img className="menu icon" src="img/menu.png" alt="menu" /></button>
-     
-      </Actions></LimiterConatiner>
- 
-      
+    <HeaderContainer>
+      <LimiterConatiner>
+        <Logo to={'/'}>BrandLogo</Logo>
+        <Catalog to={'/catalog'} title="На стрінку Товарів">
+          Каталог
+        </Catalog>
+        <Search>
+          <input type={'search'} placeholder="Пошук товарів" />
+          <button
+            type="submit"
+            onClick={() => {
+              return false;
+            }}
+          >
+            <svg width={24} height={24}>
+              <use href={`${sprite}#search`} />
+            </svg>
+          </button>
+        </Search>
+        <Actions>
+          <NavigationLink to={'/favorites'} title="На сторінку Обраних">
+            <svg width={24} height={24}>
+              <use href={`${sprite}#favorite`} />
+            </svg>
+          </NavigationLink>
+          <NavigationLink to={'/cart'} title="До Кошика">
+            <svg width={24} height={24}>
+              <use href={`${sprite}#cart`} />
+            </svg>
+          </NavigationLink>
+          <button type="button" title="Меню">
+            <svg width={18} height={12}>
+              <use href={`${sprite}#burger-menu`} />
+            </svg>
+          </button>
+        </Actions>
+      </LimiterConatiner>
     </HeaderContainer>
-  )
-}
+  );
+};

@@ -53,10 +53,10 @@ position : relative;
     font-weight: 400;
     text-transform: uppercase;
   
-  img {position: absolute;
-   
+  svg {position: absolute;   
     right: 24px;
     top: 16px;
+    fill:white;
   }
 `
 

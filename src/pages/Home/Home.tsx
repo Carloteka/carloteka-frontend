@@ -33,11 +33,11 @@ const Home = () => {
       <LimiterConatiner>
         <CategorySection>
           <ul>
-            {categories ? (categories.map((el) => (
+            {categories?.map((el) => (
               <li key={el.id}>
                 <CategoryCard category={el} />
               </li>
-            ))): null}
+            ))}
           </ul>
         </CategorySection>
       

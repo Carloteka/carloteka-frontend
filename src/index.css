@@ -29,9 +29,6 @@ main {
   }
 }
 
-p {
-  margin: 0;
-}
 ul {
   list-style: none;
 }
@@ -40,9 +37,18 @@ a {
 }
 a,
 button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   background-color: inherit;
   border: none;
   cursor: pointer;
+}
+button {
+  font-size: 19px;
+  line-height: 1;
+  font-weight: 500;
 }
 img {
   display: block;
@@ -64,9 +70,22 @@ h2 {
   line-height: calc(43 / 36);
 }
 
+h3 {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: calc(31 / 24);
+}
+
 h4 {
   color: #101010;
   font-size: 18px;
   font-weight: 700;
   line-height: calc(23 / 18);
+}
+
+input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  border: none;
 }

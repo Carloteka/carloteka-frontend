@@ -5,8 +5,8 @@ import {
   Title,
   Description,
   Button,
-
 } from './Greeting.styled'
+import sprite from '../../images/sprite.svg';
 
 export const Greeting = () => {
   return (
@@ -21,7 +21,7 @@ export const Greeting = () => {
             піци, посуд для суші, підноси для подачі кави) для ресторанів, кафе,
             барів, магазинів тощо.
           </Description>
-            <Button type="submit">Детальніше<img src="img/arrow-right.png" alt="arrow right" width={16} height={16 }/></Button>
+            <Button type="submit">Детальніше<svg width={16} height={16 }><use href={`${sprite}#arrow-right`} /></svg></Button>
         </div>
         <img src="img/Shield_and_sword.png" alt="Shield and sword" width={640} height={646} />
       </Box>

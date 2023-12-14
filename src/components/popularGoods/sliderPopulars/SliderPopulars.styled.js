@@ -18,10 +18,14 @@ position: relative;
   }
 `
 
+export const ChevronIcon = styled.svg`
+${({ left }) => left ? `` : `transform: rotate(180deg)`}} 
+`
+
 export const Chevron = styled.button`  
      position: absolute;
-     top: 50%;
-    transform: translateY(-50%);   
+     top: 134px;
+    z-index:1;
     width: 32px;
     height: 36px;
     background: #f2f0ec;`

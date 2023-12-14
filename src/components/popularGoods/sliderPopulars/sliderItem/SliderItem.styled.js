@@ -4,6 +4,12 @@ export const ThumbPhoto = styled.div`
 position: relative;
 margin-bottom: 16px;
 
+&:hover {
+  div {
+     display: flex;
+  }
+}
+
  img {    
     object-fit: cover;
     height:304px;
@@ -17,7 +23,7 @@ div {
   transform: translate(-50%, -50%) scale(1);
   width:116px;
   height: 50px;
-  display: flex;
+  display: none;
   gap: 16px;
 }
 `

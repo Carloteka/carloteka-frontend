@@ -1,10 +1,5 @@
 import { useState, useEffect } from "react";
-import {Title,
-  SliderContainer,
-  GoodsCards,
-  GoodsCardItem,
-  CarouselButtons,
-} from "./popularGoods.styled";
+import {Title} from "./popularGoods.styled";
 import { fetchPopularGoods } from "../../api/api";
 import { SliderPopulars } from "./sliderPopulars/SliderPopulars";
 
