@@ -3,33 +3,21 @@ import {
   LimiterConatiner,
   Logo,
   Catalog,
-  Search,
   Actions,
   NavigationLink,
 } from './Header.styled';
 import sprite from '../../images/sprite.svg';
+import { SearchBar } from './SearchBar/SearchBar';
 
 export const Header = () => {
   return (
     <HeaderContainer>
       <LimiterConatiner>
-        <Logo to={'/'}>BrandLogo</Logo>
+        <Logo to={'/'}>Brand Logo</Logo>
         <Catalog to={'/catalog'} title="На стрінку Товарів">
           Каталог
         </Catalog>
-        <Search>
-          <input type={'search'} placeholder="Пошук товарів" />
-          <button
-            type="submit"
-            onClick={() => {
-              return false;
-            }}
-          >
-            <svg width={24} height={24}>
-              <use href={`${sprite}#search`} />
-            </svg>
-          </button>
-        </Search>
+        <SearchBar />
         <Actions>
           <NavigationLink to={'/favorites'} title="На сторінку Обраних">
             <svg width={24} height={24}>

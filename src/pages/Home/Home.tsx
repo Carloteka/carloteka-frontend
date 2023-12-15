@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
 import { Greeting } from 'src/components/greeting/Greeting';
 import { CategoryCard } from 'src/components/category-card/CategoryCard';
-import { NewGoods } from 'src/components/newGoods';
 import { PopularGoods } from 'src/components/popularGoods';
+import { useState, useEffect } from 'react';
 import { fetchCategories } from '../../api/api';
 import categoryData from 'src/mockdata/categories.json';
 import { LimiterConatiner, CategorySection } from './Home.styled';
@@ -10,22 +9,20 @@ import { LimiterConatiner, CategorySection } from './Home.styled';
 const Home = () => {
   const [categories, setCategories] = useState();
 
-
-  
   useEffect(() => {
-        async function getCategories() {
-    try {
-      const data = await fetchCategories();
-      console.log(data);
-      setCategories(data) ;
-    } catch (error) {
-      console.log(error);
+    async function getCategories() {
+      try {
+        const data = await fetchCategories();
+        console.log(data);
+        localStorage.setItem('categories', JSON.stringify(data));
+        setCategories(data);
+      } catch (error) {
+        console.log(error);
+      }
     }
-  }
-  getCategories()
+    getCategories();
   }, []);
-  JSON.stringify(categoryData)
-
+  JSON.stringify(categoryData);
 
   return (
     <>
@@ -40,10 +37,9 @@ const Home = () => {
             ))}
           </ul>
         </CategorySection>
-      
-      <PopularGoods />
+
+        <PopularGoods />
       </LimiterConatiner>
-      
     </>
   );
 };

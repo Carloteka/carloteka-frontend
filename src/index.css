@@ -35,6 +35,9 @@ ul {
 a {
   text-decoration: none;
 }
+a:visited {
+  color: inherit;
+}
 a,
 button {
   display: flex;
