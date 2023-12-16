@@ -3,36 +3,51 @@ import styled from 'styled-components';
 export const FooterMainBlock = styled.footer``;
 
 export const FooterEmailBlock = styled.div`
+  padding: 40px 16px;
+  text-align: center;
   background-color: #dad4c8;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 88px 0px 109px;
+  @media screen and (min-width: 1440px) {
+    padding: 88px 0px 109px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
   h2 {
-    color: #101010;
-    font-size: 55px;
-    line-height: calc(63 / 55);
+    @media screen and (min-width: 1440px) {
+      font-size: 55px;
+      line-height: calc(63 / 55);
+    }
   }
   p {
-    margin: 40px 0;
-    color: #101010;
+    margin: 24px 0;
     font-size: 17px;
     line-height: calc(21 / 17);
+    @media screen and (min-width: 1440px) {
+      margin: 40px 0;
+    }
   }
 `;
 
 export const EmailBlock = styled.form`
   position: relative;
-  display: flex;
-  gap: 32px;
+  @media screen and (min-width: 1440px) {
+    display: flex;
+    gap: 32px;
+  }
 
   input {
-    padding: 12px 14px 16px 62px;
-    width: 528px;
+    margin-bottom: 16px;
+    padding: 12px 14px 16px 36px;
+    width: 100%;
     height: 48px;
     color: #81807e;
     background-color: white;
+    @media screen and (min-width: 1440px) {
+      margin-bottom: 0;
+      padding: 12px 14px 16px 62px;
+      width: 528px;
+    }
   }
   input:focus {
     outline: none;
@@ -52,17 +67,26 @@ export const EmailBlock = styled.form`
     background-color: #2d3f24;
     color: white;
     height: 48px;
-    width: 231px;
+    width: 100%;
+    @media screen and (min-width: 1440px) {
+      width: 231px;
+    }
   }
 `;
 
 export const MainFooter = styled.div`
+  padding: 46px 16px;
   display: flex;
+  flex-direction: column;
+  gap: 40px;
   justify-content: center;
-  gap: 222px;
   background-color: #2d3f24;
   color: white;
-  padding: 80px;
+  @media screen and (min-width: 1440px) {
+    padding: 80px;
+    flex-direction: row;
+    gap: 222px;
+  }
 
   div:first-child {
     width: 226px;
@@ -73,10 +97,6 @@ export const MainFooter = styled.div`
     @media screen and (min-width: 1440px) {
       margin-bottom: 24px;
     }
-  }
-
-  address {
-    font-style: inherit;
   }
 
   li {

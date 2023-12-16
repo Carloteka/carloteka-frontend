@@ -28,6 +28,7 @@ export const Slider = ({ arrayToRender, sliderHandler }) => {
               alt="img першої категорії"
               width={640}
               height={512}
+              loading="lazy"
             />
           </li>
         ))}

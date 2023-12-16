@@ -1,7 +1,15 @@
 import styled from 'styled-components';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export const Search = styled.form`
+ @media screen and (max-width: 1439.99px) {
+    order: 2;
+    margin-right: 0;
+    padding: 0 0 0 16px;
+    width:100%;
+    height: 25px;
+    justify-content: space-between;
+  }
   margin-right: 142px;
   padding: 0 16px;
   position: relative;
@@ -12,39 +20,38 @@ export const Search = styled.form`
 ${({ query }) =>
   query
     ? `box-shadow: 1px 1px 7px 0 #c6b89e;
-    background: #fff;`
-    : ``}} ;
+    background: #fff`
+    : ``}} ;  
+`;
 
-  &:focus-within {
-    
-  }
-  // border-bottom: 1px solid #363535;
-
-  input {
-    padding-right: 16px;
+export const Input = styled.input`
+  padding: 0 0 0 0px;
+  width: 240px;
+  border: none;
+  border-radius: 0;
+  background-color: inherit;
+  color: #101010;
+  text-indent: 0px;
+  @media screen and (min-width: 1440px) {
+    padding: 0 16px 0;
     width: 366px;
-    border: none;
-    border-radius: 0;
-    background-color: inherit;
-    color: #101010;
   }
-  input:focus {
-    box-shadow:
-      1px,
-      1px,
-      7px,
-      0 #c6b89e;
+
+  &:focus {
     outline: none;
   }
 `;
 
 export const SearchResultDiv = styled.div`
   position: absolute;
-  top: 38px;
+  top: 28px;
   left: 0;
   width: 100%;
   align-items: center;
   background-color: white;
+  @media screen and (min-width: 1440px) {
+    top: 38px;
+  }
 
   p:first-child {
     text-align: center;
@@ -57,9 +64,16 @@ export const SearchResultDiv = styled.div`
 
   li {
     color: #101010;
-    p {
-      margin: 0 auto 0 8px;
-      width: 220px;
+    a {
+      margin: auto auto auto 8px;
+      padding: 9px 0;
+      width: 251px;
+      height: 64px;
+      justify-content: flex-start;
+      color: inherit;
+      word-wrap: break-word;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     li {
       display: flex;
@@ -70,22 +84,12 @@ export const SearchResultDiv = styled.div`
   }
 
   img {
-    margin-right: 8px;
     height: 56px;
     object-fit: cover;
   }
 
   h4 {
     padding: 4px 16px 5px;
-  }
-
-  a {
-    padding: 10px 24px;
-    font-size: 19px;
-    line-height: 1;
-    font-weight: 500;
-    color: white;
-    background-color: #2d3f24;
   }
 `;
 
@@ -95,5 +99,24 @@ export const GoodListResult = styled.li`
   }
   li {
     border-bottom: 0.5px solid #cccbc7;
+    a {
+      width: 160px;
+      @media screen and (min-width: 1440px) {
+        width: 220px;
+      }
+    }
+  }
+`;
+
+export const Button = styled(Link)`
+  padding: 10px 24px;
+  justify-content: center;
+  font-size: 19px;
+  line-height: 1;
+  font-weight: 500;
+  color: white;
+  background-color: #2d3f24;
+  &:visited {
+    color: white;
   }
 `;

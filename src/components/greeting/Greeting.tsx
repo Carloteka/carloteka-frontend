@@ -3,9 +3,11 @@ import {
   GreetingContainer,
   Box,
   Title,
+  Img,
   Description,
+  ImgAside,
   Button,
-} from './Greeting.styled'
+} from './Greeting.styled';
 import sprite from '../../images/sprite.svg';
 
 export const Greeting = () => {
@@ -14,6 +16,12 @@ export const Greeting = () => {
       <Box>
         <div>
           <Title>Дерев’яні вироби на будь-який смак</Title>
+          <Img
+            src="img/Shield_and_sword.png"
+            alt="Shield and sword"
+            width={640}
+            height={646}
+          />
           <Description>
             Вітаємо в інтернет-магазині КАРЛОТЕКА. Ми виготовляємо якісні
             дерев'яні вироби. У нас ви можете купити або замовити іграшкові
@@ -21,10 +29,20 @@ export const Greeting = () => {
             піци, посуд для суші, підноси для подачі кави) для ресторанів, кафе,
             барів, магазинів тощо.
           </Description>
-            <Button type="submit">Детальніше<svg width={16} height={16 }><use href={`${sprite}#arrow-right`} /></svg></Button>
+          <Button type="submit">
+            Детальніше
+            <svg width={16} height={16}>
+              <use href={`${sprite}#arrow-right`} />
+            </svg>
+          </Button>
         </div>
-        <img src="img/Shield_and_sword.png" alt="Shield and sword" width={640} height={646} />
+        <ImgAside
+          src="img/Shield_and_sword.png"
+          alt="Shield and sword"
+          width={640}
+          height={646}
+        />
       </Box>
     </GreetingContainer>
-  )
-}
+  );
+};

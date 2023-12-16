@@ -8,17 +8,9 @@ import {
 } from './footer.styled';
 import { Link } from 'react-router-dom';
 import sprite from '../../images/sprite.svg';
+import { socialLinks } from 'src/socialLinks';
 
 export const Footer = () => {
-  const socialLinks = [
-    {
-      social: 'WhatsApp',
-      href: 'https://api.whatsapp.com/send?phone=380671111111',
-    },
-    { social: 'Viber', href: 'viber://chat?number=380671111111' },
-    { social: 'Telegram', href: 'https://t.me/carloteka' },
-  ];
-
   return (
     <FooterMainBlock>
       <FooterEmailBlock>

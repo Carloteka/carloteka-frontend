@@ -8,8 +8,12 @@ import {
 } from './Header.styled';
 import sprite from '../../images/sprite.svg';
 import { SearchBar } from './SearchBar/SearchBar';
+import { Menu } from './menu/Menu';
+import { useState } from 'react';
 
 export const Header = () => {
+  const [showMenu, setShowMenu] = useState(false);
+
   return (
     <HeaderContainer>
       <LimiterConatiner>
@@ -29,12 +33,13 @@ export const Header = () => {
               <use href={`${sprite}#cart`} />
             </svg>
           </NavigationLink>
-          <button type="button" title="Меню">
+          <button type="button" title="Меню" onClick={() => setShowMenu(true)}>
             <svg width={18} height={12}>
               <use href={`${sprite}#burger-menu`} />
             </svg>
           </button>
         </Actions>
+        {showMenu && <Menu onClickHandle={setShowMenu} />}
       </LimiterConatiner>
     </HeaderContainer>
   );

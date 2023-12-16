@@ -1,4 +1,10 @@
-import { Search, SearchResultDiv, GoodListResult } from './SearchBar.styled';
+import {
+  Search,
+  Input,
+  SearchResultDiv,
+  GoodListResult,
+  Button,
+} from './SearchBar.styled';
 import sprite from '../../../images/sprite.svg';
 import { useState, useEffect, useRef } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
@@ -12,7 +18,6 @@ export const SearchBar = () => {
   const isFirstRender = useRef(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query') ?? '';
-  console.log(goods, query);
 
   useEffect(() => {
     async function getAllGoods() {
@@ -54,7 +59,6 @@ export const SearchBar = () => {
   function getSearchResults() {}
 
   function handleSubmit(e) {
-    console.log(e.target.firstElementChild.value);
     e.preventDefault();
 
     setSearchParams('search', e.target.firstElementChild.value);
@@ -62,7 +66,7 @@ export const SearchBar = () => {
 
   return (
     <Search onSubmit={handleSubmit} query={query}>
-      <input
+      <Input
         type={'search'}
         name="query"
         value={query}
@@ -87,9 +91,9 @@ export const SearchBar = () => {
             <>
               <p>нічого не знайдено</p>
               <div>
-                <Link title="Show catalog" to={'./catalog'}>
+                <Button title="Show catalog" to={'./catalog'}>
                   ПОДИВИТИСЬ КАТАЛОГ
-                </Link>
+                </Button>
               </div>
             </>
           ) : (
@@ -107,7 +111,7 @@ export const SearchBar = () => {
                             height={56}
                             alt={el.name}
                           />
-                          <p>{el?.name}</p>
+                          <Link to={`./catalog?=${query}`}>{el?.name}</Link>
                         </li>
                       ))}
                     </ul>
@@ -120,12 +124,12 @@ export const SearchBar = () => {
                       {searchedGoods.map((el) => (
                         <li key={el?.id}>
                           <img
-                            src={`http://localhost:8000/${el.images[0].image}`}
+                            src={`http://localhost:8000/${el.mini_image}`}
                             width={40}
                             height={48}
                             alt={el.name}
                           />
-                          <p>{el?.name}</p>
+                          <Link to={`./catalog?=${query}`}>{el?.name}</Link>
                           <span>₴ {el?.price}</span>
                         </li>
                       ))}
@@ -134,9 +138,9 @@ export const SearchBar = () => {
                 )}
               </ul>
               <div>
-                <Link title="Show all results" to={`./catalog?=${query}`}>
+                <Button title="Show all results" to={`./catalog?=${query}`}>
                   Всі результати
-                </Link>
+                </Button>
               </div>
             </>
           )}

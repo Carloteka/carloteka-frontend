@@ -2,9 +2,14 @@ import { Greeting } from 'src/components/greeting/Greeting';
 import { CategoryCard } from 'src/components/category-card/CategoryCard';
 import { PopularGoods } from 'src/components/popularGoods';
 import { useState, useEffect } from 'react';
-import { fetchCategories } from '../../api/api';
+import { fetchCategories } from 'src/api/api';
 import categoryData from 'src/mockdata/categories.json';
-import { LimiterConatiner, CategorySection } from './Home.styled';
+import {
+  LimiterConatiner,
+  CategorySection,
+  List,
+  Category,
+} from './Home.styled';
 
 const Home = () => {
   const [categories, setCategories] = useState();
@@ -29,13 +34,13 @@ const Home = () => {
       <Greeting />
       <LimiterConatiner>
         <CategorySection>
-          <ul>
+          <List>
             {categories?.map((el) => (
-              <li key={el.id}>
+              <Category key={el.id}>
                 <CategoryCard category={el} />
-              </li>
+              </Category>
             ))}
-          </ul>
+          </List>
         </CategorySection>
 
         <PopularGoods />
