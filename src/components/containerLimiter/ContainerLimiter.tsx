@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Limiter = styled.div`
   margin: 0 auto;
-  padding: ${({ paddingTopMob }) => `${paddingTopMob} 0 74px`};
+  padding: ${({ paddingmob }) => `${paddingmob} 0 74px`};
   width: 288px;
   text-align: center;
   @media screen and (min-width: 768px) {
@@ -10,7 +10,7 @@ export const Limiter = styled.div`
   }
 
   @media screen and (min-width: 1440px) {
-    padding: ${({ paddingTopMob }) => `${paddingTopMob} 0 112px`};
+    padding: ${({ paddingdesc }) => `${paddingdesc} 0 112px`};
     text-align: start;
     width: 1312px;
   }
@@ -22,7 +22,7 @@ export const ContainerLimiter = ({
   children,
 }) => {
   return (
-    <Limiter paddingTopMob={paddingTopMob} paddingTopDesc={paddingTopDesc}>
+    <Limiter paddingmob={paddingTopMob} paddingdesc={paddingTopDesc}>
       {children}
     </Limiter>
   );
