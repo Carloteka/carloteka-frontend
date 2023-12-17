@@ -16,6 +16,7 @@ export const SearchBar = () => {
   const [goods, setGoods] = useState([]);
   const [categories, setCategories] = useState([]);
   const isFirstRender = useRef(true);
+  const inputRef = useRef(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query') ?? '';
 
@@ -56,13 +57,27 @@ export const SearchBar = () => {
     setSearchedCategories(filtering(categories));
   }, [goods, categories, query]);
 
-  function getSearchResults() {}
-
   function handleSubmit(e) {
     e.preventDefault();
 
     setSearchParams('search', e.target.firstElementChild.value);
   }
+
+  useEffect(() => {
+    console.log(inputRef);
+  }, [inputRef]);
+
+  const handleBlur = () => {
+    if (inputRef.current) {
+      inputRef.current.style.display = 'none';
+    }
+  };
+  const handleChangeInput = (value) => {
+    setSearchParams({ query: value });
+    if (inputRef.current) {
+      inputRef.current.style.display = 'block';
+    }
+  };
 
   return (
     <Search onSubmit={handleSubmit} query={query}>
@@ -71,9 +86,8 @@ export const SearchBar = () => {
         name="query"
         value={query}
         placeholder="Пошук товарів"
-        onChange={(e) => {
-          getSearchResults(), setSearchParams({ query: e.target.value });
-        }}
+        onChange={(e) => handleChangeInput(e.target.value)}
+        onBlur={() => handleBlur()}
       />
       <button
         type="submit"
@@ -86,7 +100,7 @@ export const SearchBar = () => {
         </svg>
       </button>
       {query && (
-        <SearchResultDiv>
+        <SearchResultDiv ref={inputRef}>
           {!searchedGoods.length > 0 && !searchedCategories.length > 0 ? (
             <>
               <p>нічого не знайдено</p>
