@@ -1,29 +1,21 @@
+import { useState, useEffect } from 'react';
 import { Greeting } from 'src/components/greeting/Greeting';
 import { CategoryCard } from 'src/components/category-card/CategoryCard';
 import { PopularGoods } from 'src/components/popularGoods';
-import { useState, useEffect } from 'react';
-import { fetchCategories } from 'src/api/api';
-import categoryData from 'src/mockdata/categories.json';
+// import categoryData from 'src/mockdata/categories.json';
 import { CategorySection, List, Category } from './Home.styled';
 import { ContainerLimiter } from 'src/components/containerLimiter/ContainerLimiter';
 
 const Home = () => {
-  const [categories, setCategories] = useState();
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    async function getCategories() {
-      try {
-        const data = await fetchCategories();
-        console.log(data);
-        localStorage.setItem('categories', JSON.stringify(data));
-        setCategories(data);
-      } catch (error) {
-        console.log(error);
-      }
+    if (localStorage.getItem('categories')) {
+      const item = JSON.parse(localStorage.getItem('categories'));
+      setCategories(item);
     }
-    getCategories();
   }, []);
-  JSON.stringify(categoryData);
+  // JSON.stringify(categoryData);
 
   return (
     <>

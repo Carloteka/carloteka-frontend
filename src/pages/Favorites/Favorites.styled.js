@@ -44,6 +44,7 @@ export const GoToCatalog = styled(Link)`
   width: 100%;
   justify-content: flex-start;
   color: white;
+  font-weight: 500;
   background-color: #2d3f24;
   text-transform: uppercase;
 

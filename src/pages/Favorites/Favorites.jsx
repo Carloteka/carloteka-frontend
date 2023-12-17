@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PageTitle } from 'src/components/pageTitle/PageTitle';
 import { ContainerLimiter } from 'src/components/containerLimiter/ContainerLimiter.tsx';
 import { ListHeader } from 'src/components/listHeader/ListHeader';
@@ -43,7 +43,7 @@ const Favorites = () => {
       <ContainerLimiter paddingTopMob={'24px'} paddingTopDesc={'56px'}>
         <ListHeader />
         <CardForFavoritesAndCart
-          favoriteGoods={favorites}
+          goods={favorites}
           onClickDelete={delFromFavorite}
         />
         {favorites.length > 0 ? (

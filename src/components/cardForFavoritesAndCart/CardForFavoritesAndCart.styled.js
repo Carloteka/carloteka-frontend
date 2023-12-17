@@ -3,12 +3,12 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   padding: 0 0 32px;
   width: 100%;
+  border-bottom: 1px solid #dad4c8;
 
   @media screen and (min-width: 1440px) {
     padding: 0 0 56px;
+    border-bottom: none;
   }
-
-  border-bottom: 1px solid #dad4c8;
 
   li {
     display: flex;
@@ -103,6 +103,36 @@ export const Price = styled.p`
     order: 2;
   }
 
+  @media screen and (min-width: 1440px) {
+    margin-right: 32px;
+    color: #101010;
+  }
+  &::first-letter {
+    color: #5b5b59;
+  }
+`;
+
+export const IncrementBox = styled.div`
+  margin: 0 124px 0 108px;
+  width: 119px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  order: 2;
+
+  & button:first-child {
+    letter-spacing: -0.2em;
+  }
+  button {
+    font-weight: 400;
+    font-size: 26px;
+  }
+`;
+
+export const TotalPrice = styled.p`
+  width: 120px;
+  color: #000;
+  order: 2;
   @media screen and (min-width: 1440px) {
     margin-right: 32px;
     color: #101010;

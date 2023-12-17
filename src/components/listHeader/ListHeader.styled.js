@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   text-align: start;
   background-color: #dad4c8;
   @media screen and (min-width: 1440px) {
-    padding: 12px 112px;
+    padding: 12px 24px 12px 112px;
   }
 `;
 
@@ -26,8 +26,10 @@ export const Price = styled.p`
 `;
 
 export const Quantity = styled.p`
-  margin-right: 20px;
+  margin: 0 8px 0 0;
+
   @media screen and (min-width: 1440px) {
-    margin-right: 79px;
+    width: 150px;
+    margin: 0 79px 0 108px;
   }
 `;

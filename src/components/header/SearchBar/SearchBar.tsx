@@ -8,7 +8,7 @@ import {
 import sprite from '../../../images/sprite.svg';
 import { useState, useEffect, useRef } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { fetchPopularGoods } from 'src/api/api';
+import { fetchCategories, fetchPopularGoods } from 'src/api/api';
 
 export const SearchBar = () => {
   const [searchedGoods, setSearchedGoods] = useState([]);
@@ -31,14 +31,21 @@ export const SearchBar = () => {
       }
     }
 
+    async function getCategories() {
+      try {
+        const data = await fetchCategories();
+        console.log(data);
+        localStorage.setItem('categories', JSON.stringify(data));
+        setCategories(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
     if (isFirstRender.current) {
       isFirstRender.current = false;
       getAllGoods();
-
-      const items = JSON.parse(localStorage.getItem('categories'));
-      if (items) {
-        setCategories(items);
-      }
+      getCategories();
       return;
     }
 
@@ -107,7 +114,7 @@ export const SearchBar = () => {
       </button>
       {query && (
         <SearchResultDiv ref={inputRef}>
-          {!searchedGoods.length > 0 && !searchedCategories.length > 0 ? (
+          {!(searchedGoods.length > 0) && !(searchedCategories.length > 0) ? (
             <>
               <p>нічого не знайдено</p>
               <div>

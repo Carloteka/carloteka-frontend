@@ -1,16 +1,13 @@
 import Layout from './components/Layout';
 import { Routes, Route } from 'react-router-dom';
-import { lazy, useEffect } from 'react';
+import { lazy } from 'react';
 
 const Home = lazy(() => import('./pages/Home/Home'));
 const Favorites = lazy(() => import('./pages/Favorites/Favorites'));
+const Cart = lazy(() => import('./pages/Cart/Cart'));
 const Catalog = lazy(() => import('./pages/Catalog/Catalog'));
 
-function App() { 
-
-  // useEffect(() => {    
-  // }, []);
-
+function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -18,6 +15,7 @@ function App() {
 
         <Route path="catalog" element={<Catalog />} />
         <Route path="favorites" element={<Favorites />} />
+        <Route path="cart" element={<Cart />} />
 
         <Route path="*" element={<Home />} />
       </Route>
