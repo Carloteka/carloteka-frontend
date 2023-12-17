@@ -3,6 +3,8 @@ import { PageTitle } from 'src/components/pageTitle/PageTitle';
 import { ContainerLimiter } from 'src/components/containerLimiter/ContainerLimiter.tsx';
 import { ListHeader } from 'src/components/listHeader/ListHeader';
 import {
+  FavoritesBox,
+  Card,
   Button,
   EmptyMessage,
   FlexBox,
@@ -47,16 +49,39 @@ const Cart = () => {
   }
 
   function getTotalPrice() {
-    return inCart.reduce((total, el) => el.price + total, 0);
+    return inCart.reduce(
+      (total, el) => el.price * (el?.quantity ? el.quantity : 1) + total,
+      0,
+    );
   }
-  console.log(getTotalPrice());
+
+  function increment(quantity, id) {
+    const newArray = [...inCart];
+    newArray[inCart.findIndex((el) => el.id_name === id)].quantity = quantity;
+    localStorage.setItem('invoice', JSON.stringify(newArray));
+    setInCart(newArray);
+  }
+
+  console.log(inCart);
 
   return (
     <>
       <PageTitle>Кошик</PageTitle>
       <ContainerLimiter paddingTopMob={'24px'} paddingTopDesc={'56px'}>
         <ListHeader />
-        <CardForFavoritesAndCart goods={inCart} onClickDelete={delFromCart} />
+        <FavoritesBox>
+          <ul>
+            {inCart.map((el) => (
+              <Card key={el.id_name}>
+                <CardForFavoritesAndCart
+                  good={el}
+                  onClickDelete={delFromCart}
+                  increment={increment}
+                />
+              </Card>
+            ))}
+          </ul>
+        </FavoritesBox>
         {inCart.length > 0 ? (
           <FlexBox>
             <GoToCatalog to={'/catalog'}>

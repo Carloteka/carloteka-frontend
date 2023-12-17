@@ -1,6 +1,31 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+export const FavoritesBox = styled.div`
+  padding: 0 0 32px;
+  width: 100%;
+  border-bottom: 1px solid #dad4c8;
+
+  @media screen and (min-width: 1440px) {
+    padding: 0 0 56px;
+    border-bottom: none;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+  }
+`;
+
+export const Card = styled.li`
+  @media screen and (max-width: 1439.99px) {
+    align-items: flex-start;
+  }
+  padding: 32px 0;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #dad4c8;
+`;
+
 export const Button = styled.button`
   margin-left: auto;
   padding: 5px 24px;

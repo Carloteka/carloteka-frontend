@@ -2,7 +2,13 @@ import { useState, useEffect } from 'react';
 import { PageTitle } from 'src/components/pageTitle/PageTitle';
 import { ContainerLimiter } from 'src/components/containerLimiter/ContainerLimiter.tsx';
 import { ListHeader } from 'src/components/listHeader/ListHeader';
-import { Button, EmptyMessage, GoToCatalog } from './Favorites.styled';
+import {
+  FavoritesBox,
+  Card,
+  Button,
+  EmptyMessage,
+  GoToCatalog,
+} from './Favorites.styled';
 import { CardForFavoritesAndCart } from 'src/components/cardForFavoritesAndCart/CardForFavoritesAndCart';
 import { toggleLocalStorage } from 'src/utils/toggleLocalStorage';
 import sprite from '../../images/sprite.svg';
@@ -42,10 +48,18 @@ const Favorites = () => {
       <PageTitle>Список бажань</PageTitle>
       <ContainerLimiter paddingTopMob={'24px'} paddingTopDesc={'56px'}>
         <ListHeader />
-        <CardForFavoritesAndCart
-          goods={favorites}
-          onClickDelete={delFromFavorite}
-        />
+        <FavoritesBox>
+          <ul>
+            {favorites.map((el) => (
+              <Card key={el.id_name}>
+                <CardForFavoritesAndCart
+                  good={el}
+                  onClickDelete={delFromFavorite}
+                />
+              </Card>
+            ))}
+          </ul>
+        </FavoritesBox>
         {favorites.length > 0 ? (
           <Button type="button" onClick={() => clearFavorites()}>
             Очистити список бажань
