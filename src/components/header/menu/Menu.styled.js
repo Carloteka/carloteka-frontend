@@ -11,7 +11,7 @@ export const MenuContainer = styled.div`
   flex-direction: column;
   gap: 72px;
   background-color: white;
-  z-index: 1;
+  z-index: 2;
   @media screen and (min-width: 1440px) {
     padding: 112px;
     width: 592px;

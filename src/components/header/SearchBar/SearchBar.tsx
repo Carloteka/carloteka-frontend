@@ -67,9 +67,15 @@ export const SearchBar = () => {
     console.log(inputRef);
   }, [inputRef]);
 
-  const handleBlur = () => {
+  function hideResults() {
     if (inputRef.current) {
       inputRef.current.style.display = 'none';
+    }
+  }
+
+  const handleBlur = () => {
+    if (inputRef.current) {
+      setTimeout(hideResults, 250);
     }
   };
   const handleChangeInput = (value) => {
@@ -105,7 +111,7 @@ export const SearchBar = () => {
             <>
               <p>нічого не знайдено</p>
               <div>
-                <Button title="Show catalog" to={'./catalog'}>
+                <Button title="Show catalog" to={'/catalog'}>
                   ПОДИВИТИСЬ КАТАЛОГ
                 </Button>
               </div>
@@ -125,7 +131,7 @@ export const SearchBar = () => {
                             height={56}
                             alt={el.name}
                           />
-                          <Link to={`./catalog?=${query}`}>{el?.name}</Link>
+                          <Link to={`/catalog?=${query}`}>{el?.name}</Link>
                         </li>
                       ))}
                     </ul>
@@ -143,7 +149,7 @@ export const SearchBar = () => {
                             height={48}
                             alt={el.name}
                           />
-                          <Link to={`./catalog?=${query}`}>{el?.name}</Link>
+                          <Link to={`/catalog?=${query}`}>{el?.name}</Link>
                           <span>₴ {el?.price}</span>
                         </li>
                       ))}
@@ -152,7 +158,7 @@ export const SearchBar = () => {
                 )}
               </ul>
               <div>
-                <Button title="Show all results" to={`./catalog?=${query}`}>
+                <Button title="Show all results" to={`/catalog?=${query}`}>
                   Всі результати
                 </Button>
               </div>

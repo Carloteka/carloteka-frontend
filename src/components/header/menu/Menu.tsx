@@ -114,7 +114,7 @@ export const Menu = ({ onClickHandle }) => {
               <CategoriesList>
                 {categories.map((el) => (
                   <li key={el.id_name}>
-                    <Link to={`./catalog/${el.id_name}`}>{el.name}</Link>
+                    <Link to={`/catalog/${el.id_name}`}>{el.name}</Link>
                   </li>
                 ))}
               </CategoriesList>

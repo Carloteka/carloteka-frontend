@@ -3,9 +3,12 @@ import styled from 'styled-components';
 export const FooterMainBlock = styled.footer``;
 
 export const FooterEmailBlock = styled.div`
+  position: relative;
   padding: 40px 16px;
   text-align: center;
   background-color: #dad4c8;
+  z-index: -1;
+
   @media screen and (min-width: 1440px) {
     padding: 88px 0px 109px;
     display: flex;
