@@ -7,6 +7,7 @@ import {
   Star,
 } from './SliderItem.styled';
 import sprite from '../../../../images/sprite.svg';
+import { toggleLocalStorage } from 'src/utils/toggleLocalStorage';
 
 export const SliderItem = ({ item }) => {
   const { id_name, name, mini_image, price } = item;
@@ -38,19 +39,6 @@ export const SliderItem = ({ item }) => {
   function toggleFavorite() {
     toggleLocalStorage(isFavorite, 'favorite', id_name);
     setIsFavorite((prev) => !prev);
-  }
-
-  function toggleLocalStorage(status, field, id) {
-    if (status) {
-      const newArray = JSON.parse(localStorage.getItem(field)).filter(
-        (el) => el !== id,
-      );
-      localStorage.setItem(field, JSON.stringify(newArray));
-      return;
-    }
-    const newArray = JSON.parse(localStorage.getItem(field));
-    newArray.push(id);
-    localStorage.setItem(field, JSON.stringify(newArray));
   }
 
   return (

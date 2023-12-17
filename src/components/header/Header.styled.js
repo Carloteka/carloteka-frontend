@@ -87,6 +87,7 @@ export const Actions = styled.div`
     fill: #101010;
   }
   @media screen and (min-width: 1440px) {
+    justify-content: flex-end;
     width: 368px;
   }
 `;

@@ -4,12 +4,8 @@ import { PopularGoods } from 'src/components/popularGoods';
 import { useState, useEffect } from 'react';
 import { fetchCategories } from 'src/api/api';
 import categoryData from 'src/mockdata/categories.json';
-import {
-  LimiterConatiner,
-  CategorySection,
-  List,
-  Category,
-} from './Home.styled';
+import { CategorySection, List, Category } from './Home.styled';
+import { ContainerLimiter } from 'src/components/containerLimiter/ContainerLimiter';
 
 const Home = () => {
   const [categories, setCategories] = useState();
@@ -32,7 +28,7 @@ const Home = () => {
   return (
     <>
       <Greeting />
-      <LimiterConatiner>
+      <ContainerLimiter paddingTopMob={'40px'} paddingTopDesc={'88px'}>
         <CategorySection>
           <List>
             {categories?.map((el) => (
@@ -44,7 +40,7 @@ const Home = () => {
         </CategorySection>
 
         <PopularGoods />
-      </LimiterConatiner>
+      </ContainerLimiter>
     </>
   );
 };

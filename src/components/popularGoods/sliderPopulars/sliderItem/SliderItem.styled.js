@@ -83,8 +83,6 @@ export const FlexContainer = styled.div`
 export const Star = styled.svg`
 width:16px;
 height:15px;
-${({ rate }) =>
-  rate
-    ? `fill:${rate};stroke:transparent`
-    : `fill:transparent; stroke:#5B5B59`}}  
+stroke:#5B5B59;
+fill: ${({ rate }) => (rate ? `#5B5B59` : `transparent`)}}  ;
 `;

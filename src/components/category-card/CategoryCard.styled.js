@@ -48,10 +48,6 @@ export const Title = styled.h2`
   position: relative;
   padding: 0 0 8px 0;
 
-  @media screen and (min-width: 1440px) {
-    padding: 0 32px 4px 0;
-  }
-
   &:after {
     content: '';
     position: absolute;
@@ -61,10 +57,14 @@ export const Title = styled.h2`
     background: #dad4c8;
     width: 91px;
     height: 2px;
-    @media screen and (min-width: 1440px) {
+  }
+
+  @media screen and (min-width: 1440px) {
+    padding: 0 32px 4px 0;
+    &:after {
       width: 192px;
       left: 0;
-      bottom: 0;
+      transform: translateX(0%);
     }
   }
 `;
