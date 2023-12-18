@@ -13,9 +13,22 @@ import {
 import sprite from '../../../images/sprite.svg';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { socialLinks } from 'src/socialLinks';
+import { socialLinks } from '../../../socialLinks';
 
-export const Menu = ({ onClickHandle }) => {
+type Categories = {
+  mini_image: string;
+  images: [{ image: string }];
+  name: string;
+  price: number;
+  id_name: string;
+  description: string;
+};
+
+interface MenuProps {
+  onClickHandle: (arg0: boolean) => void;
+}
+
+export const Menu = ({ onClickHandle }: MenuProps) => {
   let language: string | null = 'ukr';
   let currency: string | null = 'uah';
 
@@ -34,12 +47,11 @@ export const Menu = ({ onClickHandle }) => {
   const [isUkr, setIsUkr] = useState(language === 'ukr');
   const [isUah, setIsUah] = useState(currency === 'uah');
 
-  const tempString: string | [] | null = localStorage.getItem('categories');
-  const categories: [] | null = JSON.parse(tempString);
+  const tempString = localStorage.getItem('categories') as string;
+  const categories: Categories[] = JSON.parse(tempString);
 
-  const [showList, setShowList] = useState();
+  const [showList, setShowList] = useState<boolean>();
 
-  
   return (
     <MenuContainer>
       <CloseButton onClick={() => onClickHandle(false)}>

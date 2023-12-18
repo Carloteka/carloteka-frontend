@@ -2,11 +2,11 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const Search = styled.form`
- @media screen and (max-width: 1439.99px) {
+  @media screen and (max-width: 1439.99px) {
     order: 2;
     margin-right: 0;
     padding: 0 0 0 16px;
-    width:100%;
+    width: 100%;
     height: 25px;
     justify-content: space-between;
   }
@@ -16,16 +16,10 @@ export const Search = styled.form`
   height: 32px;
   display: flex;
   align-items: center;
-
-${({ query }) =>
-  query
-    ? `box-shadow: 1px 1px 7px 0 #c6b89e;
-    background: #fff`
-    : ``}} ;  
 `;
 
 export const Input = styled.input`
-  padding: 0 0 0 0px;
+  padding: 0;
   width: 240px;
   border: none;
   border-radius: 0;
@@ -68,7 +62,7 @@ export const SearchResultDiv = styled.div`
       margin: auto auto auto 8px;
       padding: 9px 0;
       width: 251px;
-      height: 64px;
+      height: 56px;
       justify-content: flex-start;
       color: inherit;
       word-wrap: break-word;
@@ -79,7 +73,7 @@ export const SearchResultDiv = styled.div`
       display: flex;
       align-items: center;
       padding: 2px 16px;
-      height: 64px;
+      height: 56px;
     }
   }
 

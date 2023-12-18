@@ -4,6 +4,7 @@
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable", "esnext"
 ],
+
     "module": "ESNext", "allowJs": true,
 
     "skipLibCheck": true,
@@ -27,6 +28,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src",
+    "types", "@types"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

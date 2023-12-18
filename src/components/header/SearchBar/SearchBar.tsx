@@ -8,13 +8,33 @@ import {
 import sprite from '../../../images/sprite.svg';
 import { useState, useEffect, useRef } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { fetchCategories, fetchPopularGoods } from 'src/api/api';
+import { fetchCategories, fetchPopularGoods } from '../../../api/api';
+
+type Good = {
+  images: [{ image: string }];
+  mini_image: string;
+  name: string;
+  price: number;
+  id_name: string;
+  quantity: number;
+};
+
+type Categories = {
+  mini_image: string;
+  images: [{ image: string }];
+  name: string;
+  price: number;
+  id_name: string;
+  description: string;
+};
 
 export const SearchBar = () => {
-  const [searchedGoods, setSearchedGoods] = useState([]);
-  const [searchedCategories, setSearchedCategories] = useState([]);
-  const [goods, setGoods] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [searchedGoods, setSearchedGoods] = useState<Good[]>([]);
+  const [searchedCategories, setSearchedCategories] = useState<Categories[]>(
+    [],
+  );
+  const [goods, setGoods] = useState<Good[]>([]);
+  const [categories, setCategories] = useState<Categories[]>([]);
   const isFirstRender = useRef(true);
   const inputRef = useRef(null);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -52,8 +72,9 @@ export const SearchBar = () => {
       return;
     }
 
-    function filtering(array) {
-      const filteredArray = array.filter((el) =>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    function filtering(array: Good[] | Categories[]): any[] {
+      const filteredArray = array.filter((el: Good | Categories) =>
         el.name.toUpperCase().includes(query.toUpperCase()),
       );
       return filteredArray.slice(0, 4);
@@ -63,15 +84,25 @@ export const SearchBar = () => {
     setSearchedCategories(filtering(categories));
   }, [goods, categories, query]);
 
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    const child = (e.target as HTMLInputElement).firstElementChild;
+    if (child instanceof HTMLInputElement) {
+      const value = child?.value;
 
-    setSearchParams('search', e.target.firstElementChild.value);
+      setSearchParams((params) => {
+        params.set('search', value);
+        return params;
+      });
+    }
+
+    // const child = target.firstElementChild;
   }
 
   function hideResults() {
     if (inputRef.current) {
-      inputRef.current.style.display = 'none';
+      const style = (inputRef.current as HTMLInputElement).style;
+      style.display = 'none';
     }
   }
 
@@ -80,15 +111,22 @@ export const SearchBar = () => {
       setTimeout(hideResults, 250);
     }
   };
-  const handleChangeInput = (value) => {
+  const handleChangeInput = (value: string) => {
     setSearchParams({ query: value });
     if (inputRef.current) {
-      inputRef.current.style.display = 'block';
+      const style = (inputRef.current as HTMLInputElement).style;
+      style.display = 'block';
     }
   };
 
   return (
-    <Search onSubmit={handleSubmit} $query={query}>
+    <Search
+      onSubmit={handleSubmit}
+      style={{
+        boxShadow: query ? '1px 1px 7px 0 #c6b89e' : '',
+        background: query ? '#fff' : '',
+      }}
+    >
       <Input
         type={'search'}
         name="query"
@@ -126,7 +164,7 @@ export const SearchBar = () => {
                     <h4>Категорії товарів</h4>
                     <ul>
                       {searchedCategories.map((el) => (
-                        <li key={el?.id}>
+                        <li key={el?.id_name}>
                           <img
                             src={
                               import.meta.env.PROD
@@ -148,7 +186,7 @@ export const SearchBar = () => {
                     <h4>Товари</h4>
                     <ul>
                       {searchedGoods.map((el) => (
-                        <li key={el?.id}>
+                        <li key={el?.id_name}>
                           <img
                             src={
                               import.meta.env.PROD

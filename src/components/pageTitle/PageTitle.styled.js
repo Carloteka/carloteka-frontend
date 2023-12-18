@@ -5,6 +5,8 @@ export const Wrapper = styled.div`
   height: 78px;
   display: flex;
   align-items: center;
+  justify-content: center;
+
   background-color: #dad4c8;
   @media screen and (min-width: 1440px) {
     height: 224px;

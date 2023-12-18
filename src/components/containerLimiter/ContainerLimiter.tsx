@@ -1,6 +1,29 @@
 import styled from 'styled-components';
 
-export const Limiter = styled.div`
+interface ContainerLimiterProps {
+  paddingTopMob: string;
+  paddingTopDesc: string;
+  children?: React.ReactNode;
+}
+
+type StyleProp = {
+  paddingmob?: string;
+  paddingdesc?: string;
+};
+
+export const ContainerLimiter = ({
+  paddingTopMob,
+  paddingTopDesc,
+  children,
+}: ContainerLimiterProps) => {
+  return (
+    <Limiter paddingmob={paddingTopMob} paddingdesc={paddingTopDesc}>
+      {children}
+    </Limiter>
+  );
+};
+
+export const Limiter = styled.div<StyleProp>`
   margin: 0 auto;
   padding: ${({ paddingmob }) => `${paddingmob} 0 74px`};
   width: 288px;
@@ -15,15 +38,3 @@ export const Limiter = styled.div`
     width: 1312px;
   }
 `;
-
-export const ContainerLimiter = ({
-  paddingTopMob,
-  paddingTopDesc,
-  children,
-}) => {
-  return (
-    <Limiter paddingmob={paddingTopMob} paddingdesc={paddingTopDesc}>
-      {children}
-    </Limiter>
-  );
-};

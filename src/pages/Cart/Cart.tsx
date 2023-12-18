@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { PageTitle } from 'src/components/pageTitle/PageTitle';
-import { ContainerLimiter } from 'src/components/containerLimiter/ContainerLimiter.tsx';
-import { ListHeader } from 'src/components/listHeader/ListHeader';
+import { PageTitle } from '../../components/pageTitle/PageTitle';
+import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
+import { ListHeader } from '../../components/listHeader/ListHeader';
 import {
   FavoritesBox,
   Card,
@@ -14,25 +14,33 @@ import {
   BuyBox,
   GoToPayment,
 } from './Cart.styled';
-import { CardForFavoritesAndCart } from 'src/components/cardForFavoritesAndCart/CardForFavoritesAndCart';
-import { toggleLocalStorage } from 'src/utils/toggleLocalStorage';
+import { CardForFavoritesAndCart } from '../../components/cardForFavoritesAndCart/CardForFavoritesAndCart';
+import { toggleLocalStorage } from '../../utils/toggleLocalStorage';
 import sprite from '../../images/sprite.svg';
+
+type Good = {
+  images: [{ image: string }];
+  name: string;
+  price: number;
+  id_name: string;
+  quantity: number;
+};
 
 const Cart = () => {
   let goodsInCart = [];
 
   if (localStorage.getItem('cart')) {
-    goodsInCart = JSON.parse(localStorage.getItem('cart'));
+    goodsInCart = JSON.parse(localStorage.getItem('cart') as string);
   }
 
-  let goods = [];
+  let goods: [] = [];
 
   if (localStorage.getItem('goods')) {
-    goods = JSON.parse(localStorage.getItem('goods'));
+    goods = JSON.parse(localStorage.getItem('goods') as string);
   }
 
-  let goodsInCartArray = goodsInCart.map((id) =>
-    goods.find((el) => el.id_name === id),
+  const goodsInCartArray = goodsInCart.map((id: string) =>
+    goods.find((el: { id_name: string }) => el.id_name === id),
   );
 
   const [inCart, setInCart] = useState(goodsInCartArray);
@@ -42,22 +50,27 @@ const Cart = () => {
     setInCart([]);
   }
 
-  function delFromCart(id) {
-    const newArray = goodsInCartArray.filter((el) => el.id_name !== id);
+  function delFromCart(id: string) {
+    const newArray = goodsInCartArray.filter(
+      (el: { id_name: string }) => el.id_name !== id,
+    );
     toggleLocalStorage(true, 'cart', id);
     setInCart(newArray);
   }
 
   function getTotalPrice() {
     return inCart.reduce(
-      (total, el) => el.price * (el?.quantity ? el.quantity : 1) + total,
+      (total: number, el: { quantity: number; price: number }) =>
+        el.price * (el?.quantity ? el.quantity : 1) + total,
       0,
     );
   }
 
-  function increment(quantity, id) {
+  function increment(quantity: number, id: string) {
     const newArray = [...inCart];
-    newArray[inCart.findIndex((el) => el.id_name === id)].quantity = quantity;
+    newArray[
+      inCart.findIndex((el: { id_name: string }) => el.id_name === id)
+    ].quantity = quantity;
     localStorage.setItem('invoice', JSON.stringify(newArray));
     setInCart(newArray);
   }
@@ -69,7 +82,7 @@ const Cart = () => {
         <ListHeader />
         <FavoritesBox>
           <ul>
-            {inCart.map((el) => (
+            {inCart.map((el: Good) => (
               <Card key={el.id_name}>
                 <CardForFavoritesAndCart
                   good={el}

@@ -55,6 +55,7 @@ button {
   font-weight: 500;
 }
 img {
+  object-fit: cover;
   display: block;
   max-width: 100%;
   height: auto;

@@ -33,20 +33,19 @@ export const PopularGoods = () => {
     arrayToRender = arrayPopulars.slice(0, width);
   }
 
-  function sliderHandler(payload: 1 | -1) {
+  function sliderHandler(payload: number) {
     if (arrayPopulars.length <= width) {
       return;
     }
     const newArray = [...arrayPopulars];
 
     if (payload === -1) {
-      const lastEl: Popular = newArray.pop();
+      const lastEl: Popular = newArray.pop() as Popular;
       newArray.unshift(lastEl);
     }
 
     if (payload === 1) {
-      const firstEl: Popular = newArray.shift();
-
+      const firstEl: Popular = newArray.shift() as Popular;
       newArray.push(firstEl);
     }
 

@@ -7,28 +7,39 @@ import {
   Star,
 } from './SliderItem.styled';
 import sprite from '../../../../images/sprite.svg';
-import { toggleLocalStorage } from 'src/utils/toggleLocalStorage';
+import { toggleLocalStorage } from '../../../../utils/toggleLocalStorage';
 
-export const SliderItem = ({ item }) => {
+type Popular = {
+  mini_image: string;
+  name: string;
+  price: number;
+  id_name: string;
+};
+
+interface SliderItemProps {
+  item: Popular;
+}
+
+export const SliderItem = ({ item }: SliderItemProps) => {
   const { id_name, name, mini_image, price } = item;
 
-  let cartArray = [];
-  let favoriteArray = [];
+  let cartArray: string[] = [];
+  let favoriteArray: string[] = [];
 
   if (localStorage.getItem('cart')) {
-    cartArray = JSON.parse(localStorage.getItem('cart'));
+    cartArray = JSON.parse(localStorage.getItem('cart') as string);
   } else {
     localStorage.setItem('cart', JSON.stringify(cartArray));
   }
 
   if (localStorage.getItem('favorite')) {
-    favoriteArray = JSON.parse(localStorage.getItem('favorite'));
+    favoriteArray = JSON.parse(localStorage.getItem('favorite') as string);
   } else {
     localStorage.setItem('favorite', JSON.stringify(favoriteArray));
   }
 
-  const isInCart = cartArray.includes(id_name);
-  const isInFavorite = favoriteArray.includes(id_name);
+  const isInCart: boolean = cartArray.includes(id_name);
+  const isInFavorite: boolean = favoriteArray.includes(id_name);
   const [inCart, setInCart] = useState(isInCart);
   const [isFavorite, setIsFavorite] = useState(isInFavorite);
 

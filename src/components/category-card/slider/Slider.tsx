@@ -1,10 +1,14 @@
 import { SliderContainer, ChevronIcon } from './Slider.styled';
 import sprite from '../../../images/sprite.svg';
 
-// type Props = { category: {images: []}  }
-// type Image = { images: string }
+type Image = { image: string };
 
-export const Slider = ({ arrayToRender, sliderHandler }) => {
+interface SliderProps {
+  arrayToRender: Image[];
+  sliderHandler: (payload: number) => void;
+}
+
+export const Slider = ({ arrayToRender, sliderHandler }: SliderProps) => {
   // цей метод повинен мати захист коли довжина масиву менша за ширину слайдеру
   // function sliderHandler(payload) {
   // setArray(((width+payload)>array.length) || index+payload<0 ? array : arrayToRender.slice(index+payload, width+payload));
@@ -41,7 +45,7 @@ export const Slider = ({ arrayToRender, sliderHandler }) => {
       <button
         className="btn_right"
         type="button"
-        onClick={() => sliderHandler(+1)}
+        onClick={() => sliderHandler(1)}
       >
         <ChevronIcon
           style={{ transform: 'rotate(180deg)' }}

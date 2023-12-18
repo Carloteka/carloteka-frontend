@@ -7,7 +7,22 @@ import {
 import sprite from '../../../images/sprite.svg';
 import { SliderItem } from './sliderItem/SliderItem';
 
-export const SliderPopulars = ({ arrayToRender, sliderHandler }) => {
+type Popular = {
+  mini_image: string;
+  name: string;
+  price: number;
+  id_name: string;
+};
+
+interface SliderPopularsProps {
+  arrayToRender: Popular[];
+  sliderHandler: (payload: number) => void;
+}
+
+export const SliderPopulars = ({
+  arrayToRender,
+  sliderHandler,
+}: SliderPopularsProps) => {
   return (
     <SliderContainer>
       <Chevron
@@ -31,7 +46,7 @@ export const SliderPopulars = ({ arrayToRender, sliderHandler }) => {
       <Chevron
         className="btn_right"
         type="button"
-        onClick={() => sliderHandler(+1)}
+        onClick={() => sliderHandler(1)}
       >
         <ChevronIcon
           style={{ transform: 'rotate(180deg)' }}

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   FlexContainer,
   Img,
@@ -13,14 +12,32 @@ import {
   BuyBtn,
 } from './CardForFavoritesAndCart.styled';
 import sprite from '../../images/sprite.svg';
-import { toggleLocalStorage } from 'src/utils/toggleLocalStorage';
+import { toggleLocalStorage } from '../../utils/toggleLocalStorage';
 
-export const CardForFavoritesAndCart = ({ good, onClickDelete, increment }) => {
+type Good = {
+  images: [{ image: string }];
+  name: string;
+  price: number;
+  id_name: string;
+  quantity: number;
+};
+
+interface CardForFavoritesAndCartProps {
+  good: Good;
+  onClickDelete: (id: string) => void;
+  increment: (quantity: number, id: string) => void;
+}
+
+export const CardForFavoritesAndCart = ({
+  good,
+  onClickDelete,
+  increment,
+}: CardForFavoritesAndCartProps) => {
   const { images, name, price, id_name } = good;
 
-  let quantity = good?.quantity ? good.quantity : 1;
+  const quantity = good?.quantity ? good.quantity : 1;
 
-  function incrementHandle(payload, id) {
+  function incrementHandle(payload: number, id: string) {
     if (payload + quantity === 0) {
       return;
     }
@@ -66,7 +83,7 @@ export const CardForFavoritesAndCart = ({ good, onClickDelete, increment }) => {
               --
             </button>
             <span>{quantity}</span>
-            <button type="button" onClick={() => incrementHandle(+1, id_name)}>
+            <button type="button" onClick={() => incrementHandle(1, id_name)}>
               +
             </button>
           </IncrementBox>
