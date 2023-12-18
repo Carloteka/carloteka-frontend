@@ -16,7 +16,7 @@ export const Slider = ({ arrayToRender, sliderHandler }) => {
         type="button"
         onClick={() => sliderHandler(-1)}
       >
-        <ChevronIcon left={true} width={7.5} height={11}>
+        <ChevronIcon $left={+true} width={7.5} height={11}>
           <use href={`${sprite}#chevronCategory`} />
         </ChevronIcon>
       </button>
@@ -24,7 +24,11 @@ export const Slider = ({ arrayToRender, sliderHandler }) => {
         {arrayToRender.map((el, index) => (
           <li key={index}>
             <img
-              src={`http://localhost:8000/${el.image}`}
+              src={
+                import.meta.env.PROD
+                  ? `/${el.image}`
+                  : `http://localhost:8000/${el.image}`
+              }
               alt="img першої категорії"
               width={640}
               height={512}
@@ -39,7 +43,7 @@ export const Slider = ({ arrayToRender, sliderHandler }) => {
         type="button"
         onClick={() => sliderHandler(+1)}
       >
-        <ChevronIcon left={false} width={7.5} height={11}>
+        <ChevronIcon $left={+false} width={7.5} height={11}>
           <use href={`${sprite}#chevronCategory`} />
         </ChevronIcon>
       </button>

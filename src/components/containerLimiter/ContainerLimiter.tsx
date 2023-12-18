@@ -22,7 +22,7 @@ export const ContainerLimiter = ({
   children,
 }) => {
   return (
-    <Limiter paddingmob={paddingTopMob} paddingdesc={paddingTopDesc}>
+    <Limiter $paddingmob={paddingTopMob} $paddingdesc={paddingTopDesc}>
       {children}
     </Limiter>
   );

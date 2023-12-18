@@ -62,8 +62,6 @@ const Cart = () => {
     setInCart(newArray);
   }
 
-  console.log(inCart);
-
   return (
     <>
       <PageTitle>Кошик</PageTitle>

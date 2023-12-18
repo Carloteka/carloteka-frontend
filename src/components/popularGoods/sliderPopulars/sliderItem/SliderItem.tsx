@@ -11,7 +11,7 @@ import { toggleLocalStorage } from 'src/utils/toggleLocalStorage';
 
 export const SliderItem = ({ item }) => {
   const { id_name, name, mini_image, price } = item;
-  // console.log(item);
+
   let cartArray = [];
   let favoriteArray = [];
 
@@ -45,14 +45,14 @@ export const SliderItem = ({ item }) => {
     <>
       <ThumbPhoto>
         <div>
-          <Button type="button" press={inCart} onClick={() => toggleCart()}>
+          <Button type="button" $press={+inCart} onClick={() => toggleCart()}>
             <svg>
               <use href={`${sprite}#cart`} />
             </svg>
           </Button>
           <Button
             type="button"
-            press={isFavorite}
+            $press={+isFavorite}
             onClick={() => toggleFavorite()}
           >
             <svg>
@@ -61,7 +61,11 @@ export const SliderItem = ({ item }) => {
           </Button>
         </div>
         <img
-          src={`http://localhost:8000/${mini_image}`}
+          src={
+            import.meta.env.PROD
+              ? `/${mini_image}`
+              : `http://localhost:8000/${mini_image}`
+          }
           alt="img першої категорії"
           width={304}
           height={304}
@@ -73,7 +77,7 @@ export const SliderItem = ({ item }) => {
           <ul>
             {[0, 1, 2, 3, 4].map((index) => (
               <li key={index}>
-                <Star rate={index <= 3}>
+                <Star $rate={+(index <= 3)}>
                   <use href={`${sprite}#star`} />
                 </Star>
               </li>

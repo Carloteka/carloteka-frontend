@@ -30,7 +30,11 @@ export const CardForFavoritesAndCart = ({ good, onClickDelete, increment }) => {
   return (
     <>
       <Img
-        src={`http://localhost:8000/${images[0].image}`}
+        src={
+          import.meta.env.PROD
+            ? `/${images[0].image}`
+            : `http://localhost:8000/${images[0].image}`
+        }
         width={60}
         height={82}
         alt={name}
@@ -42,7 +46,7 @@ export const CardForFavoritesAndCart = ({ good, onClickDelete, increment }) => {
             <ul>
               {[0, 1, 2, 3, 4].map((index) => (
                 <li key={index}>
-                  <Star rate={index <= 3}>
+                  <Star $rate={+(index <= 3)}>
                     <use href={`${sprite}#star`} />
                   </Star>
                 </li>

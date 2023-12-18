@@ -34,7 +34,6 @@ export const SearchBar = () => {
     async function getCategories() {
       try {
         const data = await fetchCategories();
-        console.log(data);
         localStorage.setItem('categories', JSON.stringify(data));
         setCategories(data);
       } catch (error) {
@@ -70,10 +69,6 @@ export const SearchBar = () => {
     setSearchParams('search', e.target.firstElementChild.value);
   }
 
-  useEffect(() => {
-    console.log(inputRef);
-  }, [inputRef]);
-
   function hideResults() {
     if (inputRef.current) {
       inputRef.current.style.display = 'none';
@@ -93,7 +88,7 @@ export const SearchBar = () => {
   };
 
   return (
-    <Search onSubmit={handleSubmit} query={query}>
+    <Search onSubmit={handleSubmit} $query={query}>
       <Input
         type={'search'}
         name="query"
@@ -133,7 +128,11 @@ export const SearchBar = () => {
                       {searchedCategories.map((el) => (
                         <li key={el?.id}>
                           <img
-                            src={`http://localhost:8000/${el.images[0].image}`}
+                            src={
+                              import.meta.env.PROD
+                                ? `/${el.images[0].image}`
+                                : `http://localhost:8000/${el.images[0].image}`
+                            }
                             width={47}
                             height={56}
                             alt={el.name}
@@ -151,7 +150,11 @@ export const SearchBar = () => {
                       {searchedGoods.map((el) => (
                         <li key={el?.id}>
                           <img
-                            src={`http://localhost:8000/${el.mini_image}`}
+                            src={
+                              import.meta.env.PROD
+                                ? `/${el.mini_image}`
+                                : `http://localhost:8000/${el.mini_image}`
+                            }
                             width={40}
                             height={48}
                             alt={el.name}

@@ -38,7 +38,8 @@ export const Menu = ({ onClickHandle }) => {
   const categories: [] | null = JSON.parse(tempString);
 
   const [showList, setShowList] = useState();
-  console.log(categories);
+
+  
   return (
     <MenuContainer>
       <CloseButton onClick={() => onClickHandle(false)}>
