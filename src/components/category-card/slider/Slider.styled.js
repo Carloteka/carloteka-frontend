@@ -49,6 +49,5 @@ export const SliderContainer = styled.div`
 `;
 
 export const ChevronIcon = styled.svg`
-fill:#101010;
-${({ left }) => (left ? `` : `transform: rotate(180deg)`)}} 
+  fill: #101010;
 `;

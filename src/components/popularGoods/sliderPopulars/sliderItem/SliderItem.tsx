@@ -45,17 +45,21 @@ export const SliderItem = ({ item }) => {
     <>
       <ThumbPhoto>
         <div>
-          <Button type="button" $press={+inCart} onClick={() => toggleCart()}>
+          <Button
+            type="button"
+            style={{ backgroundColor: inCart ? '#2D3F24' : 'white' }}
+            onClick={() => toggleCart()}
+          >
             <svg>
               <use href={`${sprite}#cart`} />
             </svg>
           </Button>
           <Button
             type="button"
-            $press={+isFavorite}
+            style={{ backgroundColor: isFavorite ? '#2D3F24' : 'white' }}
             onClick={() => toggleFavorite()}
           >
-            <svg>
+            <svg style={{ stroke: isFavorite ? 'white' : '#101010' }}>
               <use href={`${sprite}#favorite`} />
             </svg>
           </Button>
@@ -77,7 +81,7 @@ export const SliderItem = ({ item }) => {
           <ul>
             {[0, 1, 2, 3, 4].map((index) => (
               <li key={index}>
-                <Star $rate={+(index <= 3)}>
+                <Star style={{ fill: index <= 3 ? '#5B5B59' : 'transparent' }}>
                   <use href={`${sprite}#star`} />
                 </Star>
               </li>

@@ -118,10 +118,9 @@ export const TotalPrice = styled.p`
 `;
 
 export const Star = styled.svg`
-width:16px;
-height:15px;
-stroke:#5B5B59;
-fill: ${({ rate }) => (rate ? `#5B5B59` : `transparent`)}}  ;
+  width: 16px;
+  height: 15px;
+  stroke: #5b5b59;
 `;
 
 export const BuyBtnDesc = styled.button`

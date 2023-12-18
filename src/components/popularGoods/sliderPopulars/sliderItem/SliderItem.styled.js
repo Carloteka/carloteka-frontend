@@ -34,12 +34,10 @@ export const Button = styled.button`
   width: 50px;
   height: 50px;
   display: flex;
-  background-color: ${({ press }) => (press ? `#2D3F24` : `white`)};
 
   svg {
     width: 24px;
     height: 22px;
-    stroke: ${({ press }) => (press ? `white` : `#101010`)};
   }
 `;
 
@@ -81,8 +79,7 @@ export const FlexContainer = styled.div`
 `;
 
 export const Star = styled.svg`
-width:16px;
-height:15px;
-stroke:#5B5B59;
-fill: ${({ rate }) => (rate ? `#5B5B59` : `transparent`)}}  ;
+  width: 16px;
+  height: 15px;
+  stroke: #5b5b59;
 `;
