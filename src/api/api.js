@@ -28,7 +28,7 @@ export const fetchAllGoods = async () => {
   try {
     console.log('fetchAllGoods');
     const response = await axios.get(
-      '/shop/items/?page-size=100&category-id-name=ID_20231226194706934965_1&category-id-name=ID_20231226194706964634_3',
+      '/shop/items/?page-size=100&category-id-name=ID_20231227171054457029_0&category-id-name=ID_20231227171054476111_1',
     );
     const arrayData = response.data.results;
     console.log(response);
@@ -44,8 +44,7 @@ export const fetchFilteredGoods = async () => {
       'page-size': 100,
       backorder: true,
       'specific-order': true,
-      'category-id-name':
-        'ID_20231226194706934965_1, ID_20231227171054457029_0',
+      'category-id-name': 'ID_20231227171054457029_0,ID_20231227171054476111_1',
       'sort-by': 'price-down',
       'in-stock': true,
     });
