@@ -1,0 +1,113 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  display: flex;
+  justify-content: center;
+  font-family: 'Rubik', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: calc(25 / 18);
+  letter-spacing: 0;
+  color: #101010;
+}
+
+#root {
+  width: 100%;
+}
+
+main {
+  background-color: white;
+}
+
+ul {
+  list-style: none;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+a:visited {
+  color: inherit;
+}
+a,
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: inherit;
+  background-color: inherit;
+  border: none;
+  cursor: pointer;
+}
+button {
+  font-size: 19px;
+  line-height: 1;
+  font-weight: 500;
+}
+img {
+  object-fit: cover;
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+h1 {
+  font-weight: 600;
+  font-size: 35px;
+  line-height: calc(46 / 35);
+
+  @media screen and (min-width: 1440px) {
+    font-size: 55px;
+    line-height: calc(63 / 55);
+  }
+}
+
+h2 {
+  font-weight: 600;
+  font-size: 23px;
+  line-height: calc(34 / 23);
+  @media screen and (min-width: 1440px) {
+    font-size: 36px;
+    line-height: calc(43 / 36);
+  }
+}
+
+h3,
+legend {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: calc(27 / 20);
+  @media screen and (min-width: 1440px) {
+    font-size: 24px;
+    line-height: calc(31 / 24);
+  }
+}
+
+h4 {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: calc(23 / 18);
+}
+
+input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  border: none;
+}
+address {
+  font-style: inherit;
+}
+fieldset {
+  border: none;
+}

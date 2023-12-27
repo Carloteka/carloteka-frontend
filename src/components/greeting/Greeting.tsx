@@ -1,20 +1,26 @@
-import React from 'react'
 import {
   GreetingContainer,
   Box,
-  Text,
   Title,
-  Description,
-  Button,
   Img,
-} from './Greeting.styled'
+  Description,
+  ImgAside,
+  Button,
+} from './Greeting.styled';
+import sprite from '../../images/sprite.svg';
 
 export const Greeting = () => {
   return (
     <GreetingContainer>
       <Box>
-        <Text>
+        <div>
           <Title>Дерев’яні вироби на будь-який смак</Title>
+          <Img
+            src="img/Shield_and_sword.png"
+            alt="Shield and sword"
+            width={640}
+            height={646}
+          />
           <Description>
             Вітаємо в інтернет-магазині КАРЛОТЕКА. Ми виготовляємо якісні
             дерев'яні вироби. У нас ви можете купити або замовити іграшкові
@@ -22,15 +28,20 @@ export const Greeting = () => {
             піци, посуд для суші, підноси для подачі кави) для ресторанів, кафе,
             барів, магазинів тощо.
           </Description>
-          <Button>
-            <button type="submit">Детальніше</button>
-            <img src="img/arrow-right.png" alt="arrow right" />
+          <Button type="submit">
+            Детальніше
+            <svg width={16} height={16}>
+              <use href={`${sprite}#arrow-right`} />
+            </svg>
           </Button>
-        </Text>
-        <Img>
-          <img src="img/Shield_and_sword.png" alt="Shield and sword" />
-        </Img>
+        </div>
+        <ImgAside
+          src="img/Shield_and_sword.png"
+          alt="Shield and sword"
+          width={640}
+          height={646}
+        />
       </Box>
     </GreetingContainer>
-  )
-}
+  );
+};
