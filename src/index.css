@@ -82,7 +82,8 @@ h2 {
   }
 }
 
-h3 {
+h3,
+legend {
   font-weight: 700;
   font-size: 20px;
   line-height: calc(27 / 20);
@@ -106,4 +107,7 @@ input {
 }
 address {
   font-style: inherit;
+}
+fieldset {
+  border: none;
 }

@@ -17,7 +17,7 @@ export const fetchCategories = async () => {
 export const fetchPopularGoods = async () => {
   try {
     const response = await axios.get('/shop/items/');
-    const arrayData = response.data;
+    const arrayData = response.data.results;
     return arrayData;
   } catch (error) {
     console.log(error);

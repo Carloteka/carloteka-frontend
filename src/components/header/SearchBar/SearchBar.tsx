@@ -1,6 +1,7 @@
 import {
   Search,
   Input,
+  Backdrop,
   SearchResultDiv,
   GoodListResult,
   Button,
@@ -29,6 +30,7 @@ type Categories = {
 };
 
 export const SearchBar = () => {
+  const [showResult, setShowResult] = useState<boolean>(false);
   const [searchedGoods, setSearchedGoods] = useState<Good[]>([]);
   const [searchedCategories, setSearchedCategories] = useState<Categories[]>(
     [],
@@ -36,7 +38,6 @@ export const SearchBar = () => {
   const [goods, setGoods] = useState<Good[]>([]);
   const [categories, setCategories] = useState<Categories[]>([]);
   const isFirstRender = useRef(true);
-  const inputRef = useRef(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query') ?? '';
 
@@ -44,6 +45,7 @@ export const SearchBar = () => {
     async function getAllGoods() {
       try {
         const data = await fetchPopularGoods();
+        console.log(data);
         localStorage.setItem('goods', JSON.stringify(data));
         setGoods(data);
       } catch (error) {
@@ -74,6 +76,7 @@ export const SearchBar = () => {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function filtering(array: Good[] | Categories[]): any[] {
+      console.log(array);
       const filteredArray = array.filter((el: Good | Categories) =>
         el.name.toUpperCase().includes(query.toUpperCase()),
       );
@@ -86,37 +89,11 @@ export const SearchBar = () => {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const child = (e.target as HTMLInputElement).firstElementChild;
-    if (child instanceof HTMLInputElement) {
-      const value = child?.value;
-
-      setSearchParams((params) => {
-        params.set('search', value);
-        return params;
-      });
-    }
-
-    // const child = target.firstElementChild;
   }
 
-  function hideResults() {
-    if (inputRef.current) {
-      const style = (inputRef.current as HTMLInputElement).style;
-      style.display = 'none';
-    }
-  }
-
-  const handleBlur = () => {
-    if (inputRef.current) {
-      setTimeout(hideResults, 250);
-    }
-  };
   const handleChangeInput = (value: string) => {
     setSearchParams({ query: value });
-    if (inputRef.current) {
-      const style = (inputRef.current as HTMLInputElement).style;
-      style.display = 'block';
-    }
+    setShowResult(true);
   };
 
   return (
@@ -133,7 +110,6 @@ export const SearchBar = () => {
         value={query}
         placeholder="Пошук товарів"
         onChange={(e) => handleChangeInput(e.target.value)}
-        onBlur={() => handleBlur()}
       />
       <button
         type="submit"
@@ -145,74 +121,96 @@ export const SearchBar = () => {
           <use href={`${sprite}#search`} />
         </svg>
       </button>
-      {query && (
-        <SearchResultDiv ref={inputRef}>
-          {!(searchedGoods.length > 0) && !(searchedCategories.length > 0) ? (
-            <>
-              <p>нічого не знайдено</p>
-              <div>
-                <Button title="Show catalog" to={'/catalog'}>
-                  ПОДИВИТИСЬ КАТАЛОГ
-                </Button>
-              </div>
-            </>
-          ) : (
-            <>
-              <ul>
-                {searchedCategories.length > 0 && (
-                  <li>
-                    <h4>Категорії товарів</h4>
-                    <ul>
-                      {searchedCategories.map((el) => (
-                        <li key={el?.id_name}>
-                          <img
-                            src={
-                              import.meta.env.PROD
-                                ? `/${el.images[0].image}`
-                                : `http://localhost:8000/${el.images[0].image}`
-                            }
-                            width={47}
-                            height={56}
-                            alt={el.name}
-                          />
-                          <Link to={`/catalog?=${query}`}>{el?.name}</Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
-                )}
-                {searchedGoods.length > 0 && (
-                  <GoodListResult>
-                    <h4>Товари</h4>
-                    <ul>
-                      {searchedGoods.map((el) => (
-                        <li key={el?.id_name}>
-                          <img
-                            src={
-                              import.meta.env.PROD
-                                ? `/${el.mini_image}`
-                                : `http://localhost:8000/${el.mini_image}`
-                            }
-                            width={40}
-                            height={48}
-                            alt={el.name}
-                          />
-                          <Link to={`/catalog?=${query}`}>{el?.name}</Link>
-                          <span>₴ {el?.price}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </GoodListResult>
-                )}
-              </ul>
-              <div>
-                <Button title="Show all results" to={`/catalog?=${query}`}>
-                  Всі результати
-                </Button>
-              </div>
-            </>
-          )}
-        </SearchResultDiv>
+      {showResult && query && (
+        <>
+          <Backdrop
+            onClick={() => {
+              console.log('click');
+              setShowResult(false);
+            }}
+          ></Backdrop>
+          <SearchResultDiv>
+            {!(searchedGoods.length > 0) && !(searchedCategories.length > 0) ? (
+              <>
+                <p>нічого не знайдено</p>
+                <div>
+                  <Button title="Show catalog" to={'/catalog'}>
+                    ПОДИВИТИСЬ КАТАЛОГ
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <>
+                <ul>
+                  {searchedCategories.length > 0 && (
+                    <li>
+                      <h4>Категорії товарів</h4>
+                      <ul>
+                        {searchedCategories.map((el) => (
+                          <li key={el?.id_name}>
+                            <img
+                              src={
+                                import.meta.env.PROD
+                                  ? `/${el.images[0].image}`
+                                  : `http://localhost:8000/${el.images[0].image}`
+                              }
+                              width={47}
+                              height={56}
+                              alt={el.name}
+                            />
+                            <Link
+                              to={`/catalog?query=${query}`}
+                              onClick={() => setShowResult(false)}
+                            >
+                              {el?.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+                  )}
+                  {searchedGoods.length > 0 && (
+                    <GoodListResult>
+                      <h4>Товари</h4>
+                      <ul>
+                        {searchedGoods.map((el) => (
+                          <li key={el?.id_name}>
+                            <img
+                              src={
+                                import.meta.env.PROD
+                                  ? `/${el.mini_image}`
+                                  : `http://localhost:8000/${el.mini_image}`
+                              }
+                              width={40}
+                              height={48}
+                              alt={el.name}
+                            />
+                            <Link
+                              to={`/catalog?query=${query}`}
+                              onClick={() => setShowResult(false)}
+                            >
+                              {el?.name}
+                            </Link>
+                            <span>₴ {el?.price}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </GoodListResult>
+                  )}
+                </ul>
+                <div>
+                  <Button
+                    title="Show all results"
+                    to={`/catalog?query=${query}`}
+                    onClick={() => setShowResult(false)}
+                  >
+                    Всі результати
+                  </Button>
+                </div>
+              </>
+            )}
+          </SearchResultDiv>
+        </>
       )}
     </Search>
   );

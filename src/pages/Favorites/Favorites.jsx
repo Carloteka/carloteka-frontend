@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { PageTitle } from 'src/components/pageTitle/PageTitle';
 import { ContainerLimiter } from 'src/components/containerLimiter/ContainerLimiter.tsx';
 import { ListHeader } from 'src/components/listHeader/ListHeader';
@@ -27,10 +27,12 @@ const Favorites = () => {
   }
 
   let favoriteGoodsArray = favoritesIds.map((id) =>
-    goods.find((el) => el.id_name === id),
+    goods.filter((el) => el.id_name === id),
   );
 
-  const [favorites, setFavorites] = useState(favoriteGoodsArray);
+  const [favorites, setFavorites] = useState(
+    favoriteGoodsArray.filter((el) => el.length !== 0),
+  );
 
   function clearFavorites() {
     localStorage.favorite = [];
