@@ -21,21 +21,30 @@ const Catalog = () => {
   const isFirst = useRef(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query');
-  const [priceValue, setPriceValue] = useState(4000);
-
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const [rotate, setRotate] = useState(false);
 
   const params = useMemo(
     () => Object.fromEntries([...searchParams]),
     [searchParams],
   );
 
+  const [priceValue, setPriceValue] = useState(
+    () => getPriceValue('price-to') || 4000,
+  );
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const [rotate, setRotate] = useState(false);
+
   function isChecked(field, value) {
-    let temp = params[field];
+    const temp = params[field];
 
     return temp && temp.includes(value) ? true : false;
+  }
+
+  function getPriceValue(field) {
+    const temp = params[field];
+
+    return temp ? temp : null;
   }
 
   // let goods = [];
@@ -86,7 +95,7 @@ const Catalog = () => {
     if (!catalog || catalog?.length === 0) {
       return;
     }
-    const quantity = catalog.filter((el) => el.in_stock > 0);
+    const quantity = catalog.filter((el) => el.in_stock === 1);
     return quantity.length;
   }
 
@@ -94,7 +103,7 @@ const Catalog = () => {
     if (catalog === undefined) {
       return;
     }
-    const quantity = catalog.filter((el) => el.to_order > 0);
+    const quantity = catalog.filter((el) => el.in_stock === 3);
     return quantity.length;
   }
 
@@ -120,13 +129,19 @@ const Catalog = () => {
     return quantity.length;
   }
 
-  function priceRangeHandler(value) {
-    setPriceValue(value);
-  }
-
   function onChangeHandler(field, value) {
     let newparams = {};
     let temp = params[field];
+
+    if (field === 'price-from' || field === 'price-to') {
+      newparams = {
+        ...params,
+        [field]: value,
+      };
+
+      setSearchParams(newparams);
+      return;
+    }
 
     if (temp && temp.includes(value)) {
       const t = temp.replace(`&${field}=${value}`, '').replace(value, '');
@@ -214,7 +229,7 @@ const Catalog = () => {
                     checked={isChecked('in-stock', 'True')}
                     onChange={() => onChangeHandler('in-stock', 'True')}
                   />
-                  В наявності ({getGoodsInStock()} 17)
+                  В наявності ({getGoodsInStock()})
                 </label>
 
                 <label>
@@ -225,7 +240,7 @@ const Catalog = () => {
                     checked={isChecked('specific-order', 'True')}
                     onChange={() => onChangeHandler('specific-order', 'True')}
                   />
-                  Під замовлення ({getGoodsToOrder()} 3)
+                  Під замовлення ({getGoodsToOrder()} )
                 </label>
               </fieldset>
 
@@ -258,9 +273,12 @@ const Catalog = () => {
                 <label id="price-range">
                   <input
                     type="range"
-                    name="price"
-                    onChange={(e) => priceRangeHandler(e.target.value)}
+                    name="priceTo"
                     value={priceValue}
+                    onChange={(e) => {
+                      setPriceValue(e.target.value);
+                      onChangeHandler('price-to', e.target.value);
+                    }}
                     min={0}
                     max={10000}
                   />
@@ -269,7 +287,11 @@ const Catalog = () => {
                   <label>
                     <input
                       type="number"
-                      name="priceFrom"
+                      name="price-from"
+                      value={getPriceValue('price-from') || 0}
+                      onChange={(e) => {
+                        onChangeHandler('price-from', e.target.value);
+                      }}
                       placeholder="0"
                       min="0"
                       max="10000"
@@ -278,7 +300,12 @@ const Catalog = () => {
                   <label>
                     <input
                       type="number"
-                      name="priceTo"
+                      name="price-to"
+                      value={getPriceValue('price-to') || priceValue}
+                      onChange={(e) => {
+                        setPriceValue(e.target.value);
+                        onChangeHandler('price-to', e.target.value);
+                      }}
                       placeholder="4000"
                       min="0"
                       max="10000"
