@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { PageTitle } from 'src/components/pageTitle/PageTitle';
 import { ContainerLimiter } from 'src/components/containerLimiter/ContainerLimiter.tsx';
@@ -18,6 +18,7 @@ import sprite from '../../images/sprite.svg';
 import { fetchAllGoods, fetchFilteredGoods } from '../../api/api';
 
 const Catalog = () => {
+  const isFirst = useRef(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query');
   const [priceValue, setPriceValue] = useState(4000);
@@ -70,8 +71,16 @@ const Catalog = () => {
         console.log(error);
       }
     }
-    getAllGoods();
-  }, [query]);
+
+    if (isFirst.current) {
+      isFirst.current = false;
+      if (Object.keys(params).length === 0) {
+        getAllGoods();
+        return;
+      }
+      handleSubmit();
+    }
+  }, [query, params, setSearchParams]);
 
   function getGoodsInStock() {
     if (!catalog || catalog?.length === 0) {
@@ -139,7 +148,7 @@ const Catalog = () => {
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e?.preventDefault();
     const s = location.search.replaceAll('%26', '&').replaceAll('%3D', '=');
 
     async function getFilteredCategories() {
