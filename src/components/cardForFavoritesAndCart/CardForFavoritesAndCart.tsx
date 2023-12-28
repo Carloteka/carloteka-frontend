@@ -43,7 +43,7 @@ export const CardForFavoritesAndCart = ({
     }
     increment(payload + quantity, id);
   }
-
+  console.log(good);
   return (
     <>
       <Img
