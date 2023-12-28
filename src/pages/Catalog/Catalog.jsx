@@ -31,9 +31,21 @@ const Catalog = () => {
     () => Object.fromEntries([...searchParams]),
     [searchParams],
   );
-  const { cat, stock, price } = params;
 
   console.log(params, '-------------params');
+
+  function isChecked(field, value) {
+    let temp = params[field];
+
+    // if (temp && temp.includes(value)) {
+    //  return true
+
+    // } else {
+    //  return false
+    // }
+
+    return temp && temp.includes(value) ? true : false;
+  }
 
   let goods = [];
   let categories = [];
@@ -184,8 +196,9 @@ const Catalog = () => {
                       type="checkbox"
                       name="cat"
                       value={el.id_name}
-                      onChange={(e) =>
-                        onChangeHandler('category-id-name', e.target.value)
+                      checked={isChecked('category-id-name', el.id_name)}
+                      onChange={() =>
+                        onChangeHandler('category-id-name', el.id_name)
                       }
                     />
                     {el.name}
@@ -201,9 +214,8 @@ const Catalog = () => {
                     type="checkbox"
                     name="stock"
                     value="True"
-                    onChange={(e) =>
-                      onChangeHandler('in-stock', e.target.value)
-                    }
+                    checked={isChecked('in-stock', 'True')}
+                    onChange={() => onChangeHandler('in-stock', 'True')}
                   />
                   В наявності ({getGoodsInStock()} 17)
                 </label>
@@ -213,9 +225,8 @@ const Catalog = () => {
                     type="checkbox"
                     name="stock"
                     value="True"
-                    onChange={(e) =>
-                      onChangeHandler('specific-order', e.target.value)
-                    }
+                    checked={isChecked('specific-order', 'True')}
+                    onChange={() => onChangeHandler('specific-order', 'True')}
                   />
                   Під замовлення ({getGoodsToOrder()} 3)
                 </label>

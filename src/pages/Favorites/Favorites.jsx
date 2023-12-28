@@ -33,7 +33,7 @@ const Favorites = () => {
   const [favorites, setFavorites] = useState(
     favoriteGoodsArray.filter((el) => el.length !== 0),
   );
-  console.log(favorites);
+
   function clearFavorites() {
     localStorage.favorite = [];
     setFavorites([]);
