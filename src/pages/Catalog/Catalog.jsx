@@ -15,6 +15,7 @@ import {
 } from './Catalog.styled';
 import { toggleLocalStorage } from 'src/utils/toggleLocalStorage';
 import sprite from '../../images/sprite.svg';
+import { fetchAllGoods, fetchFilteredGoods } from '../../api/api';
 
 const Catalog = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -24,22 +25,15 @@ const Catalog = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
 
+  const [rotate, setRotate] = useState(false);
+
   const params = useMemo(
     () => Object.fromEntries([...searchParams]),
     [searchParams],
   );
   const { cat, stock, price } = params;
 
-  useEffect(() => {
-    if (query) {
-      const newparams = {
-        ...params,
-        query: query,
-      };
-
-      setSearchParams(newparams);
-    }
-  }, [query]);
+  console.log(params, '-------------params');
 
   let goods = [];
   let categories = [];
@@ -52,30 +46,65 @@ const Catalog = () => {
     categories = JSON.parse(localStorage.getItem('categories'));
   }
 
-  const [catalog, setCatalog] = useState(goods);
+  const [catalog, setCatalog] = useState([]);
+  // const [catalog, setCatalog] = useState(goods);
   const [category, setCategory] = useState(categories);
 
-  function showPagination() {}
+  useEffect(() => {
+    if (query) {
+      const newparams = {
+        ...params,
+        query: query,
+      };
+
+      setSearchParams(newparams);
+    }
+
+    async function getAllGoods() {
+      try {
+        const data = await fetchAllGoods();
+        setCatalog(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getAllGoods();
+  }, [query]);
 
   function getGoodsInStock() {
+    if (!catalog || catalog?.length === 0) {
+      return;
+    }
     const quantity = catalog.filter((el) => el.in_stock > 0);
     return quantity.length;
   }
 
   function getGoodsToOrder() {
+    if (catalog === undefined) {
+      return;
+    }
     const quantity = catalog.filter((el) => el.to_order > 0);
     return quantity.length;
   }
 
   function getGoodsSizeLarge() {
+    if (catalog === undefined) {
+      return;
+    }
     const quantity = catalog.filter((el) => el.size === 'large');
     return quantity.length;
   }
   function getGoodsSizeMiddle() {
+    if (catalog === undefined) {
+      return;
+    }
     const quantity = catalog.filter((el) => el.size === 'middle');
     return quantity.length;
   }
   function getGoodsSizeLittle() {
+    if (catalog === undefined) {
+      return;
+    }
     const quantity = catalog.filter((el) => el.size === 'little');
     return quantity.length;
   }
@@ -85,17 +114,45 @@ const Catalog = () => {
   }
 
   function onChangeHandler(field, value) {
+    let newparams = {};
     let temp = params[field];
-    const newparams = { ...params, [field]: temp ? temp + ',' + value : value };
+
+    if (temp && temp.includes(value)) {
+      const t = temp.replace(`&${field}=${value}`, '').replace(value, '');
+      newparams = {
+        ...params,
+        [field]: t,
+      };
+      if (t === '') {
+        delete newparams[field];
+      }
+    } else {
+      newparams = {
+        ...params,
+        [field]: temp ? temp + `&${field}=` + value : value,
+      };
+    }
 
     setSearchParams(newparams);
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const form = e.currentTarget;
-    setSearchParams({ category: form.elements.username.value });
-    form.reset();
+    const s = location.search.replaceAll('%26', '&').replaceAll('%3D', '=');
+
+    console.log(s);
+
+    async function getFilteredCategories() {
+      try {
+        const data = await fetchFilteredGoods(s);
+        setCatalog(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    getFilteredCategories();
+    // form.reset();
   };
 
   let pageCount = 3;
@@ -103,9 +160,13 @@ const Catalog = () => {
   const [limit, setLimit] = useState(12);
 
   let goodsQuantity = 0;
-  goodsQuantity = catalog.length > 0 && catalog.length;
+  goodsQuantity = catalog?.length > 0 && catalog.length;
   if (goodsQuantity) {
     pageCount = Math.ceil(goodsQuantity / limit);
+  }
+
+  function toggleRotate() {
+    setRotate((prev) => !prev);
   }
 
   return (
@@ -121,9 +182,11 @@ const Catalog = () => {
                   <label key={el.id_name}>
                     <input
                       type="checkbox"
-                      name="category"
-                      value={el.name}
-                      onChange={(e) => onChangeHandler('cat', e.target.value)}
+                      name="cat"
+                      value={el.id_name}
+                      onChange={(e) =>
+                        onChangeHandler('category-id-name', e.target.value)
+                      }
                     />
                     {el.name}
                   </label>
@@ -137,8 +200,10 @@ const Catalog = () => {
                   <input
                     type="checkbox"
                     name="stock"
-                    value="instock"
-                    onChange={(e) => onChangeHandler('stock', e.target.value)}
+                    value="True"
+                    onChange={(e) =>
+                      onChangeHandler('in-stock', e.target.value)
+                    }
                   />
                   В наявності ({getGoodsInStock()} 17)
                 </label>
@@ -147,8 +212,10 @@ const Catalog = () => {
                   <input
                     type="checkbox"
                     name="stock"
-                    value="to-order"
-                    onChange={(e) => onChangeHandler('stock', e.target.value)}
+                    value="True"
+                    onChange={(e) =>
+                      onChangeHandler('specific-order', e.target.value)
+                    }
                   />
                   Під замовлення ({getGoodsToOrder()} 3)
                 </label>
@@ -226,17 +293,20 @@ const Catalog = () => {
               <span style={{ margin: '0 32px' }}> | </span>
               <span> Сортувати: </span>
               <SelectBox>
-                <Select name="sort">
+                <Select name="sort" onClick={() => toggleRotate()}>
                   <option value="rating" defaultValue="Популярністю">
-                    Популярністю
+                    За популярністю
                   </option>
-                  <option value="price">Ціна</option>
-                  <option value="stock">Наявність</option>
+                  <option value="price">Від дешевих до дорогих</option>
+                  <option value="price">Від дорогих до дешевих</option>
+                  <option value="price">За рейтингом</option>
                 </Select>
                 <svg
                   width={8}
                   height={12}
-                  style={{ transform: 'rotate(-90deg)' }}
+                  style={{
+                    transform: rotate ? 'rotate(-270deg)' : 'rotate(-90deg)',
+                  }}
                 >
                   <use href={`${sprite}#chevron`} />
                 </svg>
@@ -244,7 +314,7 @@ const Catalog = () => {
             </div>
 
             <GoodsList>
-              {catalog.map((el) => (
+              {catalog?.map((el) => (
                 <li key={el.id_name}>
                   <CatalogCard item={el} />
                 </li>

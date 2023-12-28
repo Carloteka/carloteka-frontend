@@ -117,6 +117,10 @@ export const Select = styled.select`
   cursor: pointer;
   appearance: none;
   outline: none;
+
+  &:selected {
+    border: 1px solid red;
+  }
 `;
 export const SelectBox = styled.div`
   display: inline-flex;
@@ -129,5 +133,7 @@ export const SelectBox = styled.div`
     top: 6.6px;
     right: 8px;
     transform: rotate(-90deg);
+    cursor: pointer;
+    pointer-events: none;
   }
 `;

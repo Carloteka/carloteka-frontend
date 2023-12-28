@@ -9,7 +9,11 @@ import {
 import sprite from '../../../images/sprite.svg';
 import { useState, useEffect, useRef } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { fetchCategories, fetchPopularGoods } from '../../../api/api';
+import {
+  fetchCategories,
+  fetchPopularGoods,
+  fetchFilteredGoods,
+} from '../../../api/api';
 
 type Good = {
   images: [{ image: string }];
@@ -67,6 +71,7 @@ export const SearchBar = () => {
       isFirstRender.current = false;
       getAllGoods();
       getCategories();
+
       return;
     }
 

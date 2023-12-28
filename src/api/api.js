@@ -15,9 +15,47 @@ export const fetchCategories = async () => {
 };
 
 export const fetchPopularGoods = async () => {
+  const params = {
+    'page-size': 12,
+  };
+  // console.log(Object.entries(params).map(([key, value]) => `${key}=${value}`));
   try {
-    const response = await axios.get('/shop/items/');
+    const response = await axios.get('/shop/items/', {
+      params,
+      paramsSerializer: function paramsSerializer(params) {
+        return Object.entries(Object.assign({}, params))
+          .map(([key, value]) => `${key}=${value}`)
+          .join('&');
+      },
+    });
+
     const arrayData = response.data.results;
+    return arrayData;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchAllGoods = async () => {
+  const params = {
+    'page-size': 100,
+  };
+  try {
+    const response = await axios.get('/shop/items/', { params });
+    const arrayData = response.data.results;
+    // console.log(response);
+    return arrayData;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchFilteredGoods = async (search) => {
+  const params = { 'page-size': 12 };
+  try {
+    const response = await axios.get(`/shop/items/${search}`, { params });
+    const arrayData = response.data.results;
+    console.log(arrayData);
     return arrayData;
   } catch (error) {
     console.log(error);
