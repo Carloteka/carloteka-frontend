@@ -20,7 +20,6 @@ import { fetchAllGoods, fetchFilteredGoods } from '../../api/api';
 const Catalog = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query');
-  // const stock = searchParams.get('stock');
   const [priceValue, setPriceValue] = useState(4000);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,27 +31,18 @@ const Catalog = () => {
     [searchParams],
   );
 
-  console.log(params, '-------------params');
-
   function isChecked(field, value) {
     let temp = params[field];
-
-    // if (temp && temp.includes(value)) {
-    //  return true
-
-    // } else {
-    //  return false
-    // }
 
     return temp && temp.includes(value) ? true : false;
   }
 
-  let goods = [];
+  // let goods = [];
   let categories = [];
 
-  if (localStorage.getItem('goods')) {
-    goods = JSON.parse(localStorage.getItem('goods'));
-  }
+  // if (localStorage.getItem('goods')) {
+  //   goods = JSON.parse(localStorage.getItem('goods'));
+  // }
 
   if (localStorage.getItem('categories')) {
     categories = JSON.parse(localStorage.getItem('categories'));
@@ -151,8 +141,6 @@ const Catalog = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const s = location.search.replaceAll('%26', '&').replaceAll('%3D', '=');
-
-    console.log(s);
 
     async function getFilteredCategories() {
       try {
