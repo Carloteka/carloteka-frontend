@@ -26,8 +26,8 @@ const Favorites = () => {
     goods = JSON.parse(localStorage.getItem('goods'));
   }
 
-  let favoriteGoodsArray = favoritesIds.map((id) =>
-    goods.filter((el) => el.id_name === id),
+  let favoriteGoodsArray = goods.filter((el) =>
+    favoritesIds.some((id) => el.id_name === id),
   );
 
   const [favorites, setFavorites] = useState(
@@ -52,7 +52,7 @@ const Favorites = () => {
         <ListHeader />
         <FavoritesBox>
           <ul>
-            {favorites.map((el) => (
+            {favorites?.map((el) => (
               <Card key={el.id_name}>
                 <CardForFavoritesAndCart
                   good={el}
@@ -62,7 +62,7 @@ const Favorites = () => {
             ))}
           </ul>
         </FavoritesBox>
-        {favorites.length > 0 ? (
+        {favorites?.length > 0 ? (
           <Button type="button" onClick={() => clearFavorites()}>
             Очистити список бажань
           </Button>

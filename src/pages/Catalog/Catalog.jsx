@@ -20,7 +20,6 @@ import { fetchAllGoods, fetchFilteredGoods } from '../../api/api';
 const Catalog = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query');
-  // const stock = searchParams.get('stock');
   const [priceValue, setPriceValue] = useState(4000);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,16 +30,19 @@ const Catalog = () => {
     () => Object.fromEntries([...searchParams]),
     [searchParams],
   );
-  const { cat, stock, price } = params;
 
-  console.log(params, '-------------params');
+  function isChecked(field, value) {
+    let temp = params[field];
 
-  let goods = [];
+    return temp && temp.includes(value) ? true : false;
+  }
+
+  // let goods = [];
   let categories = [];
 
-  if (localStorage.getItem('goods')) {
-    goods = JSON.parse(localStorage.getItem('goods'));
-  }
+  // if (localStorage.getItem('goods')) {
+  //   goods = JSON.parse(localStorage.getItem('goods'));
+  // }
 
   if (localStorage.getItem('categories')) {
     categories = JSON.parse(localStorage.getItem('categories'));
@@ -140,8 +142,6 @@ const Catalog = () => {
     e.preventDefault();
     const s = location.search.replaceAll('%26', '&').replaceAll('%3D', '=');
 
-    console.log(s);
-
     async function getFilteredCategories() {
       try {
         const data = await fetchFilteredGoods(s);
@@ -184,8 +184,9 @@ const Catalog = () => {
                       type="checkbox"
                       name="cat"
                       value={el.id_name}
-                      onChange={(e) =>
-                        onChangeHandler('category-id-name', e.target.value)
+                      checked={isChecked('category-id-name', el.id_name)}
+                      onChange={() =>
+                        onChangeHandler('category-id-name', el.id_name)
                       }
                     />
                     {el.name}
@@ -201,9 +202,8 @@ const Catalog = () => {
                     type="checkbox"
                     name="stock"
                     value="True"
-                    onChange={(e) =>
-                      onChangeHandler('in-stock', e.target.value)
-                    }
+                    checked={isChecked('in-stock', 'True')}
+                    onChange={() => onChangeHandler('in-stock', 'True')}
                   />
                   В наявності ({getGoodsInStock()} 17)
                 </label>
@@ -213,9 +213,8 @@ const Catalog = () => {
                     type="checkbox"
                     name="stock"
                     value="True"
-                    onChange={(e) =>
-                      onChangeHandler('specific-order', e.target.value)
-                    }
+                    checked={isChecked('specific-order', 'True')}
+                    onChange={() => onChangeHandler('specific-order', 'True')}
                   />
                   Під замовлення ({getGoodsToOrder()} 3)
                 </label>
