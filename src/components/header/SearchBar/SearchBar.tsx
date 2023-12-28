@@ -67,21 +67,11 @@ export const SearchBar = () => {
       }
     }
 
-    async function getFilteredCategories() {
-      try {
-        const data = await fetchFilteredGoods();
-        localStorage.setItem('categories', JSON.stringify(data));
-        setCategories(data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
     if (isFirstRender.current) {
       isFirstRender.current = false;
       getAllGoods();
       getCategories();
-      getFilteredCategories();
+
       return;
     }
 

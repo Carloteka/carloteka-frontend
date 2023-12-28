@@ -15,7 +15,7 @@ import {
 } from './Catalog.styled';
 import { toggleLocalStorage } from 'src/utils/toggleLocalStorage';
 import sprite from '../../images/sprite.svg';
-import { fetchAllGoods } from '../../api/api';
+import { fetchAllGoods, fetchFilteredGoods } from '../../api/api';
 
 const Catalog = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -33,7 +33,7 @@ const Catalog = () => {
   );
   const { cat, stock, price } = params;
 
-  console.log(params);
+  console.log(params, '-------------params');
 
   let goods = [];
   let categories = [];
@@ -46,7 +46,8 @@ const Catalog = () => {
     categories = JSON.parse(localStorage.getItem('categories'));
   }
 
-  const [catalog, setCatalog] = useState(goods);
+  const [catalog, setCatalog] = useState([]);
+  // const [catalog, setCatalog] = useState(goods);
   const [category, setCategory] = useState(categories);
 
   useEffect(() => {
@@ -113,33 +114,44 @@ const Catalog = () => {
   }
 
   function onChangeHandler(field, value) {
-    // console.log(value);
-    // let newParams = {};
-    // let temp = params[field];
-
-    // if (temp === undefined) {
-    //   newParams = { ...params, [field]: value };
-    //   console.log('undef', params);
-    // } else if (typeof temp === 'string') {
-    //   console.log('string', temp, params);
-    //   const t = [];
-    //   t.push(temp, value);
-    //   console.log(t);
-    //   newParams = { ...params, [field]: t };
-    // } else {
-    //   console.log('else', temp, params);
-    //   newParams = { ...params, [field]: [...temp, value] };
-    // }
-
+    let newparams = {};
     let temp = params[field];
-    const newparams = { ...params, [field]: temp ? temp + ',' + value : value };
+
+    if (temp && temp.includes(value)) {
+      const t = temp.replace(`&${field}=${value}`, '').replace(value, '');
+      newparams = {
+        ...params,
+        [field]: t,
+      };
+      if (t === '') {
+        delete newparams[field];
+      }
+    } else {
+      newparams = {
+        ...params,
+        [field]: temp ? temp + `&${field}=` + value : value,
+      };
+    }
 
     setSearchParams(newparams);
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSearchParams({ query: 'fa', cat: ['odin', 'dva'], da: ['sam'] });
+    const s = location.search.replaceAll('%26', '&').replaceAll('%3D', '=');
+
+    console.log(s);
+
+    async function getFilteredCategories() {
+      try {
+        const data = await fetchFilteredGoods(s);
+        setCatalog(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    getFilteredCategories();
     // form.reset();
   };
 
@@ -170,9 +182,11 @@ const Catalog = () => {
                   <label key={el.id_name}>
                     <input
                       type="checkbox"
-                      name="category"
+                      name="cat"
                       value={el.id_name}
-                      onChange={(e) => onChangeHandler('cat', e.target.value)}
+                      onChange={(e) =>
+                        onChangeHandler('category-id-name', e.target.value)
+                      }
                     />
                     {el.name}
                   </label>
@@ -186,8 +200,10 @@ const Catalog = () => {
                   <input
                     type="checkbox"
                     name="stock"
-                    value="instock"
-                    onChange={(e) => onChangeHandler('stock', e.target.value)}
+                    value="True"
+                    onChange={(e) =>
+                      onChangeHandler('in-stock', e.target.value)
+                    }
                   />
                   В наявності ({getGoodsInStock()} 17)
                 </label>
@@ -196,8 +212,10 @@ const Catalog = () => {
                   <input
                     type="checkbox"
                     name="stock"
-                    value="to-order"
-                    onChange={(e) => onChangeHandler('stock', e.target.value)}
+                    value="True"
+                    onChange={(e) =>
+                      onChangeHandler('specific-order', e.target.value)
+                    }
                   />
                   Під замовлення ({getGoodsToOrder()} 3)
                 </label>
