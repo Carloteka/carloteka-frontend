@@ -5,13 +5,14 @@ import {
   Slider,
 } from './SliderPopulars.styled';
 import sprite from '../../../images/sprite.svg';
-import { SliderItem } from './sliderItem/SliderItem';
+import { CatalogCard } from '../../CatalogCard/CatalogCard';
 
 type Popular = {
   mini_image: string;
   name: string;
   price: number;
   id_name: string;
+  in_stock: number;
 };
 
 interface SliderPopularsProps {
@@ -38,7 +39,7 @@ export const SliderPopulars = ({
       <Slider>
         {arrayToRender.map((el, index) => (
           <li key={index}>
-            <SliderItem item={el} />
+            <CatalogCard item={el} />
           </li>
         ))}
       </Slider>

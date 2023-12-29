@@ -28,6 +28,21 @@ export const ThumbPhoto = styled.div`
     display: none;
     gap: 16px;
   }
+
+  p {
+    padding-left: 4px;
+    position: absolute;
+    top: 13px;
+    left: 16px;
+    width: 148px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    line-height: calc(20 / 13);
+    color: white;
+    background-color: #b4a525;
+  }
 `;
 export const Button = styled.button`
   border-radius: 50%;

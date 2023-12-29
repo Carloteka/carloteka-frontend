@@ -164,7 +164,7 @@ export const SearchBar = () => {
                               alt={el.name}
                             />
                             <Link
-                              to={`/catalog?query=${query}`}
+                              to={`/catalog?category-id-name=${el.id_name}`}
                               onClick={() => setShowResult(false)}
                             >
                               {el?.name}

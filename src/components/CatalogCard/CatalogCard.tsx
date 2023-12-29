@@ -14,6 +14,7 @@ type Popular = {
   name: string;
   price: number;
   id_name: string;
+  in_stock: number;
 };
 
 interface SliderItemProps {
@@ -21,7 +22,7 @@ interface SliderItemProps {
 }
 
 export const CatalogCard = ({ item }: SliderItemProps) => {
-  const { id_name, name, mini_image, price } = item;
+  const { id_name, name, mini_image, price, in_stock } = item;
 
   let cartArray: string[] = [];
   let favoriteArray: string[] = [];
@@ -52,6 +53,26 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
     setIsFavorite((prev) => !prev);
   }
 
+  function getBanner(in_stock: number) {
+    let banner = '';
+    switch (in_stock) {
+      case 2:
+        banner = 'Очікується';
+        break;
+
+      case 3:
+        banner = 'Під замовлення';
+        break;
+
+      case 0:
+        banner = 'Немає в наявності';
+        break;
+
+      default:
+        banner = 'Очікується';
+    }
+    return banner;
+  }
   return (
     <>
       <ThumbPhoto>
@@ -75,6 +96,21 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
             </svg>
           </Button>
         </div>
+        {!(in_stock === 1) && (
+          <p
+            style={{
+              borderTop: in_stock === 2 ? '0.5px solid white' : '',
+              backgroundColor:
+                in_stock === 2
+                  ? '#2D3F24'
+                  : in_stock === 3
+                  ? '#2864BE'
+                  : '#b4a525',
+            }}
+          >
+            {getBanner(in_stock)}
+          </p>
+        )}
         <img
           src={
             import.meta.env.PROD
@@ -84,6 +120,10 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
           alt="img першої категорії"
           width={304}
           height={304}
+          style={{
+            opacity: in_stock === 0 || in_stock === 3 ? '0.5' : '',
+            backgroundColor: in_stock === 0 || in_stock === 3 ? '#F2F0EC' : '',
+          }}
         />
       </ThumbPhoto>
       <h4>{name}</h4>
