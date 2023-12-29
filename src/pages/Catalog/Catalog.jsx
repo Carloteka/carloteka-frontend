@@ -275,11 +275,6 @@ const Catalog = () => {
     // select.current.style.width = width + 'em';
   }
 
-  // function submitAfterProcceduresEnds() {
-  //   console.log('before submit');
-  //   handleSubmit();
-  // }
-
   function deleteFilter(field, value) {
     const newTags = tags.filter(
       (el) => !(el.field === field && el.value === value),
@@ -297,6 +292,25 @@ const Catalog = () => {
 
     handleSubmit();
   }
+
+  const sortedByStock = catalog.toSorted((a, b) => {
+    if (a.in_stock === 1 && b.in_stock === 1) {
+      return 0;
+    } else if (a.in_stock === 1) {
+      return -1;
+    } else if (b.in_stock === 1) {
+      return 1;
+    } else if (a.in_stock === 2 && b.in_stock === 2) {
+      return 0;
+    } else if (a.in_stock === 2) {
+      return -1;
+    } else if (b.in_stock === 2) {
+      return 1;
+    } else {
+      return a.in_stock - b.in_stock;
+    }
+  });
+
   return (
     <>
       <PageTitle>Каталог</PageTitle>
@@ -500,7 +514,7 @@ const Catalog = () => {
             </div>
 
             <GoodsList>
-              {catalog?.map((el) => (
+              {sortedByStock?.map((el) => (
                 <li key={el.id_name}>
                   <CatalogCard item={el} />
                 </li>

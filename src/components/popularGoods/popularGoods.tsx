@@ -8,6 +8,7 @@ type Popular = {
   name: string;
   price: number;
   id_name: string;
+  in_stock: number;
 };
 
 export const PopularGoods = () => {
