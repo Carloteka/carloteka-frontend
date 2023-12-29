@@ -101,6 +101,64 @@ export const Price = styled.fieldset`
   }
 `;
 
+export const TagsContainer = styled.div`
+  margin-bottom: 32px;
+  padding-right: 148px;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 16px;
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 24px;
+    row-gap: 16px;
+  }
+
+  li {
+    padding: 7.5px 8px 7.5px 8px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #f2f0ec;
+  }
+
+  svg {
+    stroke: #101010;
+    cursor: pointer;
+  }
+
+  li > label {
+    display: none;
+  }
+
+  ul > li:last-child {
+    background-color: inherit;
+
+    p {
+      display: none;
+    }
+    svg {
+      display: none;
+    }
+    label {
+      // position: absolute;
+      // top: 50%;
+      // right: 0;
+      display: flex;
+      height: 23px;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 19px;
+      line-height: calc(23 / 19);
+      color: #000;
+    }
+  }
+`;
+
 export const GoodsList = styled.ul`
   display: flex;
   flex-wrap: wrap;
@@ -108,8 +166,8 @@ export const GoodsList = styled.ul`
 `;
 export const Select = styled.select`
   padding-right: 48px;
-  width: 176px;
   height: 25px;
+  width: min-content;
   font-weight: 700;
   font-size: 18px;
   line-height: calc(23 / 18);
@@ -125,7 +183,7 @@ export const Select = styled.select`
 export const SelectBox = styled.div`
   display: inline-flex;
   position: relative;
-  width: 176px;
+
   height: 25px;
 
   svg {

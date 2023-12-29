@@ -9,6 +9,7 @@ import {
   Aside,
   Form,
   Price,
+  TagsContainer,
   GoodsList,
   SelectBox,
   Select,
@@ -19,6 +20,7 @@ import { fetchAllGoods, fetchFilteredGoods } from '../../api/api';
 
 const Catalog = () => {
   const isFirst = useRef(true);
+  const select = useRef();
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query');
 
@@ -26,12 +28,6 @@ const Catalog = () => {
     () => Object.fromEntries([...searchParams]),
     [searchParams],
   );
-
-  const [priceValue, setPriceValue] = useState(
-    () => getPriceValue('price-to') || 4000,
-  );
-
-  const [currentPage, setCurrentPage] = useState(1);
 
   const [rotate, setRotate] = useState(false);
 
@@ -44,7 +40,7 @@ const Catalog = () => {
   function getPriceValue(field) {
     const temp = params[field];
 
-    return temp ? temp : null;
+    return temp ? temp : field === 'price-to' ? 4000 : 0;
   }
 
   // let goods = [];
@@ -59,6 +55,10 @@ const Catalog = () => {
   }
 
   const [catalog, setCatalog] = useState([]);
+  const [quantity, setQuantity] = useState(catalog?.length);
+  const [limit, setLimit] = useState(12);
+  const [tags, setTags] = useState([]);
+
   // const [catalog, setCatalog] = useState(goods);
   const [category, setCategory] = useState(categories);
 
@@ -74,7 +74,8 @@ const Catalog = () => {
 
     async function getAllGoods() {
       try {
-        const data = await fetchAllGoods();
+        const data = await fetchAllGoods(12);
+        setQuantity(data.length);
         setCatalog(data);
       } catch (error) {
         console.log(error);
@@ -89,49 +90,127 @@ const Catalog = () => {
       }
       handleSubmit();
     }
+
+    setTags(getTags());
   }, [query, params, setSearchParams]);
+
+  function getTags() {
+    const tagsList = [];
+    category.forEach((el) => {
+      if (isChecked('category-id-name', el.id_name)) {
+        tagsList.push({
+          field: 'category-id-name',
+          value: el.id_name,
+          tag: el.name,
+        });
+      }
+    });
+
+    const availability = 'in-stock';
+    params[availability] &&
+      tagsList.push({ field: 'in-stock', value: 'True', tag: 'В наявності' });
+
+    const backorder = 'specific-order';
+    params[backorder] &&
+      tagsList.push({
+        field: 'specific-order',
+        value: 'True',
+        tag: 'Під замовлення',
+      });
+
+    const priceFrom = 'price-from';
+    const priceTo = 'price-to';
+    const price = `₴${params[priceFrom] ? getPriceValue('price-from') : 0} - ₴${
+      params[priceTo] && getPriceValue('price-to')
+    }`;
+
+    if (params[priceTo] || params[priceFrom]) {
+      tagsList.push({ field: 'price', tag: price });
+    }
+
+    if (tagsList.length > 0) {
+      tagsList.push('dummy');
+    }
+
+    return tagsList;
+  }
+
+  function getRangeToDisplay() {
+    if (!catalog || catalog?.length === 0) {
+      return;
+    }
+    let range = '';
+    if (!params.page) {
+      range = `1-${catalog.length}`;
+    } else {
+      range = `${(params.page - 1) * limit + 1}-${
+        (params.page - 1) * limit + catalog.length
+      }`;
+    }
+    if (catalog.length === 1) {
+      range = !params.page
+        ? '1'
+        : `${(params.page - 1) * limit + catalog.length}-й`;
+    }
+    return range;
+  }
 
   function getGoodsInStock() {
     if (!catalog || catalog?.length === 0) {
       return;
     }
-    const quantity = catalog.filter((el) => el.in_stock === 1);
-    return quantity.length;
+    const amount = catalog.filter((el) => el.in_stock === 1);
+    return amount.length;
   }
 
   function getGoodsToOrder() {
     if (catalog === undefined) {
       return;
     }
-    const quantity = catalog.filter((el) => el.in_stock === 3);
-    return quantity.length;
+    const amount = catalog.filter((el) => el.in_stock === 3);
+    return amount.length;
   }
 
   function getGoodsSizeLarge() {
     if (catalog === undefined) {
       return;
     }
-    const quantity = catalog.filter((el) => el.size === 'large');
-    return quantity.length;
+    const amount = catalog.filter((el) => el.size === 'large');
+    return amount.length;
   }
   function getGoodsSizeMiddle() {
     if (catalog === undefined) {
       return;
     }
-    const quantity = catalog.filter((el) => el.size === 'middle');
-    return quantity.length;
+    const amount = catalog.filter((el) => el.size === 'middle');
+    return amount.length;
   }
   function getGoodsSizeLittle() {
     if (catalog === undefined) {
       return;
     }
-    const quantity = catalog.filter((el) => el.size === 'little');
-    return quantity.length;
+    const amount = catalog.filter((el) => el.size === 'little');
+    return amount.length;
   }
 
   function onChangeHandler(field, value) {
     let newparams = {};
     let temp = params[field];
+
+    if (field === 'price') {
+      const priceTo = 'price-to';
+      const priceFrom = 'price-from';
+
+      newparams = {
+        ...params,
+      };
+
+      delete newparams[priceTo];
+      delete newparams[priceFrom];
+
+      setSearchParams(newparams);
+      return;
+    }
 
     if (field === 'price-from' || field === 'price-to') {
       newparams = {
@@ -144,7 +223,10 @@ const Catalog = () => {
     }
 
     if (temp && temp.includes(value)) {
-      const t = temp.replace(`&${field}=${value}`, '').replace(value, '');
+      const t = temp
+        .replace(`&${field}=${value}`, '')
+        .replace(`${value}&${field}=`, '')
+        .replace(value, '');
       newparams = {
         ...params,
         [field]: t,
@@ -158,48 +240,70 @@ const Catalog = () => {
         [field]: temp ? temp + `&${field}=` + value : value,
       };
     }
-
     setSearchParams(newparams);
   }
 
   const handleSubmit = (e) => {
     e?.preventDefault();
-    const s = location.search.replaceAll('%26', '&').replaceAll('%3D', '=');
+    // if (!params.page) {
+    //   console.log('net');
+    //   setSearchParams({ ...params, page: 1 });
+    // }
+
+    let s = location.search.replaceAll('%26', '&').replaceAll('%3D', '=');
 
     async function getFilteredCategories() {
       try {
         const data = await fetchFilteredGoods(s);
-        setCatalog(data);
+        setQuantity(data.count);
+        setCatalog(data.data);
       } catch (error) {
         console.log(error);
       }
     }
 
     getFilteredCategories();
-    // form.reset();
   };
 
-  let pageCount = 3;
-
-  const [limit, setLimit] = useState(12);
-
-  let goodsQuantity = 0;
-  goodsQuantity = catalog?.length > 0 && catalog.length;
-  if (goodsQuantity) {
-    pageCount = Math.ceil(goodsQuantity / limit);
-  }
-
-  function toggleRotate() {
+  function toggleRotate(e) {
     setRotate((prev) => !prev);
   }
+  function onSelectHandler(e) {
+    console.log(select.current.value);
+    console.log(select.current.offsetWidth);
+    // let width = select.current.style.width;
+    // select.current.style.width = width + 'em';
+  }
 
+  // function submitAfterProcceduresEnds() {
+  //   console.log('before submit');
+  //   handleSubmit();
+  // }
+
+  function deleteFilter(field, value) {
+    const newTags = tags.filter(
+      (el) => !(el.field === field && el.value === value),
+    );
+
+    setTags(newTags);
+    onChangeHandler(field, value);
+
+    handleSubmit();
+  }
+
+  function pageChanger(page) {
+    const newparams = { ...params, page };
+    setSearchParams(newparams);
+
+    handleSubmit();
+  }
   return (
     <>
       <PageTitle>Каталог</PageTitle>
       <ContainerLimiter paddingTopMob={'16px'} paddingTopDesc={'56px'}>
         <FlexContainer>
           <Aside>
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} id="filter">
               <fieldset>
                 <legend>Категорії товарів</legend>
                 {category?.map((el) => (
@@ -266,7 +370,7 @@ const Catalog = () => {
                 <legend>Ціна</legend>
                 <div>
                   <span>0</span>
-                  <span>{priceValue}</span>
+                  <span>{getPriceValue('price-to')}</span>
                   <span>10000</span>
                 </div>
 
@@ -274,11 +378,10 @@ const Catalog = () => {
                   <input
                     type="range"
                     name="priceTo"
-                    value={priceValue}
-                    onChange={(e) => {
-                      setPriceValue(e.target.value);
-                      onChangeHandler('price-to', e.target.value);
-                    }}
+                    value={getPriceValue('price-to')}
+                    onChange={(e) =>
+                      onChangeHandler('price-to', e.target.value)
+                    }
                     min={0}
                     max={10000}
                   />
@@ -288,26 +391,27 @@ const Catalog = () => {
                     <input
                       type="number"
                       name="price-from"
-                      value={getPriceValue('price-from') || 0}
-                      onChange={(e) => {
-                        onChangeHandler('price-from', e.target.value);
-                      }}
+                      max={getPriceValue('price-to')}
+                      value={getPriceValue('price-from')}
+                      onChange={(e) =>
+                        onChangeHandler('price-from', e.target.value)
+                      }
                       placeholder="0"
                       min="0"
-                      max="10000"
+                      // max="10000"
                     />
                   </label>
                   <label>
                     <input
                       type="number"
                       name="price-to"
-                      value={getPriceValue('price-to') || priceValue}
-                      onChange={(e) => {
-                        setPriceValue(e.target.value);
-                        onChangeHandler('price-to', e.target.value);
-                      }}
+                      value={getPriceValue('price-to')}
+                      onChange={(e) =>
+                        onChangeHandler('price-to', e.target.value)
+                      }
                       placeholder="4000"
-                      min="0"
+                      // min="0"
+                      min={getPriceValue('price-from')}
                       max="10000"
                     />
                   </label>
@@ -317,6 +421,36 @@ const Catalog = () => {
             </Form>
           </Aside>
           <div>
+            {tags?.length > 1 && (
+              <TagsContainer>
+                <ul>
+                  {tags.map((el, index) => (
+                    <li key={`${el.value}-${index}`}>
+                      <p>{el.tag}</p>
+                      <svg
+                        width={15}
+                        height={15}
+                        onClick={() => deleteFilter(el.field, el.value)}
+                      >
+                        <use href={`${sprite}#close`} />
+                      </svg>
+                      <label>
+                        Видалити всі
+                        <input
+                          type="reset"
+                          form="filter"
+                          value=""
+                          onClick={() => {
+                            setSearchParams({});
+                            setTags([]);
+                          }}
+                        />
+                      </label>
+                    </li>
+                  ))}
+                </ul>
+              </TagsContainer>
+            )}
             <div
               style={{
                 marginBottom: '40px',
@@ -324,17 +458,34 @@ const Catalog = () => {
                 textAlign: 'left',
               }}
             >
-              <span>Представлено 1-9 з 100 </span>
+              <span>
+                Представлено {getRangeToDisplay()} з {quantity}
+              </span>
               <span style={{ margin: '0 32px' }}> | </span>
               <span> Сортувати: </span>
               <SelectBox>
-                <Select name="sort" onClick={() => toggleRotate()}>
-                  <option value="rating" defaultValue="Популярністю">
+                <Select
+                  ref={select}
+                  name="sort-by"
+                  onClick={(e) => toggleRotate(e)}
+                  onChange={(e) => onSelectHandler(e)}
+                >
+                  <option
+                    value="rating"
+                    defaultValue="За популярністю"
+                    label="За популярністю"
+                  >
                     За популярністю
                   </option>
-                  <option value="price">Від дешевих до дорогих</option>
-                  <option value="price">Від дорогих до дешевих</option>
-                  <option value="price">За рейтингом</option>
+                  <option value="price-up" label="Від дешевих до дорогих">
+                    Від дешевих до дорогих
+                  </option>
+                  <option value="price-down" label="Від дорогих до дешевих">
+                    Від дорогих до дешевих
+                  </option>
+                  <option value="rating" label="За рейтингом">
+                    За рейтингом
+                  </option>
                 </Select>
                 <svg
                   width={8}
@@ -356,9 +507,9 @@ const Catalog = () => {
               ))}
             </GoodsList>
             <Paginator
-              setCurrentPage={setCurrentPage}
-              currentPage={currentPage}
-              // pageCount={limit !== 12 ? 0 : goodsQuantity ? pageCount : 3}
+              setCurrentPage={pageChanger}
+              currentPage={params.page || 1}
+              pageCount={limit !== 12 ? 0 : Math.ceil(quantity / limit)}
             />
           </div>
         </FlexContainer>

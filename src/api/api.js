@@ -36,14 +36,13 @@ export const fetchPopularGoods = async () => {
   }
 };
 
-export const fetchAllGoods = async () => {
+export const fetchAllGoods = async (limit) => {
   const params = {
-    'page-size': 100,
+    'page-size': limit || 100,
   };
   try {
     const response = await axios.get('/shop/items/', { params });
     const arrayData = response.data.results;
-    // console.log(response);
     return arrayData;
   } catch (error) {
     console.log(error);
@@ -55,8 +54,7 @@ export const fetchFilteredGoods = async (search) => {
   try {
     const response = await axios.get(`/shop/items/${search}`, { params });
     const arrayData = response.data.results;
-    console.log(arrayData);
-    return arrayData;
+    return { count: response.data.count, data: arrayData };
   } catch (error) {
     console.log(error);
   }
