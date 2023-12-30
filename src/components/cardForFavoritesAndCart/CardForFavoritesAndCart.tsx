@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+import { CartContext } from '../Layout';
 import {
   FlexContainer,
   Img,
@@ -35,6 +37,8 @@ export const CardForFavoritesAndCart = ({
 }: CardForFavoritesAndCartProps) => {
   const { images, name, price, id_name } = good;
 
+  const { amountInCart, setAmountInCart } = useContext(CartContext);
+
   const quantity = good?.quantity ? good.quantity : 1;
 
   function incrementHandle(payload: number, id: string) {
@@ -42,6 +46,11 @@ export const CardForFavoritesAndCart = ({
       return;
     }
     increment(payload + quantity, id);
+  }
+
+  function buyBtnHandle() {
+    toggleLocalStorage(false, 'cart', id_name);
+    setAmountInCart((amountInCart) => amountInCart + 1);
   }
 
   return (
@@ -94,25 +103,25 @@ export const CardForFavoritesAndCart = ({
         )}
 
         {location.pathname.includes('favorite') && (
-          <BuyBtnDesc
-            type="button"
-            onClick={() => toggleLocalStorage(false, 'cart', id_name)}
-          >
+          <BuyBtnDesc type="button" onClick={() => buyBtnHandle()}>
             Купити
           </BuyBtnDesc>
         )}
 
-        <DelBtn type="button" onClick={() => onClickDelete(id_name)}>
+        <DelBtn
+          type="button"
+          onClick={() => {
+            setAmountInCart((amountInCart) => amountInCart - 1);
+            onClickDelete(id_name);
+          }}
+        >
           <svg width={9} height={8}>
             <use href={`${sprite}#del-x`} />
           </svg>
         </DelBtn>
       </Div>
       {location.pathname.includes('favorite') && (
-        <BuyBtn
-          type="button"
-          onClick={() => toggleLocalStorage(false, 'cart', id_name)}
-        >
+        <BuyBtn type="button" onClick={() => buyBtnHandle()}>
           Купити
         </BuyBtn>
       )}

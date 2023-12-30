@@ -245,10 +245,6 @@ const Catalog = () => {
 
   const handleSubmit = (e) => {
     e?.preventDefault();
-    // if (!params.page) {
-    //   console.log('net');
-    //   setSearchParams({ ...params, page: 1 });
-    // }
 
     let s = location.search.replaceAll('%26', '&').replaceAll('%3D', '=');
 

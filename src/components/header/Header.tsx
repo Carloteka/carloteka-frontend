@@ -11,9 +11,12 @@ import {
 import sprite from '../../images/sprite.svg';
 import { SearchBar } from './SearchBar/SearchBar';
 import { Menu } from './menu/Menu';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { CartContext } from '../Layout';
 
 export const Header = () => {
+  const { amountInCart } = useContext(CartContext);
+
   const [showMenu, setShowMenu] = useState(false);
   const [inCart, setInCart] = useState([]);
 
@@ -44,7 +47,7 @@ export const Header = () => {
           </NavigationLink>
           <NavigationLink to={'/cart'} title="До Кошика">
             {inCart?.length > 0 && (
-              <CartPreviewBtn type="button">{inCart?.length}</CartPreviewBtn>
+              <CartPreviewBtn type="button">{amountInCart}</CartPreviewBtn>
             )}
             <svg width={24} height={24}>
               <use href={`${sprite}#cart`} />
