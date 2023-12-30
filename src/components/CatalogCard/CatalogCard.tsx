@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { CartContext } from '../Layout';
 import {
   ThumbPhoto,
   Button,
@@ -24,6 +25,8 @@ interface SliderItemProps {
 export const CatalogCard = ({ item }: SliderItemProps) => {
   const { id_name, name, mini_image, price, in_stock } = item;
 
+  const { amountInCart, setAmountInCart } = useContext(CartContext);
+
   let cartArray: string[] = [];
   let favoriteArray: string[] = [];
 
@@ -47,6 +50,9 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
   function toggleCart() {
     toggleLocalStorage(inCart, 'cart', id_name);
     setInCart((prev) => !prev);
+    setAmountInCart((amountInCart) =>
+      isInCart ? amountInCart - 1 : amountInCart + 1,
+    );
   }
   function toggleFavorite() {
     toggleLocalStorage(isFavorite, 'favorite', id_name);
@@ -73,6 +79,7 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
     }
     return banner;
   }
+
   return (
     <>
       <ThumbPhoto>

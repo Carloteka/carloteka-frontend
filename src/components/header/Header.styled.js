@@ -74,15 +74,6 @@ export const Actions = styled.div`
 
   gap: 100px;
 
-  button {
-    @media screen and (max-width: 1439.99px) {
-      justify-content: flex-end;
-    }
-
-    width: 40px;
-    height: 40px;
-  }
-
   svg {
     fill: #101010;
   }
@@ -96,4 +87,27 @@ export const NavigationLink = styled(NavLink)`
   @media screen and (max-width: 1439.99px) {
     ${visuallyHidden};
   }
+`;
+
+export const BurgerMenuBtn = styled.button`
+  @media screen and (max-width: 1439.99px) {
+    justify-content: flex-end;
+  }
+
+  width: 40px;
+  height: 40px;
+`;
+
+export const CartPreviewBtn = styled.button`
+  position: absolute;
+  top: 30px;
+  transform: translateX(56px);
+  width: 25px;
+  height: 25px;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: calc(20 / 13);
+  border-radius: 50%;
+  color: #f2f0ec;
+  background-color: #2d3f24;
 `;

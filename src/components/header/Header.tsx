@@ -5,14 +5,31 @@ import {
   Catalog,
   Actions,
   NavigationLink,
+  BurgerMenuBtn,
+  CartPreviewBtn,
 } from './Header.styled';
 import sprite from '../../images/sprite.svg';
 import { SearchBar } from './SearchBar/SearchBar';
 import { Menu } from './menu/Menu';
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { CartContext } from '../Layout';
 
 export const Header = () => {
+  const { amountInCart } = useContext(CartContext);
+
   const [showMenu, setShowMenu] = useState(false);
+  const [inCart, setInCart] = useState([]);
+
+  let goodsInCart: string[] = [];
+  useEffect(() => {
+    if (localStorage.getItem('cart')) {
+      goodsInCart = JSON.parse(localStorage.getItem('cart') as string);
+    }
+    if (inCart.length === goodsInCart.length) {
+      return;
+    }
+    setInCart(goodsInCart);
+  }, [setInCart, inCart, goodsInCart]);
 
   return (
     <HeaderContainer>
@@ -29,15 +46,22 @@ export const Header = () => {
             </svg>
           </NavigationLink>
           <NavigationLink to={'/cart'} title="До Кошика">
+            {inCart?.length > 0 && (
+              <CartPreviewBtn type="button">{amountInCart}</CartPreviewBtn>
+            )}
             <svg width={24} height={24}>
               <use href={`${sprite}#cart`} />
             </svg>
           </NavigationLink>
-          <button type="button" title="Меню" onClick={() => setShowMenu(true)}>
+          <BurgerMenuBtn
+            type="button"
+            title="Меню"
+            onClick={() => setShowMenu(true)}
+          >
             <svg width={18} height={12}>
               <use href={`${sprite}#burger-menu`} />
             </svg>
-          </button>
+          </BurgerMenuBtn>
         </Actions>
         {showMenu && <Menu onClickHandle={setShowMenu} />}
       </LimiterConatiner>

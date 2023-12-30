@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { CartContext } from '../../components/Layout';
 import { PageTitle } from '../../components/pageTitle/PageTitle';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
 import { ListHeader } from '../../components/listHeader/ListHeader';
@@ -27,6 +28,8 @@ type Good = {
 };
 
 const Cart = () => {
+  const { amountInCart, setAmountInCart } = useContext(CartContext);
+
   let goodsInCart = [];
 
   if (localStorage.getItem('cart')) {
@@ -48,6 +51,7 @@ const Cart = () => {
   function clearCart() {
     localStorage.cart = [];
     setInCart([]);
+    setAmountInCart(0);
   }
 
   function delFromCart(id: string) {
