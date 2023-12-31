@@ -6,16 +6,19 @@ import { Paginator } from '../../components/Paginator/Paginator';
 import { CatalogCard } from '../../components/CatalogCard/CatalogCard';
 import {
   FlexContainer,
+  ShowFiltersBtn,
   Aside,
   Form,
+  Checkbox,
   Price,
   TagsContainer,
-  GoodsList,
+  FlexDiv,
   SelectBox,
   Backdrop,
   Menu,
   CheckedIcon,
   SelectItem,
+  GoodsList,
 } from './Catalog.styled';
 
 import { toggleLocalStorage } from 'src/utils/toggleLocalStorage';
@@ -36,6 +39,7 @@ const Catalog = () => {
   );
   const [selectValue, setSelectValue] = useState(getSortingValue());
   const [showSelectMenu, setShowSelectMenu] = useState(false);
+  const [showFilters, setShowFilters] = useState(true);
 
   function isChecked(field, value) {
     const temp = params[field];
@@ -351,13 +355,13 @@ const Catalog = () => {
       <PageTitle>Каталог</PageTitle>
       <ContainerLimiter paddingTopMob={'16px'} paddingTopDesc={'56px'}>
         <FlexContainer>
-          <Aside>
+          <Aside $show={showFilters}>
             <Form onSubmit={handleSubmit} id="filter">
               <fieldset>
                 <legend>Категорії товарів</legend>
                 {category?.map((el) => (
                   <label key={el.id_name}>
-                    <input
+                    <Checkbox
                       type="checkbox"
                       name="cat"
                       value={el.id_name}
@@ -375,7 +379,7 @@ const Catalog = () => {
                 <legend>Наявність в магазині</legend>
 
                 <label>
-                  <input
+                  <Checkbox
                     type="checkbox"
                     name="stock"
                     value="True"
@@ -386,7 +390,7 @@ const Catalog = () => {
                 </label>
 
                 <label>
-                  <input
+                  <Checkbox
                     type="checkbox"
                     name="stock"
                     value="True"
@@ -401,16 +405,16 @@ const Catalog = () => {
                 <legend>Розмір</legend>
 
                 <label>
-                  <input type="checkbox" name="size" value="large" />
+                  <Checkbox type="checkbox" name="size" value="large" />
                   Великий ({getGoodsSizeLarge()} 9)
                 </label>
 
                 <label>
-                  <input type="checkbox" name="size" value="middle" />
+                  <Checkbox type="checkbox" name="size" value="middle" />
                   Середній ({getGoodsSizeMiddle()} 6)
                 </label>
                 <label>
-                  <input type="checkbox" name="size" value="little" />
+                  <Checkbox type="checkbox" name="size" value="little" />
                   Маленький ({getGoodsSizeLittle()} 4)
                 </label>
               </fieldset>
@@ -482,7 +486,15 @@ const Catalog = () => {
               <button type="submit">Застосувати</button>
             </Form>
           </Aside>
-          <div>
+
+          <ShowFiltersBtn
+            type="button"
+            className={showFilters ? 'white-bcgr' : ''}
+            onClick={() => setShowFilters((prev) => !prev)}
+          >
+            {showFilters ? 'Сховати фільтри' : 'Фільтри'}
+          </ShowFiltersBtn>
+          <div style={{ padding: '0' }}>
             {tags?.length > 1 && (
               <TagsContainer>
                 <ul>
@@ -513,7 +525,7 @@ const Catalog = () => {
                 </ul>
               </TagsContainer>
             )}
-            <div
+            <FlexDiv
               style={{
                 marginBottom: '40px',
                 display: 'inlineFlex',
@@ -544,7 +556,7 @@ const Catalog = () => {
                 <Backdrop
                   style={{ display: showSelectMenu ? 'block' : 'none' }}
                 />
-                <Menu show={showSelectMenu}>
+                <Menu $show={showSelectMenu}>
                   {[
                     { label: 'За популярністю', value: 'rating' },
                     { label: 'Від дешевих до дорогих', value: 'price-up' },
@@ -554,7 +566,7 @@ const Catalog = () => {
                     },
                   ].map((el) => (
                     <SelectItem
-                      show={!showSelectMenu && el.label === selectValue}
+                      $show={!showSelectMenu && el.label === selectValue}
                       key={el.value}
                       onClick={() => {
                         setSelectValue(el.label);
@@ -579,7 +591,7 @@ const Catalog = () => {
                   ))}
                 </Menu>
               </SelectBox>
-            </div>
+            </FlexDiv>
 
             <GoodsList>
               {sortedByStock?.map((el) => (

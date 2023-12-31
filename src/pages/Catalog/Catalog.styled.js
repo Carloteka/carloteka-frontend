@@ -5,22 +5,51 @@ const transitionTime = '0.75s easy';
 
 export const FlexContainer = styled.div`
   display: flex;
-  gap: 32px;
+  flex-direction: column;
+  gap: 16px;
   width: 100%;
 
   @media screen and (min-width: 1440px) {
+    flex-direction: row;
+    gap: 32px;
   }
 `;
 
-export const Aside = styled.aside``;
+export const ShowFiltersBtn = styled.button`
+  display: flex;
+  width: 100%;
+  height: 48px;
+  color: white;
+  background-color: #2d3f24;
+  text-transform: uppercase;
+  @media screen and (min-width: 1440px) {
+    display: none;
+  }
+
+  &.white-bcgr {
+    margin-bottom: 56px;
+    color: #2d3f24;
+    background-color: white;
+    border: 1px solid #799058;
+  }
+`;
+
+export const Aside = styled.aside`
+  display: ${({ $show }) => ($show ? 'block' : 'none')};
+  @media screen and (min-width: 1440px) {
+    display: block;
+  }
+`;
 
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 24px;
+  text-align: left;
 
   @media screen and (min-width: 1440px) {
     width: 304px;
+    gap: 40px;
   }
 
   fieldset {
@@ -28,25 +57,40 @@ export const Form = styled.form`
   }
 
   fieldset:nth-child(even) {
-    padding-bottom: 40px;
+    padding-bottom: 24px;
     border-bottom: 1px solid grey;
+    @media screen and (min-width: 1440px) {
+      padding-bottom: 40px;
+    }
+
     legend {
-      padding-top: 40px;
+      padding-top: 24px;
       width: 100%;
       border-top: 1px solid #a7a5a3;
+      @media screen and (min-width: 1440px) {
+        padding-top: 40px;
+      }
     }
   }
 
   legend {
-    margin-bottom: 40px;
+    margin-bottom: 24px;
+    @media screen and (min-width: 1440px) {
+      margin-bottom: 40px;
+    }
   }
 
   label {
+    margin-bottom: 16px;
+    padding: 0 3px;
     display: flex;
     align-items: center;
     width: 100%;
     min-height: 25px;
     text-indent: 16px;
+  }
+  label:lastchild {
+    margin-bottom: 0;
   }
   input {
     width: 18px;
@@ -61,6 +105,8 @@ export const Form = styled.form`
     text-transform: uppercase;
   }
 `;
+
+export const Checkbox = styled.input``;
 
 export const Price = styled.fieldset`
   div {
@@ -78,6 +124,7 @@ export const Price = styled.fieldset`
   }
 
   label {
+    padding: 0;
     position: relative;
     text-indent: 0px;
   }
@@ -132,10 +179,14 @@ export const TagsContainer = styled.div`
   margin-bottom: 32px;
   padding-right: 148px;
   position: relative;
-  display: flex;
+  display: none;
   flex-wrap: wrap;
   align-items: baseline;
   gap: 16px;
+
+  @media screen and (min-width: 1440px) {
+    display: flex;
+  }
 
   ul {
     display: flex;
@@ -186,10 +237,34 @@ export const TagsContainer = styled.div`
   }
 `;
 
+export const FlexDiv = styled.div`
+  margin-bottom: 40px;
+  display: none;
+  text-align: left;
+  @media screen and (min-width: 1440px) {
+    display: inline-flex;
+  }
+`;
+
 export const GoodsList = styled.ul`
   display: flex;
   flex-wrap: wrap;
-  gap: 32px;
+  gap: 8px;
+  @media screen and (min-width: 1440px) {
+    gap: 32px;
+  }
+
+  li {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 304px;
+    height: 440px;
+    @media screen and (min-width: 1440px) {
+      height: 456px;
+      gap: 0px;
+    }
+  }
 `;
 
 export const SelectBox = styled.div`
@@ -237,7 +312,7 @@ export const Menu = styled.ul`
   border: 1px solid #a7a5a3;
   box-shadow: 1px 1px 7px 0 #dad4c870;
   transition: visibility 0.75s;
-  visibility: ${({ show }) => (show ? `visible` : `hidden`)};
+  visibility: ${({ $show }) => ($show ? `visible` : `hidden`)};
 
   svg {
     position: static;
@@ -279,8 +354,8 @@ export const SelectItem = styled.li`
     background-color 0.15s,
     color 0.25s;
 
-  ${({ show }) =>
-    show
+  ${({ $show }) =>
+    $show
       ? `background-color: #2d3f24; color:white`
       : `background-color: white; color:#101010`};
   &:hover {

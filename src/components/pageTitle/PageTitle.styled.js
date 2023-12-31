@@ -16,8 +16,11 @@ export const Wrapper = styled.div`
 export const Title = styled.h1`
   padding: 0 20px;
   width: 320px;
+  text-align: center;
+
   @media screen and (min-width: 1440px) {
     padding: 0 176px;
     width: 1440px;
+    text-align: left;
   }
 `;
