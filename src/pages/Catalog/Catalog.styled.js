@@ -75,15 +75,6 @@ export const Price = styled.fieldset`
     color: #5b5b59;
   }
 
-  input[type='range'] {
-    height: 28px;
-    // -webkit-appearance: none;
-    // appearance: none;
-    // background: transparent;
-    // cursor: pointer;
-    // width: 15rem;
-  }
-
   label {
     position: relative;
     text-indent: 0px;
@@ -91,6 +82,40 @@ export const Price = styled.fieldset`
 
   #price-range {
     margin: 16px 0;
+    padding: 0;
+    justify-content: center;
+    height: 28px;
+
+    & > div {
+      gap: 0;
+    }
+    & .bar {
+      height: 4px;
+      box-shadow: none;
+    }
+
+    & .bar-left {
+      padding: 0;
+    }
+    & .bar-right {
+      padding: 0;
+      box-shadow: none;
+    }
+    .caption {
+      display: none;
+    }
+    .thumb::before {
+      margin: -11px 0;
+      width: 28px;
+      height: 28px;
+      box-shadow: none;
+    }
+    .thumb-right::before {
+      right: 0;
+      width: 28px;
+      height: 28px;
+      box-shadow: none;
+    }
   }
 
   input {

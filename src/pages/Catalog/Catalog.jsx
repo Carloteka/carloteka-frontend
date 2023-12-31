@@ -18,6 +18,8 @@ import { toggleLocalStorage } from 'src/utils/toggleLocalStorage';
 import sprite from '../../images/sprite.svg';
 import { fetchAllGoods, fetchFilteredGoods } from '../../api/api';
 
+import MultiRangeSlider from 'multi-range-slider-react';
+
 const Catalog = () => {
   const isFirst = useRef(true);
   const select = useRef();
@@ -246,6 +248,18 @@ const Catalog = () => {
   const handleSubmit = (e) => {
     e?.preventDefault();
 
+    let newparams = {};
+    newparams = {
+      ...params,
+    };
+    const priceTo = 'price-to';
+    const priceFrom = 'price-from';
+    if (newparams[priceTo] || newparams[priceFrom]) {
+      newparams[priceTo] = maxValue;
+      newparams[priceFrom] = minValue;
+      setSearchParams(newparams);
+    }
+
     let s = location.search.replaceAll('%26', '&').replaceAll('%3D', '=');
 
     async function getFilteredCategories() {
@@ -261,7 +275,7 @@ const Catalog = () => {
     getFilteredCategories();
   };
 
-  function toggleRotate(e) {
+  function toggleRotate() {
     setRotate((prev) => !prev);
   }
   function onSelectHandler(e) {
@@ -306,6 +320,9 @@ const Catalog = () => {
       return a.in_stock - b.in_stock;
     }
   });
+
+  const [minValue, setMinValue] = useState(getPriceValue('price-from'));
+  const [maxValue, setMaxValue] = useState(getPriceValue('price-to'));
 
   return (
     <>
@@ -380,48 +397,61 @@ const Catalog = () => {
                 <legend>Ціна</legend>
                 <div>
                   <span>0</span>
-                  <span>{getPriceValue('price-to')}</span>
+                  <span>{maxValue}</span>
                   <span>10000</span>
                 </div>
 
-                <label id="price-range">
-                  <input
-                    type="range"
-                    name="priceTo"
-                    value={getPriceValue('price-to')}
-                    onChange={(e) =>
-                      onChangeHandler('price-to', e.target.value)
-                    }
-                    min={0}
-                    max={10000}
-                  />
-                </label>
+                <MultiRangeSlider
+                  id="price-range"
+                  min={0}
+                  max={10000}
+                  minValue={minValue}
+                  maxValue={maxValue}
+                  onInput={(e) => {
+                    setMinValue(e.minValue);
+                    setMaxValue(e.maxValue);
+                  }}
+                  canMinMaxValueSame={true}
+                  ruler={false}
+                  label={false}
+                  barLeftColor="#a7a5a3"
+                  barInnerColor="#101010"
+                  barRightColor="#a7a5a3"
+                  thumbLeftColor="#101010"
+                  thumbRightColor="#101010"
+                  style={{
+                    border: 'none',
+                    boxShadow: 'none',
+                    width: '100%',
+                  }}
+                />
+
                 <div>
                   <label>
                     <input
                       type="number"
                       name="price-from"
-                      max={getPriceValue('price-to')}
-                      value={getPriceValue('price-from')}
-                      onChange={(e) =>
-                        onChangeHandler('price-from', e.target.value)
-                      }
+                      max={maxValue}
+                      value={minValue}
+                      onChange={(e) => {
+                        setMinValue(e.target.value);
+                        onChangeHandler('price-from', e.target.value);
+                      }}
                       placeholder="0"
                       min="0"
-                      // max="10000"
                     />
                   </label>
                   <label>
                     <input
                       type="number"
                       name="price-to"
-                      value={getPriceValue('price-to')}
-                      onChange={(e) =>
-                        onChangeHandler('price-to', e.target.value)
-                      }
+                      value={maxValue}
+                      onChange={(e) => {
+                        setMaxValue(e.target.value);
+                        onChangeHandler('price-to', e.target.value);
+                      }}
                       placeholder="4000"
-                      // min="0"
-                      min={getPriceValue('price-from')}
+                      min={minValue}
                       max="10000"
                     />
                   </label>
@@ -477,7 +507,7 @@ const Catalog = () => {
                 <Select
                   ref={select}
                   name="sort-by"
-                  onClick={(e) => toggleRotate(e)}
+                  onClick={() => toggleRotate()}
                   onChange={(e) => onSelectHandler(e)}
                 >
                   <option
