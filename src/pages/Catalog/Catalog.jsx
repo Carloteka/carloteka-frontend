@@ -12,8 +12,12 @@ import {
   TagsContainer,
   GoodsList,
   SelectBox,
-  Select,
+  Backdrop,
+  Menu,
+  CheckedIcon,
+  SelectItem,
 } from './Catalog.styled';
+
 import { toggleLocalStorage } from 'src/utils/toggleLocalStorage';
 import sprite from '../../images/sprite.svg';
 import { fetchAllGoods, fetchFilteredGoods } from '../../api/api';
@@ -30,8 +34,8 @@ const Catalog = () => {
     () => Object.fromEntries([...searchParams]),
     [searchParams],
   );
-
-  const [rotate, setRotate] = useState(false);
+  const [selectValue, setSelectValue] = useState(getSortingValue());
+  const [showSelectMenu, setShowSelectMenu] = useState(false);
 
   function isChecked(field, value) {
     const temp = params[field];
@@ -43,6 +47,20 @@ const Catalog = () => {
     const temp = params[field];
 
     return temp ? temp : field === 'price-to' ? 4000 : 0;
+  }
+
+  function getSortingValue() {
+    let sortBy = 'За популярністю';
+    switch (params['sort-by']) {
+      case 'price-up':
+        sortBy = 'Від дешевих до дорогих';
+        break;
+
+      case 'price-down':
+        sortBy = 'Від дорогих до дешевих';
+        break;
+    }
+    return sortBy;
   }
 
   // let goods = [];
@@ -214,7 +232,7 @@ const Catalog = () => {
       return;
     }
 
-    if (field === 'price-from' || field === 'price-to') {
+    if (field === 'price-from' || field === 'price-to' || field === 'sort-by') {
       newparams = {
         ...params,
         [field]: value,
@@ -275,8 +293,12 @@ const Catalog = () => {
     getFilteredCategories();
   };
 
-  function toggleRotate() {
-    setRotate((prev) => !prev);
+  function toggleSelectMenu(e) {
+    // console.log(e);
+    if (e.target.nodeName === 'SPAN') {
+      return;
+    }
+    setShowSelectMenu((prev) => !prev);
   }
   function onSelectHandler(e) {
     console.log(select.current.value);
@@ -502,40 +524,60 @@ const Catalog = () => {
                 Представлено {getRangeToDisplay()} з {quantity}
               </span>
               <span style={{ margin: '0 32px' }}> | </span>
-              <span> Сортувати: </span>
-              <SelectBox>
-                <Select
-                  ref={select}
-                  name="sort-by"
-                  onClick={() => toggleRotate()}
-                  onChange={(e) => onSelectHandler(e)}
-                >
-                  <option
-                    value="rating"
-                    defaultValue="За популярністю"
-                    label="За популярністю"
+              <SelectBox onClick={(e) => toggleSelectMenu(e)}>
+                <span>Сортувати: </span>
+                <p>
+                  {selectValue}
+                  <svg
+                    width={8}
+                    height={12}
+                    style={{
+                      transform: showSelectMenu
+                        ? 'rotate(-270deg)'
+                        : 'rotate(-90deg)',
+                    }}
                   >
-                    За популярністю
-                  </option>
-                  <option value="price-up" label="Від дешевих до дорогих">
-                    Від дешевих до дорогих
-                  </option>
-                  <option value="price-down" label="Від дорогих до дешевих">
-                    Від дорогих до дешевих
-                  </option>
-                  <option value="rating" label="За рейтингом">
-                    За рейтингом
-                  </option>
-                </Select>
-                <svg
-                  width={8}
-                  height={12}
-                  style={{
-                    transform: rotate ? 'rotate(-270deg)' : 'rotate(-90deg)',
-                  }}
-                >
-                  <use href={`${sprite}#chevron`} />
-                </svg>
+                    <use href={`${sprite}#chevron`} />
+                  </svg>
+                </p>
+
+                <Backdrop
+                  style={{ display: showSelectMenu ? 'block' : 'none' }}
+                />
+                <Menu show={showSelectMenu}>
+                  {[
+                    { label: 'За популярністю', value: 'rating' },
+                    { label: 'Від дешевих до дорогих', value: 'price-up' },
+                    {
+                      label: 'Від дорогих до дешевих',
+                      value: 'price-down',
+                    },
+                  ].map((el) => (
+                    <SelectItem
+                      show={!showSelectMenu && el.label === selectValue}
+                      key={el.value}
+                      onClick={() => {
+                        setSelectValue(el.label);
+                        onChangeHandler('sort-by', el.value);
+                      }}
+                    >
+                      {(showSelectMenu || el.label === selectValue) && (
+                        <CheckedIcon
+                          checked={!showSelectMenu && el.label === selectValue}
+                          width={24}
+                          height={24}
+                          style={{
+                            transform: 'rotate(0deg)',
+                          }}
+                        >
+                          <use href={`${sprite}#checked`} />
+                        </CheckedIcon>
+                      )}
+
+                      <p>{el.label}</p>
+                    </SelectItem>
+                  ))}
+                </Menu>
               </SelectBox>
             </div>
 

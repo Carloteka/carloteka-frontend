@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 // import { Link } from 'react-router-dom';
 
+const transitionTime = '0.75s easy';
+
 export const FlexContainer = styled.div`
   display: flex;
   gap: 32px;
@@ -189,26 +191,12 @@ export const GoodsList = styled.ul`
   flex-wrap: wrap;
   gap: 32px;
 `;
-export const Select = styled.select`
-  padding-right: 48px;
-  height: 25px;
-  width: min-content;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: calc(23 / 18);
-  border: none;
-  cursor: pointer;
-  appearance: none;
-  outline: none;
 
-  &:selected {
-    border: 1px solid red;
-  }
-`;
 export const SelectBox = styled.div`
   display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
   position: relative;
-
   height: 25px;
 
   svg {
@@ -218,5 +206,89 @@ export const SelectBox = styled.div`
     transform: rotate(-90deg);
     cursor: pointer;
     pointer-events: none;
+  }
+  & > p {
+    padding-right: 48px;
+    height: 25px;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: calc(23 / 18);
+    cursor: pointer;
+  }
+`;
+
+export const Backdrop = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: transparent;
+  z-index: 0;
+`;
+export const Menu = styled.ul`
+  display: block;
+  position: absolute;
+  top: 30px;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 1;
+  border: 1px solid #a7a5a3;
+  box-shadow: 1px 1px 7px 0 #dad4c870;
+  transition: visibility 0.75s;
+  visibility: ${({ show }) => (show ? `visible` : `hidden`)};
+
+  svg {
+    position: static;
+  }
+`;
+
+export const CheckedIcon = styled.svg`
+  margin-right: 16px;
+  padding: 6px 5px;
+  background-color: #2d3f24;
+  fill: #2d3f24;
+  display: none;
+  transition:
+    fill 0.75s,
+    width 0.15s,
+    padding 0.15s,
+    margin-right 0.15s;
+  ${({ checked }) =>
+    checked &&
+    `fill:white; display:block; width:24px; padding:6px 5px; margin-right:16px; animation: 0.3s linear 0s 1 alternate move`};
+
+  @keyframes move {
+    from {
+      width: 0;
+    }
+    to {
+      width: 24px;
+    }
+  }
+`;
+
+export const SelectItem = styled.li`
+  padding: 12px 16px;
+  display: flex;
+  background-color: white;
+  color: #101010;
+  cursor: pointer;
+  transition:
+    background-color 0.15s,
+    color 0.25s;
+
+  ${({ show }) =>
+    show
+      ? `background-color: #2d3f24; color:white`
+      : `background-color: white; color:#101010`};
+  &:hover {
+    color: white;
+    background-color: #2d3f24;
+  }
+  &:nth-child(even) {
+    border-top: 0.5px solid #a7a5a3;
+    border-bottom: 0.5px solid #a7a5a3;
   }
 `;
