@@ -15,7 +15,6 @@
 
 .paginator {
   margin-top: 56px;
-  padding: 20px 0;
 
   list-style: none;
   display: flex;
@@ -59,12 +58,12 @@
 
 /* addition width+gap of disappearing buttons to padding of ul to avoid moving navigation buttons   */
 .paginator:has(> li:first-child[data-hidden='true']) {
-  padding-left: 40px;
+  padding-left: 82px;
 }
 .paginator:has(
     > li:first-child[data-hidden='true'] + li:nth-child(2)[data-hidden='true']
   ) {
-  padding-left: 80px;
+  padding-left: 164px;
 }
 /* ------------------- */
 
@@ -72,17 +71,6 @@
   position: relative;
 }
 
-.last_page_translucent {
-  position: absolute;
-  top: 25%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(1);
-  color: blue;
-  text-shadow: 2px 2px 6px orange;
-  font-size: 0.7em;
-  letter-spacing: 0;
-  opacity: 0.5;
-}
 .paginator > li:last-child > button:disabled {
   color: var(--subtle-txt-cl);
 }

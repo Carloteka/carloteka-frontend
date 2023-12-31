@@ -1,10 +1,16 @@
 import css from './Paginator.module.css';
 import { useRef } from 'react';
 
-export const Paginator = ({ setCurrentPage, currentPage, pageCount }) => {
+export const Paginator = ({
+  setCurrentPage,
+  currentPage: currPageAsString,
+  pageCount,
+}) => {
   const firstBtnRef = useRef();
   const secondBtnRef = useRef();
   const thirdBtnRef = useRef();
+
+  const currentPage = +currPageAsString;
 
   function startBtnAction() {
     firstBtnRef.current.innerText = 1;
@@ -233,9 +239,7 @@ export const Paginator = ({ setCurrentPage, currentPage, pageCount }) => {
               }}
               disabled={!pageCount}
             >
-              <span className={css.last_page_translucent}>
-                {pageCount ? pageCount : '?'}
-              </span>
+              {pageCount}
             </button>
           </li>
         </>
