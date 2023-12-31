@@ -15,10 +15,15 @@
 
 .paginator {
   margin-top: 56px;
-
+  display: none;
   list-style: none;
-  display: flex;
+
   gap: 32px;
+}
+@media screen and (min-width: 1440px) {
+  .paginator {
+    display: flex;
+  }
 }
 
 .paginator button {

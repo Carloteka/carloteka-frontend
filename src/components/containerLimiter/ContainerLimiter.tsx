@@ -25,7 +25,7 @@ export const ContainerLimiter = ({
 
 export const Limiter = styled.div<StyleProp>`
   margin: 0 auto;
-  padding: ${({ paddingmob }) => `${paddingmob} 0 74px`};
+  padding: ${({ paddingmob }) => `${paddingmob} 0 72px`};
   width: 288px;
   text-align: center;
   @media screen and (min-width: 768px) {
