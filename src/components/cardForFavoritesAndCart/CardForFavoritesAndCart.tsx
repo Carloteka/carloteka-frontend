@@ -37,7 +37,7 @@ export const CardForFavoritesAndCart = ({
 }: CardForFavoritesAndCartProps) => {
   const { images, name, price, id_name } = good;
 
-  const { amountInCart, setAmountInCart } = useContext(CartContext);
+  const { setAmountInCart } = useContext(CartContext);
 
   const quantity = good?.quantity ? good.quantity : 1;
 
@@ -50,7 +50,7 @@ export const CardForFavoritesAndCart = ({
 
   function buyBtnHandle() {
     toggleLocalStorage(false, 'cart', id_name);
-    setAmountInCart((amountInCart) => amountInCart + 1);
+    setAmountInCart((amountInCart: number) => amountInCart + 1);
   }
 
   return (
@@ -111,7 +111,7 @@ export const CardForFavoritesAndCart = ({
         <DelBtn
           type="button"
           onClick={() => {
-            setAmountInCart((amountInCart) => amountInCart - 1);
+            setAmountInCart((amountInCart: number) => amountInCart - 1);
             onClickDelete(id_name);
           }}
         >

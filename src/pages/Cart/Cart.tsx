@@ -28,7 +28,7 @@ type Good = {
 };
 
 const Cart = () => {
-  const { amountInCart, setAmountInCart } = useContext(CartContext);
+  const { setAmountInCart } = useContext(CartContext);
 
   let goodsInCart = [];
 

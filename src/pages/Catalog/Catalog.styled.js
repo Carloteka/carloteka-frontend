@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 // import { Link } from 'react-router-dom';
 
-const transitionTime = '0.75s easy';
-
 export const FlexContainer = styled.div`
   display: flex;
   flex-direction: column;

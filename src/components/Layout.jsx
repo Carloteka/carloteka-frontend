@@ -6,7 +6,9 @@ import { Footer } from './footer/Footer';
 
 export const CartContext = createContext({
   amountInCart: 0,
-  setAmountInCart: () => {},
+  setAmountInCart: (state) => {
+    state;
+  },
 });
 
 const Layout = () => {

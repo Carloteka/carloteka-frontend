@@ -1,26 +1,35 @@
 import css from './Paginator.module.css';
 import { useRef } from 'react';
 
+interface PaginatorProps {
+  setCurrentPage: (_value: number) => void;
+  currentPage: number;
+  pageCount: number;
+}
+
 export const Paginator = ({
   setCurrentPage,
   currentPage: currPageAsString,
   pageCount,
-}) => {
-  const firstBtnRef = useRef();
-  const secondBtnRef = useRef();
-  const thirdBtnRef = useRef();
+}: PaginatorProps) => {
+  const firstBtnRef = useRef() as React.MutableRefObject<HTMLButtonElement>;
+  const secondBtnRef = useRef() as React.MutableRefObject<HTMLButtonElement>;
+  const thirdBtnRef = useRef() as React.MutableRefObject<HTMLButtonElement>;
 
   const currentPage = +currPageAsString;
 
   function startBtnAction() {
-    firstBtnRef.current.innerText = 1;
-    secondBtnRef.current.innerText = 2;
-    thirdBtnRef.current.innerText = 3;
+    const firstBtn: HTMLButtonElement = firstBtnRef.current;
+    firstBtn.innerText = '1';
+    const secondBtn: HTMLButtonElement = secondBtnRef.current;
+    secondBtn.innerText = '2';
+    const thirdBtn: HTMLButtonElement = thirdBtnRef.current;
+    thirdBtn.innerText = '3';
     setCurrentPage(1);
   }
 
   function prevBtnAction() {
-    if (currentPage == firstBtnRef.current.innerText) {
+    if (currentPage == +firstBtnRef.current.innerText) {
       if (currentPage === 3) {
         moreBtnAction(-2);
       } else {
@@ -34,32 +43,35 @@ export const Paginator = ({
     if (pageCount && currentPage >= pageCount) {
       return;
     }
-    if (currentPage == thirdBtnRef.current.innerText) {
+    if (currentPage == +thirdBtnRef.current.innerText) {
       moreBtnAction(3);
     }
     setCurrentPage(currentPage + 1);
   }
 
-  function moreBtnAction(payload) {
+  function moreBtnAction(payload: number) {
     if (+firstBtnRef.current.innerText + payload <= pageCount || !pageCount) {
-      firstBtnRef.current.innerText = +firstBtnRef.current.innerText + payload;
-      secondBtnRef.current.innerText =
-        +secondBtnRef.current.innerText + payload;
-      thirdBtnRef.current.innerText = +thirdBtnRef.current.innerText + payload;
+      firstBtnRef.current.innerText = (+firstBtnRef.current.innerText +
+        payload) as unknown as string;
+      secondBtnRef.current.innerText = (+secondBtnRef.current.innerText +
+        payload) as unknown as string;
+      thirdBtnRef.current.innerText = (+thirdBtnRef.current.innerText +
+        payload) as unknown as string;
     } else {
       startBtnAction();
     }
   }
 
-  function isBtnHidden(button) {
+  function isBtnHidden(button: string) {
     let answer = 'false';
 
     switch (button) {
       case 'start':
         if (
-          (currentPage <= 3 && currentPage == thirdBtnRef.current?.innerText) ||
           (currentPage <= 3 &&
-            currentPage == secondBtnRef.current?.innerText) ||
+            currentPage == +thirdBtnRef.current?.innerText) ||
+          (currentPage <= 3 &&
+            currentPage == +secondBtnRef.current?.innerText) ||
           currentPage < 2
         ) {
           answer = 'true';
@@ -68,12 +80,16 @@ export const Paginator = ({
 
       case 'prev':
         if (
-          (currentPage <= 3 && currentPage == thirdBtnRef.current?.innerText) ||
+          (currentPage <= 3 &&
+            currentPage == +thirdBtnRef.current?.innerText) ||
           currentPage <= 2
         ) {
           answer = 'true';
         }
-        if (currentPage >= 2 && currentPage == firstBtnRef.current?.innerText) {
+        if (
+          currentPage >= 2 &&
+          currentPage == +firstBtnRef.current?.innerText
+        ) {
           answer = 'false';
         }
         break;
@@ -90,7 +106,7 @@ export const Paginator = ({
       case 'next':
         if (
           (pageCount - currentPage <= 2 &&
-            currentPage == firstBtnRef.current?.innerText) ||
+            currentPage == +firstBtnRef.current?.innerText) ||
           pageCount - currentPage <= 1
         ) {
           answer = 'true';
@@ -103,7 +119,7 @@ export const Paginator = ({
       case 'last':
         if (
           (pageCount - currentPage < 3 &&
-            currentPage == firstBtnRef.current?.innerText) ||
+            currentPage == +firstBtnRef.current?.innerText) ||
           pageCount - currentPage <= 1
         ) {
           answer = 'true';
@@ -120,6 +136,10 @@ export const Paginator = ({
     return answer;
   }
 
+  function setPage(el: HTMLElement) {
+    const pageNumber = +el.innerText;
+    setCurrentPage(pageNumber);
+  }
   return (
     <ul className={css.paginator}>
       {pageCount && pageCount <= 1 ? null : (
@@ -152,14 +172,14 @@ export const Paginator = ({
               type="button"
               disabled={
                 firstBtnRef.current
-                  ? currentPage == firstBtnRef.current.innerText
+                  ? currentPage == +firstBtnRef.current.innerText
                   : true
               }
               title="first button of page navigation"
-              onClick={(e) => setCurrentPage(+e.target.innerText)}
+              onClick={(e) => setPage(e.target as HTMLElement)}
             >
               {firstBtnRef.current
-                ? currentPage == firstBtnRef.current?.innerText
+                ? currentPage == +firstBtnRef.current?.innerText
                   ? currentPage
                   : firstBtnRef.current.innerText
                 : 1}
@@ -173,12 +193,12 @@ export const Paginator = ({
             <button
               ref={secondBtnRef}
               type="button"
-              disabled={currentPage == secondBtnRef?.current?.innerText}
+              disabled={currentPage == +secondBtnRef?.current?.innerText}
               title="second button of page navigation"
-              onClick={(e) => setCurrentPage(+e.target.innerText)}
+              onClick={(e) => setPage(e.target as HTMLElement)}
             >
               {secondBtnRef.current
-                ? currentPage == secondBtnRef.current?.innerText
+                ? currentPage == +secondBtnRef.current?.innerText
                   ? currentPage
                   : secondBtnRef.current.innerText
                 : 2}
@@ -192,12 +212,12 @@ export const Paginator = ({
             <button
               ref={thirdBtnRef}
               type="button"
-              disabled={currentPage == thirdBtnRef?.current?.innerText}
+              disabled={currentPage == +thirdBtnRef?.current?.innerText}
               title="third button of page navigation"
-              onClick={(e) => setCurrentPage(+e.target.innerText)}
+              onClick={(e) => setPage(e.target as HTMLElement)}
             >
               {thirdBtnRef.current
-                ? currentPage == thirdBtnRef.current?.innerText
+                ? currentPage == +thirdBtnRef.current?.innerText
                   ? currentPage
                   : thirdBtnRef.current.innerText
                 : 3}
@@ -232,9 +252,11 @@ export const Paginator = ({
               data-type={'styled'}
               title="last page"
               onClick={() => {
-                firstBtnRef.current.innerText = pageCount - 2;
-                secondBtnRef.current.innerText = pageCount - 1;
-                thirdBtnRef.current.innerText = pageCount;
+                firstBtnRef.current.innerText = (pageCount -
+                  2) as unknown as string;
+                secondBtnRef.current.innerText = (pageCount -
+                  1) as unknown as string;
+                thirdBtnRef.current.innerText = pageCount as unknown as string;
                 setCurrentPage(pageCount);
               }}
               disabled={!pageCount}

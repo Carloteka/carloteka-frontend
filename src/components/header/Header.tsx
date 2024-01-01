@@ -18,7 +18,7 @@ export const Header = () => {
   const { amountInCart } = useContext(CartContext);
 
   const [showMenu, setShowMenu] = useState(false);
-  const [inCart, setInCart] = useState([]);
+  const [inCart, setInCart] = useState<string[]>([]);
 
   let goodsInCart: string[] = [];
   useEffect(() => {
