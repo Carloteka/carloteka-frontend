@@ -24,7 +24,7 @@ import {
   NoResult,
 } from './Catalog.styled';
 
-import { toggleLocalStorage } from 'src/utils/toggleLocalStorage';
+// import { toggleLocalStorage } from 'src/utils/toggleLocalStorage';
 import sprite from '../../images/sprite.svg';
 import { fetchAllGoods, fetchFilteredGoods } from '../../api/api';
 
@@ -32,7 +32,6 @@ import MultiRangeSlider from 'multi-range-slider-react';
 
 const Catalog = () => {
   const isFirst = useRef(true);
-  const select = useRef();
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query');
 
@@ -83,11 +82,11 @@ const Catalog = () => {
 
   const [catalog, setCatalog] = useState([]);
   const [quantity, setQuantity] = useState(catalog?.length);
-  const [limit, setLimit] = useState(12);
+  const [limit] = useState(12);
   const [tags, setTags] = useState([]);
 
   // const [catalog, setCatalog] = useState(goods);
-  const [category, setCategory] = useState(categories);
+  const [category] = useState(categories);
 
   useEffect(() => {
     if (query) {
@@ -119,6 +118,7 @@ const Catalog = () => {
     }
 
     setTags(getTags());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, params, setSearchParams]);
 
   function getTags() {
@@ -301,17 +301,10 @@ const Catalog = () => {
   };
 
   function toggleSelectMenu(e) {
-    // console.log(e);
     if (e.target.nodeName === 'SPAN') {
       return;
     }
     setShowSelectMenu((prev) => !prev);
-  }
-  function onSelectHandler(e) {
-    console.log(select.current.value);
-    console.log(select.current.offsetWidth);
-    // let width = select.current.style.width;
-    // select.current.style.width = width + 'em';
   }
 
   function deleteFilter(field, value) {

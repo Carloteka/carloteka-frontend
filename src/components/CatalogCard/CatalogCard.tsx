@@ -25,7 +25,7 @@ interface SliderItemProps {
 export const CatalogCard = ({ item }: SliderItemProps) => {
   const { id_name, name, mini_image, price, in_stock } = item;
 
-  const { amountInCart, setAmountInCart } = useContext(CartContext);
+  const { setAmountInCart } = useContext(CartContext);
 
   let cartArray: string[] = [];
   let favoriteArray: string[] = [];
@@ -50,7 +50,7 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
   function toggleCart() {
     toggleLocalStorage(inCart, 'cart', id_name);
     setInCart((prev) => !prev);
-    setAmountInCart((amountInCart) =>
+    setAmountInCart((amountInCart:number) =>
       isInCart ? amountInCart - 1 : amountInCart + 1,
     );
   }
