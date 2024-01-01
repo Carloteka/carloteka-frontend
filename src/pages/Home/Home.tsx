@@ -42,7 +42,7 @@ const Home = () => {
           </List>
         </CategorySection>
 
-        <PopularGoods />
+        <PopularGoods width={4} />
       </ContainerLimiter>
     </>
   );

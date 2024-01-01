@@ -4,6 +4,7 @@ import { PageTitle } from 'src/components/pageTitle/PageTitle';
 import { ContainerLimiter } from 'src/components/containerLimiter/ContainerLimiter.tsx';
 import { Paginator } from '../../components/Paginator/Paginator';
 import { CatalogCard } from '../../components/CatalogCard/CatalogCard';
+import { PopularGoods } from '../../components/popularGoods';
 import {
   FlexContainer,
   ShowFiltersBtn,
@@ -19,6 +20,8 @@ import {
   CheckedIcon,
   SelectItem,
   GoodsList,
+  NoResultBox,
+  NoResult,
 } from './Catalog.styled';
 
 import { toggleLocalStorage } from 'src/utils/toggleLocalStorage';
@@ -494,118 +497,138 @@ const Catalog = () => {
           >
             {showFilters ? 'Сховати фільтри' : 'Фільтри'}
           </ShowFiltersBtn>
-          <div style={{ padding: '0' }}>
-            {tags?.length > 1 && (
-              <TagsContainer>
-                <ul>
-                  {tags.map((el, index) => (
-                    <li key={`${el.value}-${index}`}>
-                      <p>{el.tag}</p>
-                      <svg
-                        width={15}
-                        height={15}
-                        onClick={() => deleteFilter(el.field, el.value)}
-                      >
-                        <use href={`${sprite}#close`} />
-                      </svg>
-                      <label>
-                        Видалити всі
-                        <input
-                          type="reset"
-                          form="filter"
-                          value=""
-                          onClick={() => {
-                            setSearchParams({});
-                            setTags([]);
-                          }}
-                        />
-                      </label>
-                    </li>
-                  ))}
-                </ul>
-              </TagsContainer>
-            )}
-            <FlexDiv
-              style={{
-                marginBottom: '40px',
-                display: 'inlineFlex',
-                textAlign: 'left',
-              }}
-            >
-              <span>
-                Представлено {getRangeToDisplay()} з {quantity}
-              </span>
-              <span style={{ margin: '0 32px' }}> | </span>
-              <SelectBox onClick={(e) => toggleSelectMenu(e)}>
-                <span>Сортувати: </span>
-                <p>
-                  {selectValue}
-                  <svg
-                    width={8}
-                    height={12}
-                    style={{
-                      transform: showSelectMenu
-                        ? 'rotate(-270deg)'
-                        : 'rotate(-90deg)',
-                    }}
-                  >
-                    <use href={`${sprite}#chevron`} />
-                  </svg>
-                </p>
-
-                <Backdrop
-                  style={{ display: showSelectMenu ? 'block' : 'none' }}
-                />
-                <Menu $show={showSelectMenu}>
-                  {[
-                    { label: 'За популярністю', value: 'rating' },
-                    { label: 'Від дешевих до дорогих', value: 'price-up' },
-                    {
-                      label: 'Від дорогих до дешевих',
-                      value: 'price-down',
-                    },
-                  ].map((el) => (
-                    <SelectItem
-                      $show={!showSelectMenu && el.label === selectValue}
-                      key={el.value}
-                      onClick={() => {
-                        setSelectValue(el.label);
-                        onChangeHandler('sort-by', el.value);
+          {!query && catalog?.length > 0 ? (
+            <div style={{ padding: '0' }}>
+              {tags?.length > 1 && (
+                <TagsContainer>
+                  <ul>
+                    {tags.map((el, index) => (
+                      <li key={`${el.value}-${index}`}>
+                        <p>{el.tag}</p>
+                        <svg
+                          width={15}
+                          height={15}
+                          onClick={() => deleteFilter(el.field, el.value)}
+                        >
+                          <use href={`${sprite}#close`} />
+                        </svg>
+                        <label>
+                          Видалити всі
+                          <input
+                            type="reset"
+                            form="filter"
+                            value=""
+                            onClick={() => {
+                              setSearchParams({});
+                              setTags([]);
+                            }}
+                          />
+                        </label>
+                      </li>
+                    ))}
+                  </ul>
+                </TagsContainer>
+              )}
+              <FlexDiv
+                style={{
+                  marginBottom: '40px',
+                  display: 'inlineFlex',
+                  textAlign: 'left',
+                }}
+              >
+                <span>
+                  Представлено {getRangeToDisplay()} з {quantity}
+                </span>
+                <span style={{ margin: '0 32px' }}> | </span>
+                <SelectBox onClick={(e) => toggleSelectMenu(e)}>
+                  <span>Сортувати: </span>
+                  <p>
+                    {selectValue}
+                    <svg
+                      width={8}
+                      height={12}
+                      style={{
+                        transform: showSelectMenu
+                          ? 'rotate(-270deg)'
+                          : 'rotate(-90deg)',
                       }}
                     >
-                      {(showSelectMenu || el.label === selectValue) && (
-                        <CheckedIcon
-                          checked={!showSelectMenu && el.label === selectValue}
-                          width={24}
-                          height={24}
-                          style={{
-                            transform: 'rotate(0deg)',
-                          }}
-                        >
-                          <use href={`${sprite}#checked`} />
-                        </CheckedIcon>
-                      )}
+                      <use href={`${sprite}#chevron`} />
+                    </svg>
+                  </p>
 
-                      <p>{el.label}</p>
-                    </SelectItem>
-                  ))}
-                </Menu>
-              </SelectBox>
-            </FlexDiv>
+                  <Backdrop
+                    style={{ display: showSelectMenu ? 'block' : 'none' }}
+                  />
+                  <Menu $show={showSelectMenu}>
+                    {[
+                      { label: 'За популярністю', value: 'rating' },
+                      { label: 'Від дешевих до дорогих', value: 'price-up' },
+                      {
+                        label: 'Від дорогих до дешевих',
+                        value: 'price-down',
+                      },
+                    ].map((el) => (
+                      <SelectItem
+                        $show={!showSelectMenu && el.label === selectValue}
+                        key={el.value}
+                        onClick={() => {
+                          setSelectValue(el.label);
+                          onChangeHandler('sort-by', el.value);
+                        }}
+                      >
+                        {(showSelectMenu || el.label === selectValue) && (
+                          <CheckedIcon
+                            checked={
+                              !showSelectMenu && el.label === selectValue
+                            }
+                            width={24}
+                            height={24}
+                            style={{
+                              transform: 'rotate(0deg)',
+                            }}
+                          >
+                            <use href={`${sprite}#checked`} />
+                          </CheckedIcon>
+                        )}
 
-            <GoodsList>
-              {sortedByStock?.map((el) => (
-                <li key={el.id_name}>
-                  <CatalogCard item={el} />
-                </li>
-              ))}
-            </GoodsList>
-            <Paginator
-              setCurrentPage={pageChanger}
-              currentPage={params.page || 1}
-              pageCount={limit !== 12 ? 0 : Math.ceil(quantity / limit)}
-            />
-          </div>
+                        <p>{el.label}</p>
+                      </SelectItem>
+                    ))}
+                  </Menu>
+                </SelectBox>
+              </FlexDiv>
+
+              <GoodsList>
+                {sortedByStock?.map((el) => (
+                  <li key={el.id_name}>
+                    <CatalogCard item={el} />
+                  </li>
+                ))}
+              </GoodsList>
+              <Paginator
+                setCurrentPage={pageChanger}
+                currentPage={params.page || 1}
+                pageCount={limit !== 12 ? 0 : Math.ceil(quantity / limit)}
+              />
+            </div>
+          ) : (
+            <NoResultBox>
+              <NoResult>
+                <p>За запитом “{query}” нічого не знайдено</p>
+                <ul>
+                  <li>Спробуйте ввести назву товару або категорії</li>
+                  <li>Переконайтеся, що в назвах немає граматичних помилок</li>
+                  <li>
+                    Або скористайтесь списком усіх товарів, поділених за
+                    категоріями (ліворуч)
+                  </li>
+                </ul>
+              </NoResult>
+
+              <PopularGoods width={3} />
+            </NoResultBox>
+          )}
         </FlexContainer>
       </ContainerLimiter>
     </>

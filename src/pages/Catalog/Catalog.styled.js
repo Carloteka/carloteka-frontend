@@ -367,3 +367,37 @@ export const SelectItem = styled.li`
     border-bottom: 0.5px solid #a7a5a3;
   }
 `;
+
+export const NoResultBox = styled.div`
+  display: block;
+`;
+
+export const NoResult = styled.div`
+  color: #000;
+
+  p:first-child {
+    margin-bottom: 40px;
+    font-weight: 600;
+    font-size: 36px;
+    line-height: calc(43 / 36);
+  }
+
+  ul {
+    margin-bottom: 88px;
+  }
+
+  li {
+    margin-bottom: 24px;
+  }
+
+  li:last-child {
+    li {
+      margin-bottom: 0px;
+    }
+  }
+
+  li::before {
+    content: '*';
+    margin-right: 16px;
+  }
+`;

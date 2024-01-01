@@ -11,7 +11,11 @@ type Popular = {
   in_stock: number;
 };
 
-export const PopularGoods = () => {
+interface PopularGoodsProps {
+  width: number;
+}
+
+export const PopularGoods = ({ width }: PopularGoodsProps) => {
   const [arrayPopulars, setArray] = useState<Popular[] | []>([]);
 
   useEffect(() => {
@@ -26,8 +30,6 @@ export const PopularGoods = () => {
     }
     getPopulars();
   }, []);
-
-  const width: number = 4;
 
   let arrayToRender: Popular[] = [];
   if (arrayPopulars?.length > 0) {
