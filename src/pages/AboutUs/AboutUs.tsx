@@ -1,4 +1,4 @@
-import { PageTitle } from 'src/components/PageTitle/PageTitle';
+import { PageTitle } from '../../components/pageTitle/PageTitle';
 import { Link } from 'react-router-dom';
 import {
   SectionAboutBrand,
