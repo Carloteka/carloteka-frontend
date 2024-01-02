@@ -1,4 +1,5 @@
 import { PageTitle } from 'src/components/PageTitle/PageTitle';
+import { Link } from 'react-router-dom';
 import {
   SectionAboutBrand,
   FirstP,
@@ -113,12 +114,12 @@ const AboutUs = () => {
               головоломки з Вашими логотипами, ексклюзивні брелоки і фірмові
               коробки для Вашої продукції.
             </p>
-            <button>
+            <Link to={'/catalog'} title="На стрінку Товарів">
               Каталог
               <svg width={16} height={16}>
                 <use href={`${sprite}#arrow-right`} />
               </svg>
-            </button>
+            </Link>
           </div>
           <div>
             <Img1
