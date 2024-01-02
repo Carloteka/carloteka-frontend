@@ -127,17 +127,26 @@ export const Menu = ({ onClickHandle }: MenuProps) => {
               <CategoriesList>
                 {categories.map((el) => (
                   <li key={el.id_name}>
-                    <Link to={`/catalog/${el.id_name}`}>{el.name}</Link>
+                    <Link
+                      to={`/catalog/${el.id_name}`}
+                      onClick={() => onClickHandle(false)}
+                    >
+                      {el.name}
+                    </Link>
                   </li>
                 ))}
               </CategoriesList>
             )}
           </li>
           <li>
-            <LinkLarge to={'/about'}>Про нас</LinkLarge>
+            <LinkLarge to={'/about'} onClick={() => onClickHandle(false)}>
+              Про нас
+            </LinkLarge>
           </li>
           <li>
-            <LinkLarge to={'/delivery'}>Оплата & Доставка</LinkLarge>
+            <LinkLarge to={'/delivery'} onClick={() => onClickHandle(false)}>
+              Оплата & Доставка
+            </LinkLarge>
           </li>
         </List>
       </nav>

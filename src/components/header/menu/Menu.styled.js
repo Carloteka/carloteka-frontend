@@ -20,6 +20,13 @@ export const MenuContainer = styled.div`
   a {
     justify-content: flex-start;
   }
+
+  @media screen and (max-width: 1439.99px) {
+    h3 {
+      font-size: 24px;
+      line-height: calc(31 / 24);
+    }
+  }
 `;
 
 export const CloseButton = styled.button`
@@ -48,6 +55,9 @@ export const FlexContainer = styled.div`
 
   h3 {
     margin-bottom:16px;
+      font-size: 20px;
+  line-height: calc(27 / 20);
+   
   }
 
   button:first-of-type {
@@ -133,8 +143,6 @@ export const Socials = styled.ul`
   height: 24px;
 
   svg {
-    width: 20px;
-    height: 20px;
     fill: #2d3f24;
   }
 `;

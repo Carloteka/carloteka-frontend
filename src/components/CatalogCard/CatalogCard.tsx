@@ -9,6 +9,7 @@ import {
 } from './CatalogCard.styled';
 import sprite from '../../images/sprite.svg';
 import { toggleLocalStorage } from '../../utils/toggleLocalStorage';
+import { fetchItemDetails } from '../../api/api';
 
 type Popular = {
   mini_image: string;
@@ -24,7 +25,7 @@ interface SliderItemProps {
 
 export const CatalogCard = ({ item }: SliderItemProps) => {
   const { id_name, name, mini_image, price, in_stock } = item;
-
+  console.log(item);
   const { setAmountInCart } = useContext(CartContext);
 
   let cartArray: string[] = [];
@@ -50,7 +51,7 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
   function toggleCart() {
     toggleLocalStorage(inCart, 'cart', id_name);
     setInCart((prev) => !prev);
-    setAmountInCart((amountInCart:number) =>
+    setAmountInCart((amountInCart: number) =>
       isInCart ? amountInCart - 1 : amountInCart + 1,
     );
   }
@@ -131,6 +132,7 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
             opacity: in_stock === 0 || in_stock === 3 ? '0.5' : '',
             backgroundColor: in_stock === 0 || in_stock === 3 ? '#F2F0EC' : '',
           }}
+          onClick={() => fetchItemDetails(item.id)}
         />
       </ThumbPhoto>
       <h4>{name}</h4>
