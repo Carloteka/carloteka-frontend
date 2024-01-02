@@ -56,7 +56,7 @@ export const SectionAboutShop = styled.section`
     width: 527px;
   }
 
-  button {
+  a {
     margin-top: 40px;
     padding: 0 48px 0 24px;
     position: relative;
