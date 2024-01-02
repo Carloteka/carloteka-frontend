@@ -14,6 +14,17 @@ export const fetchCategories = async () => {
   }
 };
 
+export const fetchItemDetails = async (id) => {
+  try {
+    const response = await axios.get(`/shop/items/${id}/`);
+    console.log(response);
+    const arrayData = response.data;
+    return arrayData;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const fetchPopularGoods = async () => {
   const params = {
     'page-size': 12,
