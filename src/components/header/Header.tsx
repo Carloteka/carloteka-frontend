@@ -21,6 +21,7 @@ export const Header = () => {
   const [inCart, setInCart] = useState<string[]>([]);
 
   let goodsInCart: string[] = [];
+
   useEffect(() => {
     if (localStorage.getItem('cart')) {
       goodsInCart = JSON.parse(localStorage.getItem('cart') as string);

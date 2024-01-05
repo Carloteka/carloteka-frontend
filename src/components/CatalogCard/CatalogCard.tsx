@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react';
 import { CartContext } from '../Layout';
+import { Link } from 'react-router-dom';
 import {
   ThumbPhoto,
   Button,
@@ -9,7 +10,6 @@ import {
 } from './CatalogCard.styled';
 import sprite from '../../images/sprite.svg';
 import { toggleLocalStorage } from '../../utils/toggleLocalStorage';
-import { fetchItemDetails } from '../../api/api';
 
 type Popular = {
   mini_image: string;
@@ -17,6 +17,8 @@ type Popular = {
   price: number;
   id_name: string;
   in_stock: number;
+  id: string;
+  category__id_name: string;
 };
 
 interface SliderItemProps {
@@ -24,8 +26,9 @@ interface SliderItemProps {
 }
 
 export const CatalogCard = ({ item }: SliderItemProps) => {
-  const { id_name, name, mini_image, price, in_stock } = item;
-  console.log(item);
+  const { id_name, name, mini_image, price, in_stock, id, category__id_name } =
+    item;
+
   const { setAmountInCart } = useContext(CartContext);
 
   let cartArray: string[] = [];
@@ -119,21 +122,24 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
             {getBanner(in_stock)}
           </p>
         )}
-        <img
-          src={
-            import.meta.env.PROD
-              ? `/${mini_image}`
-              : `http://localhost:8000/${mini_image}`
-          }
-          alt="img першої категорії"
-          width={304}
-          height={304}
-          style={{
-            opacity: in_stock === 0 || in_stock === 3 ? '0.5' : '',
-            backgroundColor: in_stock === 0 || in_stock === 3 ? '#F2F0EC' : '',
-          }}
-          onClick={() => fetchItemDetails(item.id)}
-        />
+        <Link to={`/${category__id_name}/${id}`} state={{ id }}>
+          <img
+            src={
+              import.meta.env.PROD
+                ? `/${mini_image}`
+                : `http://localhost:8000/${mini_image}`
+            }
+            alt="img першої категорії"
+            width={304}
+            height={304}
+            style={{
+              opacity: in_stock === 0 || in_stock === 3 ? '0.5' : '',
+              backgroundColor:
+                in_stock === 0 || in_stock === 3 ? '#F2F0EC' : '',
+            }}
+            loading="lazy"
+          />
+        </Link>
       </ThumbPhoto>
       <h4>{name}</h4>
       <Div>

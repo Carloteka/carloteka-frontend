@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const TextContainer = styled.div`
   display: flex;
@@ -14,24 +15,6 @@ export const TextContainer = styled.div`
     display: block;
     @media screen and (min-width: 1440px) {
       display: none;
-    }
-  }
-
-  & > button {
-    padding: 13.5px 24px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 19px;
-    font-weight: 500;
-    line-height: 1;
-    text-transform: uppercase;
-    border: 1px solid #2d3f24;
-    color: #2d3f24;
-
-    @media screen and (min-width: 1440px) {
-      width: 304px;
     }
   }
 
@@ -66,5 +49,27 @@ export const Title = styled.h2`
       left: 0;
       transform: translateX(0%);
     }
+  }
+`;
+
+export const LinkBtn = styled(Link)`
+  padding: 13.5px 24px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1;
+  text-transform: uppercase;
+  border: 1px solid #2d3f24;
+  color: #2d3f24;
+
+  @media screen and (min-width: 1440px) {
+    width: 304px;
+  }
+
+  &:visited {
+    color: #2d3f24;
   }
 `;

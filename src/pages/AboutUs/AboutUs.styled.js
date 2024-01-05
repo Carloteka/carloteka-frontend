@@ -44,7 +44,7 @@ export const Table = styled.table`
     line-height: calc(23 / 19);
     vertical-align: top;
     text-align: right;
-    color: #000;
+    color: #101010;
   }
 `;
 

@@ -17,7 +17,7 @@ export const fetchCategories = async () => {
 export const fetchItemDetails = async (id) => {
   try {
     const response = await axios.get(`/shop/items/${id}/`);
-    console.log(response);
+    // console.log(response);
     const arrayData = response.data;
     return arrayData;
   } catch (error) {
@@ -65,6 +65,7 @@ export const fetchFilteredGoods = async (search) => {
   try {
     const response = await axios.get(`/shop/items/${search}`, { params });
     const arrayData = response.data.results;
+    // console.log(arrayData);
     return { count: response.data.count, data: arrayData };
   } catch (error) {
     console.log(error);
