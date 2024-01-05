@@ -1,4 +1,4 @@
-import { TextContainer, Title } from './CategoryCard.styled';
+import { TextContainer, Title, LinkBtn } from './CategoryCard.styled';
 import { Slider } from './slider/Slider';
 import { useState } from 'react';
 
@@ -57,9 +57,12 @@ export const CategoryCard = ({ category }: CategoryCardProps) => {
         <Title>{name}</Title>
         <Slider arrayToRender={arrayToRender} sliderHandler={sliderHandler} />
         <p>{description}</p>
-        <button className="card_btn" type="submit">
+        <LinkBtn
+          className="card_btn"
+          to={`/catalog?category-id-name=${category.id_name}`}
+        >
           Переглянути
-        </button>
+        </LinkBtn>
       </TextContainer>
     </>
   );

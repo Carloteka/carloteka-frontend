@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 import { CartContext } from '../Layout';
+import { Increment } from '../Increment/Increment';
 import {
   FlexContainer,
   Img,
   Name,
   Div,
   Price,
-  IncrementBox,
   TotalPrice,
   Star,
   BuyBtnDesc,
@@ -41,13 +41,6 @@ export const CardForFavoritesAndCart = ({
 
   const quantity = good?.quantity ? good.quantity : 1;
 
-  function incrementHandle(payload: number, id: string) {
-    if (payload + quantity === 0) {
-      return;
-    }
-    increment(payload + quantity, id);
-  }
-
   function buyBtnHandle() {
     toggleLocalStorage(false, 'cart', id_name);
     setAmountInCart((amountInCart: number) => amountInCart + 1);
@@ -64,6 +57,7 @@ export const CardForFavoritesAndCart = ({
         width={60}
         height={82}
         alt={name}
+        loading="lazy"
       />
       <Name>Декоративна ваза з натурального дерева</Name>
       <Div>
@@ -87,15 +81,11 @@ export const CardForFavoritesAndCart = ({
         <Price>₴ {price}</Price>
 
         {location.pathname.includes('cart') && (
-          <IncrementBox>
-            <button type="button" onClick={() => incrementHandle(-1, id_name)}>
-              --
-            </button>
-            <span>{quantity}</span>
-            <button type="button" onClick={() => incrementHandle(1, id_name)}>
-              +
-            </button>
-          </IncrementBox>
+          <Increment
+            increment={increment}
+            id_name={id_name}
+            quantity={quantity}
+          />
         )}
 
         {location.pathname.includes('cart') && (

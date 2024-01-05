@@ -174,7 +174,7 @@ export const Price = styled.fieldset`
 `;
 
 export const TagsContainer = styled.div`
-  margin-bottom: 32px;
+  margin-bottom: 40px;
   padding-right: 148px;
   position: relative;
   display: none;

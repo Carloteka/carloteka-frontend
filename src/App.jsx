@@ -7,6 +7,12 @@ const Favorites = lazy(() => import('./pages/Favorites/Favorites'));
 const Cart = lazy(() => import('./pages/Cart/Cart'));
 const Catalog = lazy(() => import('./pages/Catalog/Catalog'));
 const AboutUs = lazy(() => import('./pages/AboutUs/AboutUs'));
+const GoodDetail = lazy(() => import('./pages/GoodDetail/GoodDetail'));
+const Description = lazy(() => import('./components/Description/Description'));
+const AdditionalInfo = lazy(() =>
+  import('./components/AdditionalInfo/AdditionalInfo'),
+);
+const Reviews = lazy(() => import('./components/Reviews/Reviews'));
 
 function App() {
   return (
@@ -18,6 +24,12 @@ function App() {
         <Route path="favorites" element={<Favorites />} />
         <Route path="cart" element={<Cart />} />
         <Route path="about" element={<AboutUs />} />
+
+        <Route path=":category_name/:goodId" element={<GoodDetail />}>
+          <Route path="description" element={<Description />} />
+          <Route path="additional" element={<AdditionalInfo />} />
+          <Route path="reviews" element={<Reviews />} />
+        </Route>
 
         <Route path="*" element={<Home />} />
       </Route>

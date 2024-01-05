@@ -127,30 +127,35 @@ const AboutUs = () => {
               alt="a wooden amphora"
               width={229}
               height={343}
+              loading="lazy"
             />
             <Img2
               src="src/images/about-Group 1023.png"
               alt="a massive craft bound book"
               width={343}
               height={228}
+              loading="lazy"
             />
             <Img3
               src="src/images/about-Group 1027.png"
               alt="a wooden chessboard with chess"
               width={345}
               height={276}
+              loading="lazy"
             />
             <Img4
               src="src/images/about-Group 1025.png"
               alt="a craft backgammon board"
               width={345}
               height={276}
+              loading="lazy"
             />
             <Img5
               src="src/images/about-Group 1024.png"
               alt="a wooden phone stand"
               width={276}
               height={345}
+              loading="lazy"
             />
           </div>
         </SectionAboutShop>

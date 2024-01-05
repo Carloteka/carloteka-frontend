@@ -23,6 +23,7 @@ type Good = {
   images: [{ image: string }];
   name: string;
   price: number;
+  length: number;
   id_name: string;
   quantity: number;
 };
@@ -30,7 +31,7 @@ type Good = {
 const Cart = () => {
   const { setAmountInCart } = useContext(CartContext);
 
-  let goodsInCart = [];
+  let goodsInCart: string[] = [];
 
   if (localStorage.getItem('cart')) {
     goodsInCart = JSON.parse(localStorage.getItem('cart') as string);
@@ -42,12 +43,14 @@ const Cart = () => {
     goods = JSON.parse(localStorage.getItem('goods') as string);
   }
 
-  const goodsInCartArray = goodsInCart.map((id: string) =>
-    goods.find((el: { id_name: string }) => el.id_name === id),
+  const goodsInCartArray = goods.filter((el: { id_name: string }) =>
+    goodsInCart.some((id) => el.id_name === id),
   );
 
-  const [inCart, setInCart] = useState(goodsInCartArray);
-
+  const [inCart, setInCart] = useState<Good[]>(
+    goodsInCartArray.filter((el: { length: number }) => el.length !== 0),
+  );
+  console.log(goodsInCartArray);
   function clearCart() {
     localStorage.cart = [];
     setInCart([]);
@@ -71,7 +74,7 @@ const Cart = () => {
   }
 
   function increment(quantity: number, id: string) {
-    const newArray = [...inCart];
+    const newArray: Good[] = [...inCart];
     newArray[
       inCart.findIndex((el: { id_name: string }) => el.id_name === id)
     ].quantity = quantity;
