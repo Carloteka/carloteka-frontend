@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const GreetingContainer = styled.section`
   padding: 16px;
@@ -70,7 +71,7 @@ export const Description = styled.p`
     width: 640px;
   }
 `;
-export const Button = styled.button`
+export const Button = styled(Link)`
   position: relative;
   background-color: #2d3f24;
   color: white;

@@ -35,9 +35,9 @@ a {
   color: inherit;
   text-decoration: none;
 }
-a:visited {
+/* a:visited {
   color: inherit;
-}
+} */
 a,
 button {
   display: flex;
