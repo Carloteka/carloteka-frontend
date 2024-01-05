@@ -29,6 +29,7 @@ const Description = () => {
           gap: '32px',
           borderTop: '1px solid #A7A5A3',
           paddingTop: '40px',
+          color: '#000',
         }}
       >
         <div>

@@ -17,6 +17,7 @@ import {
 import { Slider } from '../../components/category-card/slider/Slider';
 import sprite from '../../images/sprite.svg';
 import { fetchItemDetails } from '../../api/api';
+import { toggleLocalStorage } from '../../utils/toggleLocalStorage';
 
 type Good = {
   mini_image: string;
@@ -49,6 +50,7 @@ const GoodDetail = () => {
         const data = await fetchItemDetails(goodId);
         setArray(data.images);
         setGood(data);
+        setIsFavorite(favoriteArray.includes(data.id_name));
       } catch (error) {
         console.log(error);
       }
@@ -57,6 +59,7 @@ const GoodDetail = () => {
   }, [goodId]);
 
   let goodsInCart = [];
+  let favoriteArray: string[] = [];
 
   if (localStorage.getItem('cart')) {
     goodsInCart = JSON.parse(localStorage.getItem('cart') as string);
@@ -72,6 +75,14 @@ const GoodDetail = () => {
     goods.find((el: { id_name: string }) => el.id_name === id),
   );
 
+  if (localStorage.getItem('favorite')) {
+    favoriteArray = JSON.parse(localStorage.getItem('favorite') as string);
+  } else {
+    localStorage.setItem('favorite', JSON.stringify(favoriteArray));
+  }
+
+  const isInFavorite: boolean = favoriteArray.includes(good?.id_name);
+  const [isFavorite, setIsFavorite] = useState(isInFavorite);
   const [inCart, setInCart] = useState(goodsInCartArray);
   const quantity = inCart?.quantity ? inCart.quantity : 1;
 
@@ -111,6 +122,11 @@ const GoodDetail = () => {
     setInCart(newArray);
   }
 
+  function toggleFavorite() {
+    toggleLocalStorage(isFavorite, 'favorite', good.id_name);
+    setIsFavorite((prev) => !prev);
+  }
+
   return (
     good && (
       <>
@@ -135,9 +151,23 @@ const GoodDetail = () => {
                   id_name={good.id_name}
                   quantity={quantity}
                 />
-                <AddToCartBtn type="button">Додати до кошика</AddToCartBtn>
-                <AddToFavoriteBtn type="button">
-                  <svg width={24} height={24}>
+                <AddToCartBtn type="button" onClick={() => toggleCart()}>
+                  Додати до кошика
+                </AddToCartBtn>
+                <AddToFavoriteBtn
+                  type="button"
+                  style={{
+                    backgroundColor: isFavorite ? '#2D3F24' : 'transparent',
+                  }}
+                  onClick={() => toggleFavorite()}
+                >
+                  <svg
+                    width={24}
+                    height={24}
+                    style={{
+                      fill: isFavorite ? 'white' : '#101010',
+                    }}
+                  >
                     <use href={`${sprite}#favorite`} />
                   </svg>
                 </AddToFavoriteBtn>

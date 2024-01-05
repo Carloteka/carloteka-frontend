@@ -393,7 +393,7 @@ const Catalog = () => {
                     checked={isChecked('specific-order', 'True')}
                     onChange={() => onChangeHandler('specific-order', 'True')}
                   />
-                  Під замовлення ({getGoodsToOrder()} )
+                  Під замовлення ({getGoodsToOrder()})
                 </label>
               </fieldset>
 

@@ -128,7 +128,7 @@ export const Menu = ({ onClickHandle }: MenuProps) => {
                 {categories.map((el) => (
                   <li key={el.id_name}>
                     <Link
-                      to={`/catalog/${el.id_name}`}
+                      to={`/catalog?category-id-name=${el.id_name}`}
                       onClick={() => onClickHandle(false)}
                     >
                       {el.name}
