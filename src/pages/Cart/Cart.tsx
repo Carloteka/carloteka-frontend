@@ -16,7 +16,8 @@ import {
   GoToPayment,
 } from './Cart.styled';
 import { CardForFavoritesAndCart } from '../../components/cardForFavoritesAndCart/CardForFavoritesAndCart';
-import { toggleLocalStorage } from '../../utils/toggleLocalStorage';
+import { toggleCartInLocalStorage } from '../../utils/toggleCartInLocalStorage';
+import { addToCart } from '../../utils/addToCart';
 import sprite from '../../images/sprite.svg';
 
 type Good = {
@@ -31,7 +32,7 @@ type Good = {
 const Cart = () => {
   const { setAmountInCart } = useContext(CartContext);
 
-  let goodsInCart: string[] = [];
+  let goodsInCart: { id: string; amount: number }[] = [];
 
   if (localStorage.getItem('cart')) {
     goodsInCart = JSON.parse(localStorage.getItem('cart') as string);
@@ -44,7 +45,7 @@ const Cart = () => {
   }
 
   const goodsInCartArray = goods.filter((el: { id_name: string }) =>
-    goodsInCart.some((id) => el.id_name === id),
+    goodsInCart.some((item) => el.id_name === item.id),
   );
 
   const [inCart, setInCart] = useState<Good[]>(
@@ -61,7 +62,7 @@ const Cart = () => {
     const newArray = goodsInCartArray.filter(
       (el: { id_name: string }) => el.id_name !== id,
     );
-    toggleLocalStorage(true, 'cart', id);
+    toggleCartInLocalStorage(true, id);
     setInCart(newArray);
   }
 
@@ -73,12 +74,13 @@ const Cart = () => {
     );
   }
 
-  function increment(quantity: number, id: string) {
+  function increment(amount: number, id: string) {
     const newArray: Good[] = [...inCart];
     newArray[
       inCart.findIndex((el: { id_name: string }) => el.id_name === id)
-    ].quantity = quantity;
+    ].quantity = amount;
     localStorage.setItem('invoice', JSON.stringify(newArray));
+    addToCart(amount, id);
     setInCart(newArray);
   }
 

@@ -10,6 +10,7 @@ import {
 } from './CatalogCard.styled';
 import sprite from '../../images/sprite.svg';
 import { toggleLocalStorage } from '../../utils/toggleLocalStorage';
+import { toggleCartInLocalStorage } from '../../utils/toggleCartInLocalStorage';
 
 type Popular = {
   mini_image: string;
@@ -31,7 +32,7 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
 
   const { setAmountInCart } = useContext(CartContext);
 
-  let cartArray: string[] = [];
+  let cartArray: { id: string; amount: number }[] = [];
   let favoriteArray: string[] = [];
 
   if (localStorage.getItem('cart')) {
@@ -46,13 +47,13 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
     localStorage.setItem('favorite', JSON.stringify(favoriteArray));
   }
 
-  const isInCart: boolean = cartArray.includes(id_name);
+  const isInCart: boolean = cartArray.some((el) => el.id === id_name);
   const isInFavorite: boolean = favoriteArray.includes(id_name);
   const [inCart, setInCart] = useState(isInCart);
   const [isFavorite, setIsFavorite] = useState(isInFavorite);
 
   function toggleCart() {
-    toggleLocalStorage(inCart, 'cart', id_name);
+    toggleCartInLocalStorage(inCart, id_name);
     setInCart((prev) => !prev);
     setAmountInCart((amountInCart: number) =>
       isInCart ? amountInCart - 1 : amountInCart + 1,
@@ -92,6 +93,7 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
             type="button"
             style={{ backgroundColor: inCart ? '#2D3F24' : 'white' }}
             onClick={() => toggleCart()}
+            disabled={in_stock === 0}
           >
             <svg>
               <use href={`${sprite}#cart`} />
@@ -102,7 +104,7 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
             style={{ backgroundColor: isFavorite ? '#2D3F24' : 'white' }}
             onClick={() => toggleFavorite()}
           >
-            <svg style={{ stroke: isFavorite ? 'white' : '#101010' }}>
+            <svg style={{ fill: isFavorite ? 'white' : '#101010' }}>
               <use href={`${sprite}#favorite`} />
             </svg>
           </Button>

@@ -18,6 +18,7 @@ import { Slider } from '../../components/category-card/slider/Slider';
 import sprite from '../../images/sprite.svg';
 import { fetchItemDetails } from '../../api/api';
 import { toggleLocalStorage } from '../../utils/toggleLocalStorage';
+import { addToCart } from '../../utils/addToCart';
 
 type Good = {
   mini_image: string;
@@ -58,7 +59,7 @@ const GoodDetail = () => {
     getGoodDetail();
   }, [goodId]);
 
-  let goodsInCart = [];
+  let goodsInCart: { id: string; amount: number }[] = [];
   let favoriteArray: string[] = [];
 
   if (localStorage.getItem('cart')) {
@@ -71,8 +72,8 @@ const GoodDetail = () => {
     goods = JSON.parse(localStorage.getItem('goods') as string);
   }
 
-  const goodsInCartArray = goodsInCart.map((id: string) =>
-    goods.find((el: { id_name: string }) => el.id_name === id),
+  const goodsInCartArray = goods.filter((el: { id_name: string }) =>
+    goodsInCart.some((item) => el.id_name === item.id),
   );
 
   if (localStorage.getItem('favorite')) {
@@ -84,7 +85,7 @@ const GoodDetail = () => {
   const isInFavorite: boolean = favoriteArray.includes(good?.id_name);
   const [isFavorite, setIsFavorite] = useState(isInFavorite);
   const [inCart, setInCart] = useState(goodsInCartArray);
-  const quantity = inCart?.quantity ? inCart.quantity : 1;
+  const [amount, setAmount] = useState(1);
 
   const [array, setArray] = useState<Image[]>(good?.images || []);
   //   console.log(array);
@@ -113,12 +114,11 @@ const GoodDetail = () => {
     setArray(newArray);
   }
 
-  function increment(quantity: number, id: string) {
-    const newArray = [...inCart];
-    newArray[
-      inCart.findIndex((el: { id_name: string }) => el.id_name === id)
-    ].quantity = quantity;
+  function increment(amount: number, id: string) {
+    const newArray: Good[] = [...inCart];
+    setAmount(amount);
     localStorage.setItem('invoice', JSON.stringify(newArray));
+
     setInCart(newArray);
   }
 
@@ -149,9 +149,12 @@ const GoodDetail = () => {
                 <Increment
                   increment={increment}
                   id_name={good.id_name}
-                  quantity={quantity}
+                  quantity={amount}
                 />
-                <AddToCartBtn type="button" onClick={() => toggleCart()}>
+                <AddToCartBtn
+                  type="button"
+                  onClick={() => addToCart(amount, good.id_name)}
+                >
                   Додати до кошика
                 </AddToCartBtn>
                 <AddToFavoriteBtn
