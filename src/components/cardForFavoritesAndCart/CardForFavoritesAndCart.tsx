@@ -14,7 +14,7 @@ import {
   BuyBtn,
 } from './CardForFavoritesAndCart.styled';
 import sprite from '../../images/sprite.svg';
-import { toggleLocalStorage } from '../../utils/toggleLocalStorage';
+import { toggleCartInLocalStorage } from '../../utils/toggleCartInLocalStorage';
 
 type Good = {
   images: [{ image: string }];
@@ -42,7 +42,7 @@ export const CardForFavoritesAndCart = ({
   const quantity = good?.quantity ? good.quantity : 1;
 
   function buyBtnHandle() {
-    toggleLocalStorage(false, 'cart', id_name);
+    toggleCartInLocalStorage(false, id_name);
     setAmountInCart((amountInCart: number) => amountInCart + 1);
   }
 

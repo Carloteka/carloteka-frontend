@@ -17,9 +17,7 @@ export const SliderContainer = styled.div`
   }
 `;
 
-export const ChevronIcon = styled.svg`
-${({ left }) => (left ? `` : `transform: rotate(180deg)`)}} 
-`;
+export const ChevronIcon = styled.svg``;
 
 export const Chevron = styled.button`
   position: absolute;

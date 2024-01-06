@@ -27,6 +27,7 @@ export const ThumbPhoto = styled.div`
     height: 50px;
     display: none;
     gap: 16px;
+    z-index: 1;
   }
 
   p {
