@@ -19,6 +19,7 @@ import sprite from '../../images/sprite.svg';
 import { fetchItemDetails } from '../../api/api';
 import { toggleLocalStorage } from '../../utils/toggleLocalStorage';
 import { addToCart } from '../../utils/addToCart';
+import { getBanner } from '../../utils/getBanner';
 
 type Good = {
   mini_image: string;
@@ -59,22 +60,7 @@ const GoodDetail = () => {
     getGoodDetail();
   }, [goodId]);
 
-  let goodsInCart: { id: string; amount: number }[] = [];
   let favoriteArray: string[] = [];
-
-  if (localStorage.getItem('cart')) {
-    goodsInCart = JSON.parse(localStorage.getItem('cart') as string);
-  }
-
-  let goods: [] = [];
-
-  if (localStorage.getItem('goods')) {
-    goods = JSON.parse(localStorage.getItem('goods') as string);
-  }
-
-  const goodsInCartArray = goods.filter((el: { id_name: string }) =>
-    goodsInCart.some((item) => el.id_name === item.id),
-  );
 
   if (localStorage.getItem('favorite')) {
     favoriteArray = JSON.parse(localStorage.getItem('favorite') as string);
@@ -84,7 +70,7 @@ const GoodDetail = () => {
 
   const isInFavorite: boolean = favoriteArray.includes(good?.id_name);
   const [isFavorite, setIsFavorite] = useState(isInFavorite);
-  const [inCart, setInCart] = useState(goodsInCartArray);
+
   const [amount, setAmount] = useState(1);
 
   const [array, setArray] = useState<Image[]>(good?.images || []);
@@ -114,17 +100,20 @@ const GoodDetail = () => {
     setArray(newArray);
   }
 
-  function increment(amount: number, id: string) {
-    const newArray: Good[] = [...inCart];
+  function increment(amount: number) {
     setAmount(amount);
-    localStorage.setItem('invoice', JSON.stringify(newArray));
-
-    setInCart(newArray);
   }
 
   function toggleFavorite() {
     toggleLocalStorage(isFavorite, 'favorite', good.id_name);
     setIsFavorite((prev) => !prev);
+  }
+
+  function toggleCart() {
+    const isNeedAddNewToCart = addToCart(amount, good.id_name, 'add');
+
+    isNeedAddNewToCart &&
+      setAmountInCart((amountInCart: number) => amountInCart + 1);
   }
 
   return (
@@ -142,7 +131,7 @@ const GoodDetail = () => {
               <Price>₴ {good.price}</Price>
               <p>
                 <span>Наявність в магазині: </span>
-                {good.in_stock === 1 ? 'так' : 'no'}
+                {good.in_stock === 1 ? 'так' : getBanner(good.in_stock)}
               </p>
               <Material>{good.mini_description}</Material>
               <div>
@@ -151,10 +140,7 @@ const GoodDetail = () => {
                   id_name={good.id_name}
                   quantity={amount}
                 />
-                <AddToCartBtn
-                  type="button"
-                  onClick={() => addToCart(amount, good.id_name)}
-                >
+                <AddToCartBtn type="button" onClick={() => toggleCart()}>
                   Додати до кошика
                 </AddToCartBtn>
                 <AddToFavoriteBtn

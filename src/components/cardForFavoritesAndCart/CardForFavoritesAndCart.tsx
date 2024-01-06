@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { CartContext } from '../Layout';
 import { Increment } from '../Increment/Increment';
 import {
@@ -38,13 +38,26 @@ export const CardForFavoritesAndCart = ({
   const { images, name, price, id_name } = good;
 
   const { setAmountInCart } = useContext(CartContext);
-
-  const quantity = good?.quantity ? good.quantity : 1;
+  const [quantity, setQuantity] = useState(1);
 
   function buyBtnHandle() {
     toggleCartInLocalStorage(false, id_name);
     setAmountInCart((amountInCart: number) => amountInCart + 1);
   }
+
+  useEffect(() => {
+    if (location.pathname.includes('cart')) {
+      if (!localStorage.getItem('cart')) {
+        localStorage.setItem('cart', JSON.stringify([]));
+      }
+
+      const newArray = JSON.parse(localStorage.getItem('cart'));
+
+      const temp = newArray.find((el) => el.id === good.id_name);
+
+      setQuantity(temp.amount);
+    }
+  }, [quantity]);
 
   return (
     <>
@@ -85,6 +98,7 @@ export const CardForFavoritesAndCart = ({
             increment={increment}
             id_name={id_name}
             quantity={quantity}
+            setQuantity={setQuantity}
           />
         )}
 

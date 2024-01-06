@@ -4,14 +4,23 @@ interface IncrementProps {
   quantity: number;
   id_name: string;
   increment: (quantity: number, id: string) => void;
+  setQuantity: (quantity: number) => void;
 }
 
-export const Increment = ({ increment, id_name, quantity }: IncrementProps) => {
+export const Increment = ({
+  increment,
+  id_name,
+  quantity,
+  setQuantity,
+}: IncrementProps) => {
   function incrementHandle(payload: number, id: string) {
     if (payload + quantity === 0) {
       return;
     }
     increment(payload + quantity, id);
+    if (setQuantity) {
+      setQuantity(payload + quantity);
+    }
   }
 
   return (
