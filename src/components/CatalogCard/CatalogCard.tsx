@@ -11,6 +11,7 @@ import {
 import sprite from '../../images/sprite.svg';
 import { toggleLocalStorage } from '../../utils/toggleLocalStorage';
 import { toggleCartInLocalStorage } from '../../utils/toggleCartInLocalStorage';
+import { getBanner } from '../../utils/getBanner';
 
 type Popular = {
   mini_image: string;
@@ -64,27 +65,6 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
     setIsFavorite((prev) => !prev);
   }
 
-  function getBanner(in_stock: number) {
-    let banner = '';
-    switch (in_stock) {
-      case 2:
-        banner = 'Очікується';
-        break;
-
-      case 3:
-        banner = 'Під замовлення';
-        break;
-
-      case 0:
-        banner = 'Немає в наявності';
-        break;
-
-      default:
-        banner = 'Очікується';
-    }
-    return banner;
-  }
-
   return (
     <>
       <ThumbPhoto>
@@ -113,6 +93,7 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
           <p
             style={{
               borderTop: in_stock === 2 ? '0.5px solid white' : '',
+              textTransform: 'capitalize',
               backgroundColor:
                 in_stock === 2
                   ? '#2D3F24'

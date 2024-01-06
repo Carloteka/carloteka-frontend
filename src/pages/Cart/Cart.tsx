@@ -44,14 +44,22 @@ const Cart = () => {
     goods = JSON.parse(localStorage.getItem('goods') as string);
   }
 
+  // const goodsInCartArray = goods.filter((el: { id_name: string }) =>
+  //   goodsInCart.some((item) => el.id_name === item.id),
+  // );
   const goodsInCartArray = goods.filter((el: { id_name: string }) =>
-    goodsInCart.some((item) => el.id_name === item.id),
+    goodsInCart.some((item) => {
+      if (el.id_name === item.id) {
+        el.quantity = item.amount;
+        return true;
+      } else return false;
+    }),
   );
-
+  console.log(goodsInCartArray);
   const [inCart, setInCart] = useState<Good[]>(
     goodsInCartArray.filter((el: { length: number }) => el.length !== 0),
   );
-  console.log(goodsInCartArray);
+  // console.log(inCart);
   function clearCart() {
     localStorage.cart = [];
     setInCart([]);
@@ -79,8 +87,8 @@ const Cart = () => {
     newArray[
       inCart.findIndex((el: { id_name: string }) => el.id_name === id)
     ].quantity = amount;
-    localStorage.setItem('invoice', JSON.stringify(newArray));
-    addToCart(amount, id);
+
+    addToCart(amount, id, 'replace');
     setInCart(newArray);
   }
 
@@ -152,7 +160,7 @@ const Cart = () => {
                 </div>
                 <div>
                   <p>Загальна вартість</p>
-                  <p>₴ {getTotalPrice()}</p>
+                  <p>₴{getTotalPrice()}</p>
                 </div>
               </div>
 
