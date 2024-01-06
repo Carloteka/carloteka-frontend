@@ -2,32 +2,49 @@ import styled from 'styled-components';
 
 export const SectionAdditionalInfo = styled.section`
   padding-top: 8px;
-  height: 211px;
+  min-height: 211px;
   display: flex;
   justify-content: space-between;
 
   color: #000;
 
   & > table {
-    width: 640px;
+    width: 100%;
     min-height: 136px;
+
+    text-align: left;
 
     border-collapse: separate;
     border-spacing: 0 0px;
+
+    @media screen and (min-width: 1440px) {
+      width: 640px;
+    }
+  }
+
+  & > table > tbody {
+    vertical-align: top;
   }
 
   & > table td:first-child {
-    width: 336px;
+    width: auto;
+    @media screen and (min-width: 1440px) {
+      width: 336px;
+    }
   }
 
-  td:last-child {
+  & > table td:last-child {
     text-align: right;
   }
 
   & > details {
-    padding: 32px;
-    height: clamp(95px, 95px, 211px);
-    background-color: #dad4c8;
+    display: none;
+
+    @media screen and (min-width: 1440px) {
+      padding: 32px;
+      height: clamp(95px, 95px, 211px);
+      background-color: #dad4c8;
+    }
   }
 
   & > details table {

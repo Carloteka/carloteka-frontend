@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchItemDetails } from '../../api/api';
+import { SectionDescription } from './Description.styled';
 
 const Description = () => {
   const { goodId } = useParams();
@@ -22,7 +23,7 @@ const Description = () => {
 
   return (
     good && (
-      <section
+      <SectionDescription
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -54,7 +55,7 @@ const Description = () => {
           width={528}
           height={528}
         ></img>
-      </section>
+      </SectionDescription>
     )
   );
 };

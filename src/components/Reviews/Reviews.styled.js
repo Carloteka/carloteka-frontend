@@ -10,8 +10,13 @@ export const SectionReviews = styled.section`
   p:first-child {
     margin-bottom: 12px;
     font-weight: 700;
+  font-size: 20px;
+  line-height: calc(27 / 20);  
+
+    @media screen and (min-width: 1440px) {    
     font-size: 24px;
     line-height: calc(31 / 24);
+    }
   }
 
   label {
@@ -36,6 +41,19 @@ export const Form = styled.form`
 
   & > div:first-of-type {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    label {
+      align-items: center;
+      @media screen and (min-width: 1440px) {
+        align-items: start;
+      }
+    }
+    @media screen and (min-width: 1440px) {
+      align-items: start;
+    }
   }
 
   ul {
@@ -53,11 +71,15 @@ export const Form = styled.form`
   }
 
   button {
-    width: 231px;
+    width: 100%;
     height: 48px;
     color: white;
     background-color: #2d3f24;
     text-transform: uppercase;
+
+    @media screen and (min-width: 1440px) {
+      width: 231px;
+    }
   }
 `;
 
@@ -82,12 +104,19 @@ export const TextAreaLabel = styled.label`
 `;
 
 export const FlexContainer = styled.div`
-  margin: 40px 0 27px;
+  margin: 40px 0;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+
   justify-content: space-between;
   column-gap: 32px;
   row-gap: 24px;
+
+  @media screen and (min-width: 1440px) {
+    margin: 40px 0 27px;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 
   label {
     gap: 12px;

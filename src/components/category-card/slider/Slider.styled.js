@@ -2,6 +2,9 @@ import styled from 'styled-components';
 
 export const SliderContainer = styled.div`
   position: relative;
+  display: flex;
+  align-items: center;
+
   button {
     position: absolute;
     top: 50%;
