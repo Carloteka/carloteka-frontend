@@ -123,7 +123,7 @@ export const MenuCart = ({ onClickHandle }: MenuCartProps) => {
         <Link to={'/cart'} onClick={() => onClickHandle(false)}>
           переглянути кошик
         </Link>
-        <Link to={'/payment'} onClick={() => onClickHandle(false)}>
+        <Link to={'/delivery'} onClick={() => onClickHandle(false)}>
           Купити
         </Link>
       </MenuContainer>
