@@ -51,9 +51,11 @@ export const CardForFavoritesAndCart = ({
         localStorage.setItem('cart', JSON.stringify([]));
       }
 
-      const newArray = JSON.parse(localStorage.getItem('cart'));
+      const newArray = JSON.parse(localStorage.getItem('cart') as string);
 
-      const temp = newArray.find((el) => el.id === good.id_name);
+      const temp = newArray.find(
+        (el: { id: string }) => el.id === good.id_name,
+      );
 
       setQuantity(temp.amount);
     }

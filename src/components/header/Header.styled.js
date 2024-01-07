@@ -72,7 +72,7 @@ export const Actions = styled.div`
   display: flex;
   align-items: center;
 
-  gap: 100px;
+  gap: 116px;
 
   svg {
     fill: #101010;
@@ -84,6 +84,8 @@ export const Actions = styled.div`
 `;
 
 export const NavigationLink = styled(NavLink)`
+  width: 40px;
+  height: 40px;
   @media screen and (max-width: 1439.99px) {
     ${visuallyHidden};
   }
@@ -101,7 +103,7 @@ export const BurgerMenuBtn = styled.button`
 export const CartPreviewBtn = styled.button`
   position: absolute;
   top: 30px;
-  transform: translateX(56px);
+  transform: translateX(-100px);
   width: 25px;
   height: 25px;
   font-weight: 400;

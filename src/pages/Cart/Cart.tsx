@@ -44,22 +44,20 @@ const Cart = () => {
     goods = JSON.parse(localStorage.getItem('goods') as string);
   }
 
-  // const goodsInCartArray = goods.filter((el: { id_name: string }) =>
-  //   goodsInCart.some((item) => el.id_name === item.id),
-  // );
-  const goodsInCartArray = goods.filter((el: { id_name: string }) =>
-    goodsInCart.some((item) => {
-      if (el.id_name === item.id) {
-        el.quantity = item.amount;
-        return true;
-      } else return false;
-    }),
+  const goodsInCartArray = goods.filter(
+    (el: { id_name: string; quantity: number }) =>
+      goodsInCart.some((item) => {
+        if (el.id_name === item.id) {
+          el.quantity = item.amount;
+          return true;
+        } else return false;
+      }),
   );
-  console.log(goodsInCartArray);
+
   const [inCart, setInCart] = useState<Good[]>(
     goodsInCartArray.filter((el: { length: number }) => el.length !== 0),
   );
-  // console.log(inCart);
+
   function clearCart() {
     localStorage.cart = [];
     setInCart([]);
