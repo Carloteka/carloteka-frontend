@@ -63,7 +63,19 @@ const Delivery = () => {
     );
   }
 
-  function submitHandle(e) {
+  function submitHandle(e: React.FormEvent) {
+    e.preventDefault();
+
+    const elementsCollection = e.target.elements;
+    const elements = Array.from(elementsCollection).filter(
+      (el) => el.value !== '',
+    );
+
+    let data = {};
+    elements.map((el) => (data[el.name] = el.value));
+
+    console.log('send to backend', data);
+
     navigate('/payment');
     // e.form.reset();
   }
@@ -83,6 +95,7 @@ const Delivery = () => {
                     name="name"
                     type="text"
                     className="short"
+                    required
                   />
                 </label>
                 <label className="short">
@@ -92,11 +105,12 @@ const Delivery = () => {
                     name="surname"
                     type="text"
                     className="short"
+                    required
                   />
                 </label>
                 <label>
                   Країна
-                  <select name="country" defaultValue="">
+                  <select name="country" defaultValue="" required>
                     <option value="" disabled selected hidden>
                       Оберіть країну
                     </option>
@@ -106,7 +120,7 @@ const Delivery = () => {
                 </label>
                 <label>
                   Регіон
-                  <select name="oblast" defaultValue="">
+                  <select name="oblast" defaultValue="" required>
                     <option value="" disabled selected hidden>
                       Оберіть регіон
                     </option>
@@ -116,7 +130,7 @@ const Delivery = () => {
                 </label>
                 <label>
                   Місто
-                  <select name="city" defaultValue="">
+                  <select name="city" defaultValue="" required>
                     <option value="" disabled selected hidden>
                       Оберіть місто
                     </option>
@@ -126,7 +140,7 @@ const Delivery = () => {
                 </label>
                 <label>
                   Служба доставки
-                  <select name="post" defaultValue="">
+                  <select name="post" defaultValue="" required>
                     <option value="" disabled selected hidden>
                       Оберіть службу доставки
                     </option>
@@ -136,7 +150,7 @@ const Delivery = () => {
                 </label>
                 <label>
                   Номер відділення
-                  <select name="office" defaultValue="">
+                  <select name="office" defaultValue="" required>
                     <option value="" disabled selected hidden>
                       Оберіть номер відділення
                     </option>
@@ -146,7 +160,7 @@ const Delivery = () => {
                 </label>
                 <label>
                   Вид оплати
-                  <select name="payment" defaultValue="">
+                  <select name="payment" defaultValue="" required>
                     <option value="" disabled selected hidden>
                       Оберіть вид оплати
                     </option>
@@ -156,7 +170,12 @@ const Delivery = () => {
                 </label>
                 <label>
                   Номер телефону
-                  <input placeholder="38067 123 4567" name="phone" type="tel" />
+                  <input
+                    placeholder="38067 123 4567"
+                    name="phone"
+                    type="tel"
+                    required
+                  />
                 </label>
                 <label>
                   Email
@@ -164,13 +183,14 @@ const Delivery = () => {
                     placeholder="myemail@gmail.com"
                     name="email"
                     type="email"
+                    required
                   />
                 </label>
               </FlexContainer>
               <h3>Додаткова інформація</h3>
               <label>
                 Коментар щодо замовлення (не обов’язково)
-                <textarea placeholder="Напишіть щось"></textarea>
+                <textarea placeholder="Напишіть щось" name="comment"></textarea>
               </label>
             </Form>
             <aside>
