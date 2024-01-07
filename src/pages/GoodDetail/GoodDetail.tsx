@@ -139,6 +139,9 @@ const GoodDetail = () => {
                   increment={increment}
                   id_name={good.id_name}
                   quantity={amount}
+                  setQuantity={() => {
+                    return;
+                  }}
                 />
                 <AddToCartBtn type="button" onClick={() => toggleCart()}>
                   Додати до кошика

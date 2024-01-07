@@ -11,6 +11,7 @@ import {
 import sprite from '../../images/sprite.svg';
 import { SearchBar } from './SearchBar/SearchBar';
 import { Menu } from './menu/Menu';
+import { MenuCart } from './menu/MenuCart';
 import { useState, useEffect, useContext } from 'react';
 import { CartContext } from '../Layout';
 
@@ -18,6 +19,7 @@ export const Header = () => {
   const { amountInCart } = useContext(CartContext);
 
   const [showMenu, setShowMenu] = useState(false);
+  const [showCartMenu, setShowCartMenu] = useState(false);
   const [inCart, setInCart] = useState<string[]>([]);
 
   let goodsInCart: string[] = [];
@@ -47,13 +49,15 @@ export const Header = () => {
             </svg>
           </NavigationLink>
           <NavigationLink to={'/cart'} title="До Кошика">
-            {inCart?.length > 0 && (
-              <CartPreviewBtn type="button">{amountInCart}</CartPreviewBtn>
-            )}
             <svg width={24} height={24}>
               <use href={`${sprite}#cart`} />
             </svg>
           </NavigationLink>
+          {inCart?.length > 0 && (
+            <CartPreviewBtn type="button" onClick={() => setShowCartMenu(true)}>
+              {amountInCart}
+            </CartPreviewBtn>
+          )}
           <BurgerMenuBtn
             type="button"
             title="Меню"
@@ -65,6 +69,7 @@ export const Header = () => {
           </BurgerMenuBtn>
         </Actions>
         {showMenu && <Menu onClickHandle={setShowMenu} />}
+        {showCartMenu && <MenuCart onClickHandle={setShowCartMenu} />}
       </LimiterConatiner>
     </HeaderContainer>
   );
