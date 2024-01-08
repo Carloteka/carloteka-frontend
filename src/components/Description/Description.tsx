@@ -3,10 +3,12 @@ import { useParams } from 'react-router-dom';
 import { fetchItemDetails } from '../../api/api';
 import { SectionDescription } from './Description.styled';
 
+type Good = { images: [{ image: string }]; name: string };
+
 const Description = () => {
   const { goodId } = useParams();
 
-  const [good, setGood] = useState();
+  const [good, setGood] = useState<Good>();
 
   useEffect(() => {
     async function getGoodDetail() {

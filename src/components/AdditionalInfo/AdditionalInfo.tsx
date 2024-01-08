@@ -4,10 +4,15 @@ import { useParams } from 'react-router-dom';
 import { fetchItemDetails } from '../../api/api';
 import sprite from '../../images/sprite.svg';
 
+type Good = {
+  height: number;
+  width: number;
+};
+
 const AdditionalInfo = () => {
   const { goodId } = useParams();
 
-  const [good, setGood] = useState();
+  const [good, setGood] = useState<Good>();
 
   useEffect(() => {
     async function getGoodDetail() {

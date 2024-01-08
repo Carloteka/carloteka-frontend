@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PageTitle } from '../../components/pageTitle/PageTitle';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
@@ -12,7 +12,7 @@ import {
   CustomTitle,
   PolicyLink,
 } from './Delivery.styled';
-import sprite from '../../images/sprite.svg';
+// import sprite from '../../images/sprite.svg';
 
 type Good = {
   images: [{ image: string }];
@@ -33,6 +33,8 @@ const Delivery = () => {
     if (goodsInCart.length === 0) {
       navigate('/cart');
     }
+  } else {
+    navigate('/cart');
   }
 
   let goods: [] = [];
@@ -66,12 +68,19 @@ const Delivery = () => {
   function submitHandle(e: React.FormEvent) {
     e.preventDefault();
 
-    const elementsCollection = e.target.elements;
+    const target = e.target as HTMLFormElement;
+    const elementsCollection =
+      target.elements as HTMLCollectionOf<HTMLInputElement>;
     const elements = Array.from(elementsCollection).filter(
       (el) => el.value !== '',
     );
 
-    let data = {};
+    type dataObject = {
+      [key: string]: string | undefined;
+    };
+
+    const data: dataObject = {};
+
     elements.map((el) => (data[el.name] = el.value));
 
     console.log('send to backend', data);
@@ -222,7 +231,7 @@ const Delivery = () => {
 
                 <Total>
                   <p>Загальна сума:</p>
-                  <p>₴ {getTotalPrice()}</p>
+                  <p>₴ {getTotalPrice() + 95}</p>
                 </Total>
 
                 <CustomTitle>Метод оплати</CustomTitle>

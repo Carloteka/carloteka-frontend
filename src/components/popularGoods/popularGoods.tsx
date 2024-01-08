@@ -4,6 +4,8 @@ import { fetchPopularGoods } from '../../api/api';
 import { SliderPopulars } from './sliderPopulars/SliderPopulars';
 
 type Popular = {
+  category__id_name: string;
+  id: string;
   mini_image: string;
   name: string;
   price: number;
