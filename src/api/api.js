@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 axios.defaults.baseURL = import.meta.env.PROD
-  ? 'https://carloteka.com/api'
+  ? 'http://carloteka.com/api'
   : 'http://localhost:8000/api';
 
 export const fetchCategories = async () => {
