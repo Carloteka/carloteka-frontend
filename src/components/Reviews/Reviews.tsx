@@ -10,10 +10,14 @@ import { useParams } from 'react-router-dom';
 import { fetchItemDetails } from '../../api/api';
 import sprite from '../../images/sprite.svg';
 
+type Good = {
+  name: string;
+};
+
 const Reviews = () => {
   const { goodId } = useParams();
 
-  const [good, setGood] = useState();
+  const [good, setGood] = useState<Good>();
   const [rate, setRate] = useState(0);
 
   useEffect(() => {
@@ -31,13 +35,22 @@ const Reviews = () => {
   function submitHandle(e: React.FormEvent) {
     e.preventDefault();
 
-    const elementsCollection = e.target.elements;
+    const target = e.target as HTMLFormElement;
+    const elementsCollection =
+      target.elements as HTMLCollectionOf<HTMLInputElement>;
     const elements = Array.from(elementsCollection).filter(
       (el) => el.value !== '',
     );
 
-    let data = {};
-    console.log(elements.map((el) => (data[el.name] = el.value)));
+    type dataObject = {
+      [key: string]: string | number | undefined;
+    };
+
+    const data: dataObject = {
+      rate: 3.5,
+    };
+
+    elements.map((el) => (data[el.name] = el.value));
     data.rate = rate;
     console.log('send to backend', data);
   }

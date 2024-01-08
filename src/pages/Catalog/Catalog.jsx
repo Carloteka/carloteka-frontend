@@ -1,10 +1,10 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { PageTitle } from 'src/components/pageTitle/PageTitle';
-import { ContainerLimiter } from 'src/components/containerLimiter/ContainerLimiter.tsx';
-import { Paginator } from '../../components/Paginator/Paginator';
-import { CatalogCard } from '../../components/CatalogCard/CatalogCard';
-import { PopularGoods } from '../../components/popularGoods';
+import { PageTitle } from '../../components/pageTitle/PageTitle.tsx';
+import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter.tsx';
+import { Paginator } from '../../components/Paginator/Paginator.tsx';
+import { CatalogCard } from '../../components/CatalogCard/CatalogCard.tsx';
+import { PopularGoods } from '../../components/popularGoods/index.ts';
 import {
   FlexContainer,
   ShowFiltersBtn,
@@ -22,11 +22,10 @@ import {
   GoodsList,
   NoResultBox,
   NoResult,
-} from './Catalog.styled';
+} from './Catalog.styled.js';
 
-// import { toggleLocalStorage } from 'src/utils/toggleLocalStorage';
 import sprite from '../../images/sprite.svg';
-import { fetchAllGoods, fetchFilteredGoods } from '../../api/api';
+import { fetchAllGoods, fetchFilteredGoods } from '../../api/api.js';
 
 import MultiRangeSlider from 'multi-range-slider-react';
 
@@ -69,12 +68,7 @@ const Catalog = () => {
     return sortBy;
   }
 
-  // let goods = [];
   let categories = [];
-
-  // if (localStorage.getItem('goods')) {
-  //   goods = JSON.parse(localStorage.getItem('goods'));
-  // }
 
   if (localStorage.getItem('categories')) {
     categories = JSON.parse(localStorage.getItem('categories'));
@@ -85,7 +79,6 @@ const Catalog = () => {
   const [limit] = useState(12);
   const [tags, setTags] = useState([]);
 
-  // const [catalog, setCatalog] = useState(goods);
   const [category] = useState(categories);
 
   useEffect(() => {

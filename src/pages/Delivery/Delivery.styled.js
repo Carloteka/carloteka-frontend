@@ -123,14 +123,10 @@ export const DeliveryPrice = styled.div`
 
 export const Total = styled.div`
   margin-top: 24px;
-  height: 35px;
+  // height: 35px;
   font-weight: 700;
   font-size: 18px;
   line-height: calc(23 / 18);
-
-  p:last-child {
-    align-self: end;
-  }
 `;
 
 export const CustomTitle = styled.h3`
