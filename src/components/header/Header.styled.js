@@ -74,6 +74,11 @@ export const Actions = styled.div`
 
   gap: 116px;
 
+  button {
+    width: 40px;
+    height: 40px;
+  }
+
   svg {
     fill: #101010;
   }
@@ -95,15 +100,23 @@ export const BurgerMenuBtn = styled.button`
   @media screen and (max-width: 1439.99px) {
     justify-content: flex-end;
   }
-
-  width: 40px;
-  height: 40px;
 `;
 
-export const CartPreviewBtn = styled.button`
+export const CartMenuBtn = styled.button`
+  position: relative;
+
+  @media screen and (max-width: 1439.99px) {
+    ${visuallyHidden};
+  }
+`;
+
+export const CartCounter = styled.span`
   position: absolute;
-  top: 30px;
-  transform: translateX(-100px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -10px;
+  right: -20px;
   width: 25px;
   height: 25px;
   font-weight: 400;
