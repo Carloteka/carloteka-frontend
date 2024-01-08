@@ -11,7 +11,6 @@ export const Backdrop = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #f2f0ec50;
-  // pointer-events: none;
   z-index: 0;
 `;
 

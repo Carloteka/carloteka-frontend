@@ -94,7 +94,8 @@ const Reviews = () => {
               Ваш відгук *<textarea name="review" rows={6} required></textarea>
             </TextAreaLabel>
             <label>
-              Ім'я *<input type="text" name="name" required />
+              Ім'я *;
+              <input type="text" name="name" required />
             </label>
             <label>
               Електронна пошта *<input type="email" name="email" required />

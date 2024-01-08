@@ -16,7 +16,7 @@ export const Greeting = () => {
         <div>
           <Title>Дерев’яні вироби на будь-який смак</Title>
           <Img
-            src="src/images/Shield_and_sword.png"
+            src="src/images/Shield_and_sword-1.png"
             alt="Shield and sword"
             width={640}
             height={646}
@@ -36,7 +36,7 @@ export const Greeting = () => {
           </Button>
         </div>
         <ImgAside
-          src="src/images/Shield_and_sword.png"
+          src="src/images/Shield_and_sword-1.png"
           alt="Shield and sword"
           width={640}
           height={646}

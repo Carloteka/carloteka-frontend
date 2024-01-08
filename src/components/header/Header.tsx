@@ -50,8 +50,8 @@ export const Header = () => {
             </svg>
           </NavigationLink>
           <CartMenuBtn
-            onClick={() => setShowCartMenu(true)}
-            title="Меню Кошика"
+            onClick={() => inCart?.length > 0 && setShowCartMenu(true)}
+            title={inCart?.length > 0 ? 'Меню Кошика' : 'Кошик пустий'}
           >
             <svg width={24} height={24}>
               <use href={`${sprite}#cart`} />

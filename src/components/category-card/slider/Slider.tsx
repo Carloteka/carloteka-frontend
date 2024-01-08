@@ -20,7 +20,7 @@ export const Slider = ({ arrayToRender, sliderHandler }: SliderProps) => {
         type="button"
         onClick={() => sliderHandler(-1)}
       >
-        <ChevronIcon width={7.5} height={11}>
+        <ChevronIcon width={8} height={14}>
           <use href={`${sprite}#chevronCategory`} />
         </ChevronIcon>
       </button>
@@ -49,8 +49,8 @@ export const Slider = ({ arrayToRender, sliderHandler }: SliderProps) => {
       >
         <ChevronIcon
           style={{ transform: 'rotate(180deg)' }}
-          width={7.5}
-          height={11}
+          width={8}
+          height={14}
         >
           <use href={`${sprite}#chevronCategory`} />
         </ChevronIcon>

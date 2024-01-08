@@ -9,6 +9,7 @@ const Catalog = lazy(() => import('./pages/Catalog/Catalog'));
 const AboutUs = lazy(() => import('./pages/AboutUs/AboutUs'));
 const GoodDetail = lazy(() => import('./pages/GoodDetail/GoodDetail'));
 const Delivery = lazy(() => import('./pages/Delivery/Delivery'));
+const Payment = lazy(() => import('./pages/Payment/Payment'));
 const Description = lazy(() => import('./components/Description/Description'));
 const AdditionalInfo = lazy(() =>
   import('./components/AdditionalInfo/AdditionalInfo'),
@@ -26,6 +27,7 @@ function App() {
         <Route path="cart" element={<Cart />} />
         <Route path="about" element={<AboutUs />} />
         <Route path="delivery" element={<Delivery />} />
+        <Route path="payment" element={<Payment />} />
 
         <Route path=":category_name/:goodId" element={<GoodDetail />}>
           <Route path="description" element={<Description />} />
