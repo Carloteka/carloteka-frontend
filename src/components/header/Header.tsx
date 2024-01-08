@@ -5,8 +5,9 @@ import {
   Catalog,
   Actions,
   NavigationLink,
+  CartMenuBtn,
   BurgerMenuBtn,
-  CartPreviewBtn,
+  CartCounter,
 } from './Header.styled';
 import sprite from '../../images/sprite.svg';
 import { SearchBar } from './SearchBar/SearchBar';
@@ -48,16 +49,16 @@ export const Header = () => {
               <use href={`${sprite}#favorite`} />
             </svg>
           </NavigationLink>
-          <NavigationLink to={'/cart'} title="До Кошика">
+          <CartMenuBtn
+            onClick={() => setShowCartMenu(true)}
+            title="Меню Кошика"
+          >
             <svg width={24} height={24}>
               <use href={`${sprite}#cart`} />
             </svg>
-          </NavigationLink>
-          {inCart?.length > 0 && (
-            <CartPreviewBtn type="button" onClick={() => setShowCartMenu(true)}>
-              {amountInCart}
-            </CartPreviewBtn>
-          )}
+            {inCart?.length > 0 && <CartCounter>{amountInCart}</CartCounter>}
+          </CartMenuBtn>
+
           <BurgerMenuBtn
             type="button"
             title="Меню"
