@@ -2,16 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PageTitle } from '../../components/pageTitle/PageTitle';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
-import {
-  DeliveryBox,
-  Form,
-  FlexContainer,
-  Info,
-  DeliveryPrice,
-  Total,
-  CustomTitle,
-  PolicyLink,
-} from './Delivery.styled';
+import { DeliveryBox, Form, FlexContainer } from './Delivery.styled';
+import { InvoiceInfo } from '../../components/InvoiceInfo/InvoiceInfo';
 // import sprite from '../../images/sprite.svg';
 
 type Good = {
@@ -56,14 +48,6 @@ const Delivery = () => {
   const [inCart] = useState<Good[]>(
     goodsInCartArray.filter((el: { length: number }) => el.length !== 0),
   );
-
-  function getTotalPrice() {
-    return inCart.reduce(
-      (total: number, el: { quantity: number; price: number }) =>
-        el.price * (el?.quantity ? el.quantity : 1) + total,
-      0,
-    );
-  }
 
   function submitHandle(e: React.FormEvent) {
     e.preventDefault();
@@ -203,52 +187,7 @@ const Delivery = () => {
               </label>
             </Form>
             <aside>
-              <Info>
-                <h3>Ваше замовлення</h3>
-                <div>
-                  <h4>Товар</h4>
-                  <h4>Вартість</h4>
-                </div>
-
-                <ul>
-                  {inCart?.map((el) => (
-                    <li key={el.id_name}>
-                      <div>
-                        <p>
-                          {el.name}
-                          {el.quantity > 1 && ` (${el.quantity} шт.)`}
-                        </p>
-                        <p>₴ {el.price * el.quantity}</p>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-
-                <DeliveryPrice>
-                  <p>Вартість доставки</p>
-                  <p>₴ 95</p>
-                </DeliveryPrice>
-
-                <Total>
-                  <p>Загальна сума:</p>
-                  <p>₴ {getTotalPrice() + 95}</p>
-                </Total>
-
-                <CustomTitle>Метод оплати</CustomTitle>
-                <p>
-                  Ви можете оплатити з допомогою кредитної/дебітної картки,
-                  Apple Pay, Google Pay, а також готівкою.
-                </p>
-                <p>
-                  Ваші особисті дані використовуватимуться для обробки вашого
-                  замовлення, можливості користування цим веб-сайтом та для
-                  інших цілей, описаних у нашій
-                  <PolicyLink to={'./policy'}>
-                    {' '}
-                    політиці конфіденційності.
-                  </PolicyLink>
-                </p>
-              </Info>
+              <InvoiceInfo inCart={inCart} />
 
               <button type="submit" form="delivery">
                 продовжити
