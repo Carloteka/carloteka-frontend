@@ -21,7 +21,7 @@ export const MenuContainer = styled.div`
     justify-content: flex-start;
   }
 
-  @media screen and (max-width: 1439.99px) {
+  @media screen and (max-width: 1439px) {
     h3 {
       font-size: 24px;
       line-height: calc(31 / 24);
@@ -45,7 +45,7 @@ export const CloseButton = styled.button`
 `;
 
 export const FlexContainer = styled.div`
-@media screen and (max-width: 1439.99px) {
+@media screen and (max-width: 1439px) {
       flex-direction: column;
       row-gap:24px;
     }

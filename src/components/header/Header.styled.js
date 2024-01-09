@@ -61,7 +61,7 @@ export const Logo = styled(Link)`
 `;
 
 export const Catalog = styled(NavLink)`
-  @media screen and (max-width: 1439.99px) {
+  @media screen and (max-width: 1439px) {
     ${visuallyHidden};
   }
   margin-right: 80px;
@@ -91,13 +91,13 @@ export const Actions = styled.div`
 export const NavigationLink = styled(NavLink)`
   width: 40px;
   height: 40px;
-  @media screen and (max-width: 1439.99px) {
+  @media screen and (max-width: 1439px) {
     ${visuallyHidden};
   }
 `;
 
 export const BurgerMenuBtn = styled.button`
-  @media screen and (max-width: 1439.99px) {
+  @media screen and (max-width: 1439px) {
     justify-content: flex-end;
   }
 `;
@@ -105,7 +105,7 @@ export const BurgerMenuBtn = styled.button`
 export const CartMenuBtn = styled.button`
   position: relative;
 
-  @media screen and (max-width: 1439.99px) {
+  @media screen and (max-width: 1439px) {
     ${visuallyHidden};
   }
 `;

@@ -19,7 +19,7 @@ export const List = styled.ul`
 export const Category = styled.li`
   display: flex;
   gap: 32px;
-  @media screen and (max-width: 1439.99px) {
+  @media screen and (max-width: 1439px) {
     flex-direction: column;
     gap: 24px;
   }

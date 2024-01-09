@@ -14,7 +14,7 @@ export const Img = styled.img`
 `;
 
 export const Name = styled.h4`
-  @media screen and (max-width: 1439.99px) {
+  @media screen and (max-width: 1439px) {
     margin-right: 0;
     width: 101.5px;
     font-weight: 400;
@@ -46,7 +46,7 @@ export const FlexContainer = styled.div`
   color: #5b5b59;
   order: 2;
 
-  @media screen and (max-width: 1439.99px) {
+  @media screen and (max-width: 1439px) {
     margin-right: 0;
     gap: 4px;
     width: 100%;
@@ -70,7 +70,7 @@ export const Price = styled.p`
   color: #000;
   order: 1;
 
-  @media screen and (max-width: 1439.99px) {
+  @media screen and (max-width: 1439px) {
     margin: 22px 0 2px;
     text-align: end;
     font-size: 16px;
@@ -107,7 +107,7 @@ export const Star = styled.svg`
 `;
 
 export const BuyBtnDesc = styled.button`
-  @media screen and (max-width: 1439.99px) {
+  @media screen and (max-width: 1439px) {
     display: none;
   }
   margin-right: 88px;

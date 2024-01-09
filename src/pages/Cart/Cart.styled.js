@@ -18,7 +18,7 @@ export const FavoritesBox = styled.div`
 `;
 
 export const Card = styled.li`
-  @media screen and (max-width: 1439.99px) {
+  @media screen and (max-width: 1439px) {
     align-items: flex-start;
   }
   padding: 32px 0;
@@ -162,7 +162,7 @@ export const BuyBox = styled.div`
     line-height: calc(25 / 20);
     background-color: #f2f0ec;
     border: 1px solid #cccbc7;
-    @media screen and (max-width: 1439.99px) {
+    @media screen and (max-width: 1439px) {
       font-size: 18px;
       line-height: calc(23 / 18);
     }

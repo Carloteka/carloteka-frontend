@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const Search = styled.form`
-  @media screen and (max-width: 1439.99px) {
+  @media screen and (max-width: 1439px) {
     order: 2;
     margin-right: 0;
     padding: 0 0 0 16px;
