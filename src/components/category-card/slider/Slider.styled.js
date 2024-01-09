@@ -45,7 +45,7 @@ export const SliderContainer = styled.div`
 
   img {
     object-fit: cover;
-    @media screen and (max-width: 1439.99px) {
+    @media screen and (max-width: 1439px) {
       height: 224px;
     }
   }

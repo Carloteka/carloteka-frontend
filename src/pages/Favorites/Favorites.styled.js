@@ -18,7 +18,7 @@ export const FavoritesBox = styled.div`
 `;
 
 export const Card = styled.li`
-  @media screen and (max-width: 1439.99px) {
+  @media screen and (max-width: 1439px) {
     align-items: flex-start;
   }
   padding: 32px 0;

@@ -29,7 +29,7 @@ export const Box = styled.div`
   }
 
   & > div {
-    @media screen and (max-width: 1439.99px) {
+    @media screen and (max-width: 1439px) {
       display: flex;
       flex-direction: column;
       gap: 24px;
@@ -38,19 +38,19 @@ export const Box = styled.div`
 `;
 export const Img = styled.img`
   display: none;
-  @media screen and (max-width: 1439.99px) {
+  @media screen and (max-width: 1439px) {
     width: 100%;
     display: block;
   }
 `;
 export const ImgAside = styled.img`
   display: block;
-  @media screen and (max-width: 1439.99px) {
+  @media screen and (max-width: 1439px) {
     display: none;
   }
 `;
 export const Title = styled.h1`
-  @media screen and (max-width: 1439.99px) {
+  @media screen and (max-width: 1439px) {
     width: 288px;
     font-size: 35px;
     line-height: calc(46 / 35);
