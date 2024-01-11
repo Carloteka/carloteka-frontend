@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Select from 'react-select';
 
 export const DeliveryBox = styled.section`
   position: relative;
@@ -69,4 +70,55 @@ export const FlexContainer = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   row-gap: 32px;
+`;
+
+export const StyledSelect = styled(Select)`
+  .rs__indicator-separator {
+    display: none;
+  }
+  &.react-select-container {
+    width: 100%;
+  }
+  .rs__input {
+    margin: 0;
+    height: 50px;
+  }
+  .rs__input-container {
+    height: 50px;
+  }
+  .rs__menu {
+    margin-top: 0;
+    border: 1px solid #a7a5a3;
+    border-radius: 0;
+  }
+  .rs__option:hover {
+    svg {
+      fill: white;
+    }
+  }
+  .rs__menu-list {
+    padding-top: 0;
+  }
+  .rs__value-container {
+    padding: 0;
+    height: 50px;
+  }
+  .rs__single-value {
+    margin-left: 0;
+    color: #101010;
+
+    svg {
+      display: none;
+    }
+  }
+  .rs__placeholder {
+    padding-bottom: 4px;
+    color: #a7a5a3;
+  }
+`;
+
+export const GeoIcon = styled.svg`
+  padding: 2px 4px;
+  fill: #5b5b59;
+  margin-right: 8px;
 `;
