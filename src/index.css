@@ -115,3 +115,8 @@ address {
 fieldset {
   border: none;
 }
+
+/* ::-webkit-scrollbar,
+::-webkit-scrollbar-thumb {
+  display: none;
+} */
