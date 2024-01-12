@@ -15,7 +15,6 @@
     "@vitejs/plugin-react-swc": "^3.3.2",
     "axios": "^1.4.0",
     "multi-range-slider-react": "^2.0.7",
-    "node-sass": "^9.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.19.0",

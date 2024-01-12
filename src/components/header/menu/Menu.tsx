@@ -144,7 +144,10 @@ export const Menu = ({ onClickHandle }: MenuProps) => {
             </LinkLarge>
           </li>
           <li>
-            <LinkLarge to={'/delivery'} onClick={() => onClickHandle(false)}>
+            <LinkLarge
+              to={'/aboutPayment'}
+              onClick={() => onClickHandle(false)}
+            >
               Оплата & Доставка
             </LinkLarge>
           </li>

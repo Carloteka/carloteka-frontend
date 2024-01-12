@@ -18,14 +18,14 @@ interface PopularGoodsProps {
 }
 
 export const PopularGoods = ({ width }: PopularGoodsProps) => {
-  const [arrayPopulars, setArray] = useState<Popular[] | []>([]);
+  const [arrayPopulars, setArrayPopulars] = useState<Popular[] | []>([]);
 
   useEffect(() => {
     async function getPopulars() {
       try {
         const data = await fetchPopularGoods();
 
-        setArray(data.slice(0, 12));
+        setArrayPopulars(data.slice(0, 12));
       } catch (error) {
         console.log(error);
       }
@@ -54,7 +54,7 @@ export const PopularGoods = ({ width }: PopularGoodsProps) => {
       newArray.push(firstEl);
     }
 
-    setArray(newArray);
+    setArrayPopulars(newArray);
   }
 
   return (
