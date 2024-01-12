@@ -11,6 +11,10 @@ const GoodDetail = lazy(() => import('./pages/GoodDetail/GoodDetail'));
 const Delivery = lazy(() => import('./pages/Delivery/Delivery'));
 const Payment = lazy(() => import('./pages/Payment/Payment'));
 const Policy = lazy(() => import('./pages/Policy/Policy'));
+const Refund = lazy(() => import('./pages/Refund/Refund'));
+const AboutPaymentAndDelivery = lazy(() =>
+  import('./pages/AboutPaymentAndDelivery/AboutPaymentAndDelivery'),
+);
 const Description = lazy(() => import('./components/Description/Description'));
 const AdditionalInfo = lazy(() =>
   import('./components/AdditionalInfo/AdditionalInfo'),
@@ -30,6 +34,8 @@ function App() {
         <Route path="delivery" element={<Delivery />} />
         <Route path="payment" element={<Payment />} />
         <Route path="policy" element={<Policy />} />
+        <Route path="refund" element={<Refund />} />
+        <Route path="aboutPayment" element={<AboutPaymentAndDelivery />} />
 
         <Route path=":category_name/:goodId" element={<GoodDetail />}>
           <Route path="description" element={<Description />} />

@@ -116,7 +116,12 @@ fieldset {
   border: none;
 }
 
-/* ::-webkit-scrollbar,
+::-webkit-scrollbar {
+  width: 8px;
+  background: transparent;
+}
+
 ::-webkit-scrollbar-thumb {
-  display: none;
-} */
+  background: rgba(18 20 23 / 15%);
+  border-radius: 6px;
+}

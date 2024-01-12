@@ -62,7 +62,7 @@ export const Footer = () => {
         <h3>Допомога</h3>
         <List>
           <li>
-            <Link to={'/delivery'}>Оплата & Доставка</Link>
+            <Link to={'/aboutPayment'}>Оплата & Доставка</Link>
           </li>
           <li>
             <Link to={'/refund'}>Повернення & Відшкодування</Link>

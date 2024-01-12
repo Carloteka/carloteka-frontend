@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   width: 100%;
-  height: 78px;
+  min-height: 78px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,7 +14,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Title = styled.h1`
-  padding: 0 20px;
+  padding: 10px 16px;
   width: 320px;
   text-align: center;
 

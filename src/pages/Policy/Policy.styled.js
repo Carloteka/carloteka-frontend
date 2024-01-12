@@ -5,18 +5,23 @@ export const PolicyBox = styled.div`
   gap: 32px;
 
   & > div:last-child {
+    @media screen and (max-width: 1439px) {
+      display: none;
+    }
     h2 {
       display: none;
     }
   }
 `;
 export const PrivacyPolicy = styled.div`
-  width: 975px;
+  width: 100%;
   height: 1032px;
   overflow-y: scroll;
+  overflow-x: hidden;
+  text-align: left;
 
-  &::-webkit-scrollbar-thumb {
-    background: rgba(18 20 23 / 15%);
+  @media screen and (min-width: 1440px) {
+    width: 975px;
   }
 
   &:not(:hover) {
