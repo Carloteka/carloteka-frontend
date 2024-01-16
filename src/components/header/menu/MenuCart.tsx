@@ -86,7 +86,7 @@ export const MenuCart = ({ onClickHandle }: MenuCartProps) => {
               <Img
                 src={
                   import.meta.env.PROD
-                    ? `/${el.images[0].image}`
+                    ? `http://carloteka.com/${el.images[0].image}`
                     : `http://localhost:8000/${el.images[0].image}`
                 }
                 width={127}

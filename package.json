@@ -12,6 +12,7 @@
     "format": "prettier --write ./src"
   },
   "dependencies": {
+    "@google-pay/button-react": "^3.0.10",
     "@vitejs/plugin-react-swc": "^3.3.2",
     "axios": "^1.4.0",
     "multi-range-slider-react": "^2.0.7",

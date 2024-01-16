@@ -13,7 +13,12 @@ import {
 } from './AboutUs.styled';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
 import sprite from '../../images/sprite.svg';
-// import imgPath from 'img/lamination-wood-grade-cylinders-manufacturer 1.jpg';
+import example1 from '../../images/about-Group 1026.png';
+import example2 from '../../images/about-Group 1023.png';
+import example3 from '../../images/about-Group 1027.png';
+import example4 from '../../images/about-Group 1025.png';
+import example5 from '../../images/about-Group 1024.png';
+import imgPath from '../../images/lamination-wood-grade-cylinders-manufacturer 1.jpg';
 
 const AboutUs = () => {
   return (
@@ -21,7 +26,7 @@ const AboutUs = () => {
       <PageTitle>Про нас</PageTitle>
       <ContainerLimiter paddingTopMob={'16px'} paddingTopDesc={'80px'}>
         <img
-          src="src/images/lamination-wood-grade-cylinders-manufacturer 1.jpg"
+          src={imgPath}
           alt="lamination wood grade cylinders manufacturer"
           width={1312}
           height={800}
@@ -123,35 +128,35 @@ const AboutUs = () => {
           </div>
           <div>
             <Img1
-              src="src/images/about-Group 1026.png"
+              src={example1}
               alt="a wooden amphora"
               width={229}
               height={343}
               loading="lazy"
             />
             <Img2
-              src="src/images/about-Group 1023.png"
+              src={example2}
               alt="a massive craft bound book"
               width={343}
               height={228}
               loading="lazy"
             />
             <Img3
-              src="src/images/about-Group 1027.png"
+              src={example3}
               alt="a wooden chessboard with chess"
               width={345}
               height={276}
               loading="lazy"
             />
             <Img4
-              src="src/images/about-Group 1025.png"
+              src={example4}
               alt="a craft backgammon board"
               width={345}
               height={276}
               loading="lazy"
             />
             <Img5
-              src="src/images/about-Group 1024.png"
+              src={example5}
               alt="a wooden phone stand"
               width={276}
               height={345}

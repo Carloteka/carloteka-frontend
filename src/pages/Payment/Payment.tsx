@@ -23,6 +23,9 @@ import {
 import { Modal } from '../../components/Modal/Modal';
 import { InvoiceInfo } from '../../components/InvoiceInfo/InvoiceInfo';
 import sprite from '../../images/sprite.svg';
+import visaImg from '../../images/visa.png';
+import photo from '../../images/photo.jpg';
+import GooglePayButton from '@google-pay/button-react';
 
 type Good = {
   images: [{ image: string }];
@@ -213,7 +216,7 @@ const Payment = () => {
                         />
                       </label>
                       <img
-                        src="src/images/visa.png"
+                        src={visaImg}
                         alt="visa and mastercard label"
                         width={79}
                         height={16}
@@ -247,6 +250,43 @@ const Payment = () => {
                 </Form>
                 <span>OR</span>
                 <PaymentMethodDiv>
+                  <GooglePayButton
+                    environment="TEST"
+                    paymentRequest={{
+                      apiVersion: 2,
+                      apiVersionMinor: 0,
+                      allowedPaymentMethods: [
+                        {
+                          type: 'CARD',
+                          parameters: {
+                            allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+                            allowedCardNetworks: ['MASTERCARD', 'VISA'],
+                          },
+                          tokenizationSpecification: {
+                            type: 'PAYMENT_GATEWAY',
+                            parameters: {
+                              gateway: 'example',
+                              gatewayMerchantId: 'exampleGatewayMerchantId',
+                            },
+                          },
+                        },
+                      ],
+                      merchantInfo: {
+                        merchantId: '12345678901234567890',
+                        merchantName: 'Demo Merchant',
+                      },
+                      transactionInfo: {
+                        totalPriceStatus: 'FINAL',
+                        totalPriceLabel: 'Total',
+                        totalPrice: '100.00',
+                        currencyCode: 'USD',
+                        countryCode: 'US',
+                      },
+                    }}
+                    onLoadPaymentData={(paymentRequest) => {
+                      console.log('load payment data', paymentRequest);
+                    }}
+                  />
                   <button
                     type="button"
                     onClick={() => setPaymentMethod('applePay')}
@@ -255,14 +295,14 @@ const Payment = () => {
                       <use href={`${sprite}#applePay`} />
                     </svg>
                   </button>
-                  <button
+                  {/* <button
                     type="button"
                     onClick={() => setPaymentMethod('googlePay')}
                   >
                     <svg width={60} height={24}>
                       <use href={`${sprite}#googlePay`} />
                     </svg>
-                  </button>
+                  </button> */}
                 </PaymentMethodDiv>
               </div>
 
@@ -288,12 +328,7 @@ const Payment = () => {
               </HeaderDiv>
               <ModalMain>
                 <UserDiv>
-                  <img
-                    src="src/images/photo.jpg"
-                    alt="your photo"
-                    width={60}
-                    height={60}
-                  />
+                  <img src={photo} alt="your photo" width={60} height={60} />
                   <div>
                     <p>Тарас Шевченко</p>
                     <p>myemail@gmail.com</p>
@@ -301,7 +336,7 @@ const Payment = () => {
                 </UserDiv>
                 <CardDiv>
                   <img
-                    src="src/images/visa.png"
+                    src={visaImg}
                     alt="visa and mastercard label"
                     width={card === 'visa' ? 50 : 21}
                     height={16}
