@@ -50,7 +50,7 @@ const Description = () => {
         <img
           src={
             import.meta.env.PROD
-              ? `/${good.images[0].image}`
+              ? `http://carloteka.com/${good.images[0].image}`
               : `http://localhost:8000/${good.images[0].image}`
           }
           alt={good.name}

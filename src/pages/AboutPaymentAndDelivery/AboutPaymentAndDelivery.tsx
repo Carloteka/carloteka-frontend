@@ -5,6 +5,7 @@ import {
   DeliverySection,
 } from './AboutPaymentAndDelivery.styled';
 import sprite from '../../images/sprite.svg';
+import paymentImg from '../../images/high-view-laptop-black-shopping-card-1x.jpg';
 
 const AboutPaymentAndDelivery = () => {
   return (
@@ -35,7 +36,7 @@ const AboutPaymentAndDelivery = () => {
             </ol>
           </div>
           <img
-            src="src/images/high-view-laptop-black-shopping-card-1x.jpg"
+            src={paymentImg}
             alt="black laptop and shopping card"
             width={640}
             height={426}

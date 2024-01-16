@@ -30,7 +30,7 @@ export const Slider = ({ arrayToRender, sliderHandler }: SliderProps) => {
             <img
               src={
                 import.meta.env.PROD
-                  ? `/${el.image}`
+                  ? `http://carloteka.com/${el.image}`
                   : `http://localhost:8000/${el.image}`
               }
               alt="img першої категорії"

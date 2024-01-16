@@ -109,7 +109,7 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
           <img
             src={
               import.meta.env.PROD
-                ? `/${mini_image}`
+                ? `http://carloteka.com/${mini_image}`
                 : `http://localhost:8000/${mini_image}`
             }
             alt="img першої категорії"

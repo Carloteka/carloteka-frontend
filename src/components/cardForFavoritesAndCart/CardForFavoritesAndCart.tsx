@@ -66,7 +66,7 @@ export const CardForFavoritesAndCart = ({
       <Img
         src={
           import.meta.env.PROD
-            ? `/${images[0].image}`
+            ? `http://carloteka.com/${images[0].image}`
             : `http://localhost:8000/${images[0].image}`
         }
         width={60}
