@@ -88,16 +88,12 @@ export const List = styled.ul`
 
 export const FlexCatalogContainer = styled.div`
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   gap: 32px;
-
-  button {
-    width: 24px;
-    height: 24px;
-    justify-content: center;
-  }
+  cursor: pointer;
 
   svg {
+    padding: 5px 4px;
     fill: #101010;
   }
 `;
