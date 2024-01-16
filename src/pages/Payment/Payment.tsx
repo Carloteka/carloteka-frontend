@@ -250,6 +250,14 @@ const Payment = () => {
                 </Form>
                 <span>OR</span>
                 <PaymentMethodDiv>
+                  <button
+                    type="button"
+                    onClick={() => setPaymentMethod('applePay')}
+                  >
+                    <svg width={58} height={24}>
+                      <use href={`${sprite}#applePay`} />
+                    </svg>
+                  </button>
                   <GooglePayButton
                     environment="TEST"
                     paymentRequest={{
@@ -287,14 +295,7 @@ const Payment = () => {
                       console.log('load payment data', paymentRequest);
                     }}
                   />
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMethod('applePay')}
-                  >
-                    <svg width={58} height={24}>
-                      <use href={`${sprite}#applePay`} />
-                    </svg>
-                  </button>
+
                   {/* <button
                     type="button"
                     onClick={() => setPaymentMethod('googlePay')}
