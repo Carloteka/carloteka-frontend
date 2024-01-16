@@ -110,18 +110,17 @@ export const Menu = ({ onClickHandle }: MenuProps) => {
       <nav>
         <List>
           <li>
-            <FlexCatalogContainer>
+            <FlexCatalogContainer onClick={() => setShowList((prev) => !prev)}>
               <h3>Каталог</h3>
-              <button
-                onClick={() => setShowList((prev) => !prev)}
+              <svg
+                width={24}
+                height={24}
                 style={{
                   transform: showList ? 'rotate(90deg)' : 'rotate(270deg)',
                 }}
               >
-                <svg width={8} height={12}>
-                  <use href={`${sprite}#chevron`} />
-                </svg>
-              </button>
+                <use href={`${sprite}#chevron`} />
+              </svg>
             </FlexCatalogContainer>
             {showList && (
               <CategoriesList>
