@@ -362,7 +362,7 @@ const Delivery = () => {
             <aside style={{ paddingTop: '116px' }}>
               <InvoiceInfo inCart={inCart} />
 
-              <button type="submit" form="delivery">
+              <button type="submit" form="delivery" className="primaryBtn">
                 продовжити
               </button>
             </aside>
