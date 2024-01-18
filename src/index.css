@@ -23,6 +23,7 @@ body {
   line-height: calc(25 / 18);
   letter-spacing: 0;
   color: #101010;
+  background-color: white;
 }
 
 #root {
