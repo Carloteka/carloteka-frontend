@@ -8,7 +8,6 @@ import {
   GoToDelivery,
   Form,
   RelativeDiv,
-  Button,
   PaymentMethodDiv,
   FlexContainer,
   SuccessBox,
@@ -132,7 +131,10 @@ const Payment = () => {
       <>
         <PageTitle>Оплата</PageTitle>
         <ContainerLimiter paddingTopMob={'56px'} paddingTopDesc={'80px'}>
-          <GoToDelivery to={isSuccess ? '/catalog' : '/delivery'}>
+          <GoToDelivery
+            to={isSuccess ? '/catalog' : '/delivery'}
+            className="secondaryBtn"
+          >
             <svg width={16} height={16}>
               <use href={`${sprite}#arrow-right`} />
             </svg>
@@ -245,7 +247,9 @@ const Payment = () => {
                         required
                       />
                     </label>
-                    <Button type="submit">підтвердити</Button>
+                    <button type="submit" className="primaryBtn">
+                      підтвердити
+                    </button>
                   </FlexContainer>
                 </Form>
                 <span>OR</span>
@@ -360,7 +364,9 @@ const Payment = () => {
                       <use href={`${sprite}#i`} />
                     </svg>
                   </div>
-                  <Button type="submit">підтвердити</Button>
+                  <button type="submit" className="primaryBtn">
+                    підтвердити
+                  </button>
                 </form>
               </ModalMain>
             </Modal>

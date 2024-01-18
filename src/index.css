@@ -1,3 +1,7 @@
+:root {
+  --transition-time: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 *,
 *::after,
 *::before {
@@ -48,11 +52,41 @@ button {
   background-color: inherit;
   border: none;
   cursor: pointer;
+
+  transition:
+    color var(--transition-time),
+    background-color var(--transition-time);
 }
 button {
   font-size: 19px;
   line-height: 1;
   font-weight: 500;
+}
+
+.primaryBtn {
+  padding: 5px 24px;
+  width: 100%;
+  height: 48px;
+  text-transform: uppercase;
+  color: white;
+  background-color: #2d3f24;
+}
+.primaryBtn:visited {
+  color: white;
+}
+.primaryBtn:hover {
+  background-color: #1f241d;
+}
+.primaryBtn:focus {
+  background-color: #1f241d;
+  border: 2px solid #dad4c8;
+}
+.primaryBtn:active {
+  background-color: #2d3f24;
+  border: 2px solid #000;
+}
+.primaryBtn:disabled {
+  opacity: 0.3;
 }
 
 .secondaryBtn {
@@ -62,6 +96,26 @@ button {
   text-transform: uppercase;
   color: #2d3f24;
   border: 1px solid #2d3f24;
+}
+.secondaryBtn:visited {
+  color: #2d3f24;
+}
+.secondaryBtn:hover {
+  color: white;
+  background-color: #2d3f24;
+}
+.secondaryBtn:focus {
+  color: white;
+  background-color: #2d3f24;
+  border: 2px solid #000;
+}
+.secondaryBtn:active {
+  background-color: #1b2118;
+  border: 2px solid #000;
+}
+.secondaryBtn:disabled {
+  color: #869e79;
+  border: 1px solid #869e79;
 }
 
 img {
