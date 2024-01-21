@@ -30,7 +30,7 @@ const AboutUs = () => {
   return (
     <>
       <PageTitle>Про нас</PageTitle>
-      <ContainerLimiter paddingTopMob={'16px'} paddingTopDesc={'80px'}>
+      <ContainerLimiter paddingTopMob={'24px'} paddingTopDesc={'80px'}>
         <picture>
           <source srcSet={imgAvif} width="1312" height="800" />
           <img
@@ -72,47 +72,47 @@ const AboutUs = () => {
           </div>
           <div>
             <Table>
-              <tbody>
-                <tr>
-                  <td>Назва компанії</td>
-                  <td>Карлотека</td>
-                </tr>
-                <tr>
-                  <td>Власник</td>
-                  <td>Зайцева Наталія</td>
-                </tr>
-                <tr>
-                  <td>Адреса</td>
-                  <td>
-                    вул. А.Фарба 4б,<br></br> Дніпро, Україна
-                  </td>
-                </tr>
-                <tr>
-                  <td>Номер телефону</td>
-                  <td>
-                    <a href="tel:+380955810075" title="Call +380955810075">
-                      +380 (95) 581-00-75
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Відділ продажу</td>
-                  <td>
-                    <a href="tel:+380955810075" title="Call +380955810075">
-                      +380955810075
-                    </a>
-                    <a href="tel:+380955810075" title="Call +380955810075">
-                      +380955810075
-                    </a>
-                    <a
-                      href="mailto:info.carloteka@gmail.com"
-                      title="mail to info.carloteka@gmail.com"
-                    >
-                      info.carloteka@gmail.com
-                    </a>
-                  </td>
-                </tr>
-              </tbody>
+              <div>
+                <p>Назва компанії</p>
+                <p className="companyTitle">Карлотека</p>
+              </div>
+              <div>
+                <p>Власник</p>
+                <p>Зайцева Наталія</p>
+              </div>
+              <div>
+                <p>Адреса</p>
+                <p>
+                  вул. А.Фарба 4б,<br></br> Дніпро, Україна
+                </p>
+              </div>
+              <div>
+                <p className="telNo">Номер телефону</p>
+                <p>
+                  <a href="tel:+380955810075" title="Call +380955810075">
+                    +380 (95) 581-00-75
+                  </a>
+                </p>
+              </div>
+              <div>
+                <p style={{ position: 'absolute', width: '71px' }}>
+                  Відділ продажу
+                </p>
+                <p style={{ marginLeft: 'auto' }}>
+                  <a href="tel:+380955810075" title="Call +380955810075">
+                    +380955810075
+                  </a>
+                  <a href="tel:+380955810075" title="Call +380955810075">
+                    +380955810075
+                  </a>
+                  <a
+                    href="mailto:info.carloteka@gmail.com"
+                    title="mail to info.carloteka@gmail.com"
+                  >
+                    info.carloteka@gmail.com
+                  </a>
+                </p>
+              </div>
             </Table>
           </div>
         </SectionAboutBrand>
