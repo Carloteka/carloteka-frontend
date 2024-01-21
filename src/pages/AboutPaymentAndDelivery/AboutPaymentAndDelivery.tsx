@@ -37,7 +37,12 @@ const AboutPaymentAndDelivery = () => {
           </div>
 
           <picture>
-            <source srcSet={paymentImgAvif} width="640" height="426" />
+            <source
+              srcSet={paymentImgAvif}
+              width="640"
+              height="426"
+              type={'image/avif'}
+            />
             <img
               src={paymentImgJpg}
               alt="black laptop and shopping card"
