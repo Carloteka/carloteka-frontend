@@ -12,15 +12,7 @@ import {
 import { toggleCartInLocalStorage } from '../../../utils/toggleCartInLocalStorage';
 import sprite from '../../../images/sprite.svg';
 import { Link } from 'react-router-dom';
-
-type Good = {
-  images: [{ image: string }];
-  name: string;
-  price: number;
-  length: number;
-  id_name: string;
-  quantity: number;
-};
+import { Good } from '../../../../@types/custom';
 
 interface MenuCartProps {
   onClickHandle: (arg0: boolean) => void;
@@ -29,7 +21,7 @@ interface MenuCartProps {
 export const MenuCart = ({ onClickHandle }: MenuCartProps) => {
   const { setAmountInCart } = useContext(CartContext);
 
-  let goodsInCart: { id: string; amount: number }[] = [];
+  let goodsInCart: { id: number; amount: number }[] = [];
 
   if (localStorage.getItem('cart')) {
     goodsInCart = JSON.parse(localStorage.getItem('cart') as string);
@@ -42,9 +34,9 @@ export const MenuCart = ({ onClickHandle }: MenuCartProps) => {
   }
 
   const goodsInCartArray = goods.filter(
-    (el: { id_name: string; quantity: number }) =>
+    (el: { id: number; quantity: number }) =>
       goodsInCart.some((item) => {
-        if (el.id_name === item.id) {
+        if (el.id === item.id) {
           el.quantity = item.amount;
           return true;
         } else return false;
@@ -52,12 +44,12 @@ export const MenuCart = ({ onClickHandle }: MenuCartProps) => {
   );
 
   const [inCart, setInCart] = useState<Good[]>(
-    goodsInCartArray.filter((el: { length: number }) => el.length !== 0),
+    goodsInCartArray.filter((el: { id: number }) => el.id !== 0),
   );
 
-  function delFromCart(id: string) {
+  function delFromCart(id: number) {
     const newArray = goodsInCartArray.filter(
-      (el: { id_name: string }) => el.id_name !== id,
+      (el: { id: number }) => el.id !== id,
     );
     toggleCartInLocalStorage(true, id);
     setInCart(newArray);
@@ -82,12 +74,12 @@ export const MenuCart = ({ onClickHandle }: MenuCartProps) => {
         </CloseButton>
         <ul>
           {inCart?.map((el: Good) => (
-            <Card key={el.id_name}>
+            <Card key={el.id}>
               <Img
                 src={
                   import.meta.env.PROD
-                    ? `http://carloteka.com/${el.images[0].image}`
-                    : `http://localhost:8000/${el.images[0].image}`
+                    ? `http://carloteka.com/${el.image_set[0].image}`
+                    : `http://localhost:8000/${el.image_set[0].image}`
                 }
                 width={127}
                 height={158}
@@ -104,7 +96,7 @@ export const MenuCart = ({ onClickHandle }: MenuCartProps) => {
                 type="button"
                 onClick={() => {
                   setAmountInCart((amountInCart: number) => amountInCart - 1);
-                  delFromCart(el.id_name);
+                  delFromCart(el.id);
                 }}
               >
                 <svg width={9} height={8}>

@@ -9,14 +9,12 @@ interface PaginatorProps {
 
 export const Paginator = ({
   setCurrentPage,
-  currentPage: currPageAsString,
+  currentPage,
   pageCount,
 }: PaginatorProps) => {
   const firstBtnRef = useRef() as React.MutableRefObject<HTMLButtonElement>;
   const secondBtnRef = useRef() as React.MutableRefObject<HTMLButtonElement>;
   const thirdBtnRef = useRef() as React.MutableRefObject<HTMLButtonElement>;
-
-  const currentPage = +currPageAsString;
 
   function startBtnAction() {
     const firstBtn: HTMLButtonElement = firstBtnRef.current;
@@ -178,11 +176,9 @@ export const Paginator = ({
               title="first button of page navigation"
               onClick={(e) => setPage(e.target as HTMLElement)}
             >
-              {firstBtnRef.current
-                ? currentPage == +firstBtnRef.current?.innerText
-                  ? currentPage
-                  : firstBtnRef.current.innerText
-                : 1}
+              {!firstBtnRef.current?.innerText
+                ? currentPage
+                : firstBtnRef.current.innerText}
             </button>
           </li>
           <li
@@ -197,11 +193,9 @@ export const Paginator = ({
               title="second button of page navigation"
               onClick={(e) => setPage(e.target as HTMLElement)}
             >
-              {secondBtnRef.current
-                ? currentPage == +secondBtnRef.current?.innerText
-                  ? currentPage
-                  : secondBtnRef.current.innerText
-                : 2}
+              {!secondBtnRef.current?.innerText
+                ? currentPage + 1
+                : secondBtnRef.current.innerText}
             </button>
           </li>
           <li
@@ -216,11 +210,9 @@ export const Paginator = ({
               title="third button of page navigation"
               onClick={(e) => setPage(e.target as HTMLElement)}
             >
-              {thirdBtnRef.current
-                ? currentPage == +thirdBtnRef.current?.innerText
-                  ? currentPage
-                  : thirdBtnRef.current.innerText
-                : 3}
+              {!thirdBtnRef.current?.innerText
+                ? currentPage + 2
+                : thirdBtnRef.current.innerText}
             </button>
           </li>
           <li data-hidden={isBtnHidden('more')}>

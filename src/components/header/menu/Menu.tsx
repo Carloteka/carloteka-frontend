@@ -13,15 +13,7 @@ import sprite from '../../../images/sprite.svg';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { socialLinks } from '../../../socialLinks';
-
-type Categories = {
-  mini_image: string;
-  images: [{ image: string }];
-  name: string;
-  price: number;
-  id_name: string;
-  description: string;
-};
+import { Categories } from '../../../../@types/custom';
 
 interface MenuProps {
   onClickHandle: () => void;
@@ -58,9 +50,9 @@ export const Menu = ({ onClickHandle }: MenuProps) => {
             {showList && (
               <CategoriesList>
                 {categories.map((el) => (
-                  <li key={el.id_name}>
+                  <li key={el.id}>
                     <Link
-                      to={`/catalog?category-id-name=${el.id_name}`}
+                      to={`/catalog?category__id=${el.id}`}
                       onClick={() => onClickHandle()}
                     >
                       {el.name}

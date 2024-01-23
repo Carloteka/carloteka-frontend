@@ -20,23 +20,19 @@ import { fetchItemDetails } from '../../api/api';
 import { toggleLocalStorage } from '../../utils/toggleLocalStorage';
 import { addToCart } from '../../utils/addToCart';
 import { getBanner } from '../../utils/getBanner';
-
-type Good = {
-  mini_image: string;
-  images: [{ image: string }];
-  name: string;
-  mini_description: string;
-  price: number;
-  id_name: string;
-  description: string;
-  in_stock: number;
-};
+import { Good } from '../../../@types/custom';
+// type Good = {
+//   mini_image: string;
+//   images: [{ image: string }];
+//   name: string;
+//   mini_description: string;
+//   price: number;
+//   id_name: string;
+//   description: string;
+//   in_stock: number;
+// };
 
 type Image = { image: string };
-
-// interface GoodDetailProps {
-//   id: string;
-// }
 
 const GoodDetail = () => {
   const { goodId } = useParams();
@@ -49,9 +45,9 @@ const GoodDetail = () => {
     async function getGoodDetail() {
       try {
         const data = await fetchItemDetails(goodId);
-        setArray(data.images);
+        setArray(data.image_set);
         setGood(data);
-        setIsFavorite(favoriteArray.includes(data.id_name));
+        setIsFavorite(favoriteArray.includes(data.id));
       } catch (error) {
         console.log(error);
       }
@@ -59,7 +55,7 @@ const GoodDetail = () => {
     getGoodDetail();
   }, [goodId]);
 
-  let favoriteArray: string[] = [];
+  let favoriteArray: number[] = [];
 
   if (localStorage.getItem('favorite')) {
     favoriteArray = JSON.parse(localStorage.getItem('favorite') as string);
@@ -67,12 +63,12 @@ const GoodDetail = () => {
     localStorage.setItem('favorite', JSON.stringify(favoriteArray));
   }
 
-  const isInFavorite: boolean = favoriteArray.includes(good?.id_name);
+  const isInFavorite: boolean = favoriteArray.includes(good?.id);
   const [isFavorite, setIsFavorite] = useState(isInFavorite);
 
   const [amount, setAmount] = useState(1);
 
-  const [array, setArray] = useState<Image[]>(good?.images || []);
+  const [array, setArray] = useState<Image[]>(good?.image_set || []);
   //   console.log(array);
 
   const width: number = 1;
@@ -104,12 +100,12 @@ const GoodDetail = () => {
   }
 
   function toggleFavorite() {
-    toggleLocalStorage(isFavorite, 'favorite', good.id_name);
+    toggleLocalStorage(isFavorite, 'favorite', good.id);
     setIsFavorite((prev) => !prev);
   }
 
   function toggleCart() {
-    const isNeedAddNewToCart = addToCart(amount, good.id_name, 'add');
+    const isNeedAddNewToCart = addToCart(amount, good.id, 'add');
 
     isNeedAddNewToCart &&
       setAmountInCart((amountInCart: number) => amountInCart + 1);
@@ -130,13 +126,13 @@ const GoodDetail = () => {
               <Price>₴ {good.price}</Price>
               <p>
                 <span>Наявність в магазині: </span>
-                {good.in_stock === 1 ? 'так' : getBanner(good.in_stock)}
+                {good.stock === 'IN_STOCK' ? 'так' : getBanner(good.stock)}
               </p>
               <Material>{good.mini_description}</Material>
               <div>
                 <Increment
                   increment={increment}
-                  id_name={good.id_name}
+                  id={good.id}
                   quantity={amount}
                   setQuantity={() => {
                     return;
@@ -172,7 +168,7 @@ const GoodDetail = () => {
               </div>
               <p>
                 <span>Категорія: </span>
-                {good.name}
+                {good.category?.name}
               </p>
             </SellDiv>
           </SectionInfo>
