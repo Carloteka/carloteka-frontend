@@ -1,4 +1,4 @@
-import { LoaderWrap, Load } from './Loader.styled';
+import { LoaderWrap } from './Loader.styled';
 
 export const Loader = () => {
   return (
