@@ -8,16 +8,18 @@ export const fetchCategories = async () => {
   try {
     const response = await axios.get('/shop/categories/');
     const arrayData = response.data;
+    // console.log(arrayData);
     return arrayData;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const fetchItemDetails = async (id) => {
+export const fetchItemDetails = async (slug) => {
   try {
-    const response = await axios.get(`/shop/items/${id}/`);
+    const response = await axios.get(`/shop/items/${slug}/`);
     const arrayData = response.data;
+    // console.log(arrayData);.
     return arrayData;
   } catch (error) {
     console.log(error);
@@ -63,6 +65,7 @@ export const fetchFilteredGoods = async (search) => {
   const params = { limit: 12 };
   try {
     const response = await axios.get(`/shop/items/${search}`, { params });
+    // console.log(response);
     const arrayData = response.data.results;
     return { count: response.data.count, data: arrayData };
   } catch (error) {

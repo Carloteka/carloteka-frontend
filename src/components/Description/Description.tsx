@@ -3,8 +3,7 @@ import { useParams } from 'react-router-dom';
 import { fetchItemDetails } from '../../api/api';
 import { SectionDescription } from './Description.styled';
 import { marked } from 'marked';
-
-type Good = { images: [{ image: string }]; name: string; description: string };
+import { Good } from '../../../@types/custom';
 
 const Description = () => {
   const { goodId } = useParams();
@@ -51,8 +50,8 @@ const Description = () => {
         <img
           src={
             import.meta.env.PROD
-              ? `http://carloteka.com/${good.images[0].image}`
-              : `http://localhost:8000/${good.images[0].image}`
+              ? `http://carloteka.com/${good.image_set[0].image}`
+              : `http://localhost:8000/${good.image_set[0].image}`
           }
           alt={good.name}
           width={528}
