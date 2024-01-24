@@ -51,7 +51,7 @@ export const CategoryCard = ({ category }: CategoryCardProps) => {
         <p>{description}</p>
         <LinkBtn
           className="secondaryBtn"
-          to={`/catalog?category-id-name=${category.id}`}
+          to={`/catalog?category__id=${category.id}`}
         >
           Переглянути
         </LinkBtn>

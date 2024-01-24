@@ -95,8 +95,9 @@ const Catalog = () => {
     async function getAllGoods() {
       try {
         const data = await fetchAllGoods(12);
-        setQuantity(data.length);
-        setCatalog(data);
+
+        setQuantity(data.count);
+        setCatalog(data.data);
       } catch (error) {
         console.log(error);
       }
@@ -313,7 +314,7 @@ const Catalog = () => {
     }
   }
 
-  const sortedByStock = catalog.toSorted((a, b) => {
+  const sortedByStock = catalog.sort((a, b) => {
     if (a.stock === 'IN_STOCK' && b.stock === 'IN_STOCK') {
       return 0;
     } else if (a.stock === 'IN_STOCK') {

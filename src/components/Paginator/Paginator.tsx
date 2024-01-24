@@ -138,6 +138,11 @@ export const Paginator = ({
     const pageNumber = +el.innerText;
     setCurrentPage(pageNumber);
   }
+
+  function scrollToTop() {
+    window.scrollTo(0, 0);
+  }
+
   return (
     <ul className={css.paginator}>
       {pageCount && pageCount <= 1 ? null : (
@@ -147,7 +152,10 @@ export const Paginator = ({
               type="button"
               data-type={'styled'}
               title="to first page"
-              onClick={() => startBtnAction()}
+              onClick={() => {
+                startBtnAction();
+                window.scrollTo(0, 0);
+              }}
             >
               &lt;&lt;
             </button>
@@ -158,7 +166,10 @@ export const Paginator = ({
               type="button"
               data-type={'styled'}
               title="previous page"
-              onClick={() => prevBtnAction()}
+              onClick={() => {
+                prevBtnAction();
+                scrollToTop();
+              }}
             >
               &lt;
             </button>
@@ -174,7 +185,10 @@ export const Paginator = ({
                   : true
               }
               title="first button of page navigation"
-              onClick={(e) => setPage(e.target as HTMLElement)}
+              onClick={(e) => {
+                setPage(e.target as HTMLElement);
+                scrollToTop();
+              }}
             >
               {!firstBtnRef.current?.innerText
                 ? currentPage
@@ -191,7 +205,10 @@ export const Paginator = ({
               type="button"
               disabled={currentPage == +secondBtnRef?.current?.innerText}
               title="second button of page navigation"
-              onClick={(e) => setPage(e.target as HTMLElement)}
+              onClick={(e) => {
+                setPage(e.target as HTMLElement);
+                scrollToTop();
+              }}
             >
               {!secondBtnRef.current?.innerText
                 ? currentPage + 1
@@ -208,7 +225,10 @@ export const Paginator = ({
               type="button"
               disabled={currentPage == +thirdBtnRef?.current?.innerText}
               title="third button of page navigation"
-              onClick={(e) => setPage(e.target as HTMLElement)}
+              onClick={(e) => {
+                setPage(e.target as HTMLElement);
+                scrollToTop();
+              }}
             >
               {!thirdBtnRef.current?.innerText
                 ? currentPage + 2
@@ -222,6 +242,7 @@ export const Paginator = ({
               onClick={() => {
                 moreBtnAction(+3);
                 setCurrentPage(+thirdBtnRef.current.innerText - 2);
+                scrollToTop();
               }}
             >
               ...
@@ -232,7 +253,10 @@ export const Paginator = ({
               type="button"
               data-type={'styled'}
               title="next page"
-              onClick={() => nextBtnAction()}
+              onClick={() => {
+                nextBtnAction();
+                scrollToTop();
+              }}
             >
               Наступна
             </button>
@@ -250,6 +274,7 @@ export const Paginator = ({
                   1) as unknown as string;
                 thirdBtnRef.current.innerText = pageCount as unknown as string;
                 setCurrentPage(pageCount);
+                scrollToTop();
               }}
               disabled={!pageCount}
             >
