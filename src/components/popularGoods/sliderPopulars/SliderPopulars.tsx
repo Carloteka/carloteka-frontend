@@ -8,16 +8,6 @@ import sprite from '../../../images/sprite.svg';
 import { CatalogCard } from '../../CatalogCard/CatalogCard';
 import { Good as Popular } from '../../../../@types/custom';
 
-// type Popular = {
-//   category__id_name: string;
-//   id: string;
-//   mini_image: string;
-//   name: string;
-//   price: number;
-//   id_name: string;
-//   in_stock: number;
-// };
-
 interface SliderPopularsProps {
   arrayToRender: Popular[];
   sliderHandler: (payload: number) => void;

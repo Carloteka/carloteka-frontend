@@ -3,15 +3,6 @@ import { Section, Title } from './popularGoods.styled';
 import { fetchPopularGoods } from '../../api/api';
 import { SliderPopulars } from './sliderPopulars/SliderPopulars';
 import { Good as Popular } from '../../../@types/custom';
-// type Popular = {
-//   category__id_name: string;
-//   id: string;
-//   mini_image: string;
-//   name: string;
-//   price: number;
-//   id_name: string;
-//   in_stock: number;
-// };
 
 interface PopularGoodsProps {
   width: number;

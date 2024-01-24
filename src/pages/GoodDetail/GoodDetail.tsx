@@ -21,16 +21,6 @@ import { toggleLocalStorage } from '../../utils/toggleLocalStorage';
 import { addToCart } from '../../utils/addToCart';
 import { getBanner } from '../../utils/getBanner';
 import { Good } from '../../../@types/custom';
-// type Good = {
-//   mini_image: string;
-//   images: [{ image: string }];
-//   name: string;
-//   mini_description: string;
-//   price: number;
-//   id_name: string;
-//   description: string;
-//   in_stock: number;
-// };
 
 type Image = { image: string };
 

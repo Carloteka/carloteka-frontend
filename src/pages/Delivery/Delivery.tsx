@@ -155,7 +155,8 @@ const Delivery = () => {
     });
 
   function getOfficeValue() {
-    if (delivery) {
+    if (delivery?.office) {
+      // console.log(delivery.length);
       const selectedLabel = [
         'Відділеня 23, проспект Перемоги 1',
         'Відділеня 11, вул. Вербицького 14',
@@ -178,6 +179,8 @@ const Delivery = () => {
           </>
         ),
       };
+    } else {
+      return undefined;
     }
   }
 

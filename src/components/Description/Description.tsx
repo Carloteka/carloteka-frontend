@@ -27,21 +27,13 @@ const Description = () => {
     const target = description.current;
     if (target) {
       target.innerHTML = marked.parse(markdown) as string;
+      console.log('set innerHTML');
     }
   }
 
   return (
     good && (
-      <SectionDescription
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '32px',
-          borderTop: '1px solid #A7A5A3',
-          paddingTop: '40px',
-          color: '#000',
-        }}
-      >
+      <SectionDescription>
         <div>
           <h4 style={{ marginBottom: '12px' }}>{good.name}</h4>
 

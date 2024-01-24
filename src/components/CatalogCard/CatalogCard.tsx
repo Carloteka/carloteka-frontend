@@ -14,22 +14,13 @@ import { toggleLocalStorage } from '../../utils/toggleLocalStorage';
 import { toggleCartInLocalStorage } from '../../utils/toggleCartInLocalStorage';
 import { getBanner } from '../../utils/getBanner';
 import { Good as Popular } from '../../../@types/custom';
-// type Popular = {
-//   mini_image: string;
-//   name: string;
-//   price: number;
-//   id_name: string;
-//   in_stock: number;
-//   id: string;
-//   category__id_name: string;
-// };
 
 interface SliderItemProps {
   item: Popular;
 }
 
 export const CatalogCard = ({ item }: SliderItemProps) => {
-  const { id, name, mini_image, price, stock, slug, category, stars } = item;
+  const { id, name, mini_image, price, stock, slug, stars } = item;
 
   const { setAmountInCart } = useContext(CartContext);
 
@@ -105,7 +96,7 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
             {getBanner(stock)}
           </p>
         )}
-        <Link to={`/${category.id}/${slug}/description`} state={{ id }}>
+        <Link to={`/${slug}/description`} state={{ id }}>
           <img
             src={
               import.meta.env.PROD

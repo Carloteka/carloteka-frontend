@@ -19,7 +19,7 @@ export const fetchItemDetails = async (slug) => {
   try {
     const response = await axios.get(`/shop/items/${slug}/`);
     const arrayData = response.data;
-    // console.log(arrayData);.
+    console.log(arrayData);
     return arrayData;
   } catch (error) {
     console.log(error);
@@ -28,7 +28,7 @@ export const fetchItemDetails = async (slug) => {
 
 export const fetchPopularGoods = async () => {
   const params = {
-    limit: 4,
+    limit: 12,
   };
   // console.log(Object.entries(params).map(([key, value]) => `${key}=${value}`));
   try {
@@ -55,7 +55,8 @@ export const fetchAllGoods = async (limit) => {
   try {
     const response = await axios.get('/shop/items/', { params });
     const arrayData = response.data.results;
-    return arrayData;
+    // console.log(response);
+    return { count: response.data.count, data: arrayData };
   } catch (error) {
     console.log(error);
   }
