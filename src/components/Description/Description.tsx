@@ -15,7 +15,7 @@ const Description = () => {
       try {
         const data = await fetchItemDetails(goodId);
         setGood(data);
-        getDescription(data.description);
+        // getDescription(data.description);
       } catch (error) {
         console.log(error);
       }
@@ -26,10 +26,15 @@ const Description = () => {
   function getDescription(markdown: string) {
     const target = description.current;
     if (target) {
-      target.innerHTML = marked.parse(markdown) as string;
       console.log('set innerHTML');
+      target.innerHTML = marked.parse(markdown) as string;
     }
+    return undefined;
   }
+
+  // function createMarkup() {
+  //   return { __html: marked.parse(good?.description as string) as string };
+  // }
 
   return (
     good && (
@@ -37,7 +42,11 @@ const Description = () => {
         <div>
           <h4 style={{ marginBottom: '12px' }}>{good.name}</h4>
 
-          <div ref={description}></div>
+          <div
+            ref={description}
+            // dangerouslySetInnerHTML={createMarkup()}
+            onChange={getDescription(good.description)}
+          ></div>
         </div>
         <img
           src={
