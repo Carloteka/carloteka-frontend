@@ -239,12 +239,27 @@ const Catalog = () => {
         [field]: temp ? temp + `&${field}=` + value : value,
       };
     }
+
     setSearchParams(newparams);
+    let s = location.search.replaceAll('%26', '&').replaceAll('%3D', '=');
+    getFilteredCategories(s);
+  }
+
+  async function getFilteredCategories(filter) {
+    try {
+      const data = await fetchFilteredGoods(filter);
+
+      setQuantity(data.count);
+      setCatalog(data.data);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const handleSubmit = (e) => {
     e?.preventDefault();
 
+    setSearchParams({ ...params, price_min: minValue, price_max: maxValue });
     let newparams = {};
     newparams = {
       ...params,
@@ -259,18 +274,7 @@ const Catalog = () => {
 
     let s = location.search.replaceAll('%26', '&').replaceAll('%3D', '=');
 
-    async function getFilteredCategories() {
-      try {
-        const data = await fetchFilteredGoods(s);
-
-        setQuantity(data.count);
-        setCatalog(data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    getFilteredCategories();
+    getFilteredCategories(s);
   };
 
   function toggleSelectMenu(e) {
@@ -586,7 +590,7 @@ const Catalog = () => {
           ) : (
             <NoResultBox>
               <NoResult>
-                <p>За запитом “{query}” нічого не знайдено</p>
+                <p>За запитом {query ? `'${query}'` : ''} нічого не знайдено</p>
                 <ul>
                   <li>Спробуйте ввести назву товару або категорії</li>
                   <li>Переконайтеся, що в назвах немає граматичних помилок</li>
