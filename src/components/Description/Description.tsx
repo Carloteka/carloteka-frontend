@@ -23,18 +23,18 @@ const Description = () => {
     getGoodDetail();
   }, [goodId]);
 
-  function getDescription(markdown: string) {
-    const target = description.current;
-    if (target) {
-      console.log('set innerHTML');
-      target.innerHTML = marked.parse(markdown) as string;
-    }
-    return undefined;
-  }
-
-  // function createMarkup() {
-  //   return { __html: marked.parse(good?.description as string) as string };
+  // function getDescription(markdown: string) {
+  //   const target = description.current;
+  //   if (target) {
+  //     console.log('set innerHTML');
+  //     target.innerHTML = marked.parse(markdown) as string;
+  //   }
+  //   return undefined;
   // }
+
+  function createMarkup() {
+    return { __html: marked.parse(good?.description as string) as string };
+  }
 
   return (
     good && (
@@ -44,8 +44,8 @@ const Description = () => {
 
           <div
             ref={description}
-            // dangerouslySetInnerHTML={createMarkup()}
-            onChange={getDescription(good.description)}
+            dangerouslySetInnerHTML={createMarkup()}
+            // onChange={getDescription(good.description)}
           ></div>
         </div>
         <img
