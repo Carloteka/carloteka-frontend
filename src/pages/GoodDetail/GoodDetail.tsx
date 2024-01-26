@@ -110,6 +110,7 @@ const GoodDetail = () => {
             <Slider
               arrayToRender={arrayToRender}
               sliderHandler={sliderHandler}
+              description={good.name}
             ></Slider>
             <SellDiv>
               <h3>{good.name}</h3>

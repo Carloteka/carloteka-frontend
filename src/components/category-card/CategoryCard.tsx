@@ -43,11 +43,19 @@ export const CategoryCard = ({ category }: CategoryCardProps) => {
   // }
   return (
     <>
-      <Slider arrayToRender={arrayToRender} sliderHandler={sliderHandler} />
+      <Slider
+        arrayToRender={arrayToRender}
+        sliderHandler={sliderHandler}
+        description={name}
+      />
 
       <TextContainer>
         <Title>{name}</Title>
-        <Slider arrayToRender={arrayToRender} sliderHandler={sliderHandler} />
+        <Slider
+          arrayToRender={arrayToRender}
+          sliderHandler={sliderHandler}
+          description={name}
+        />
         <p>{description}</p>
         <LinkBtn
           className="secondaryBtn"
