@@ -12,7 +12,7 @@ export const Backdrop = styled.div`
   z-index: 0;
 `;
 
-export const MenuContainer = styled.div`
+export const MenuContainer = styled.div<{ $showCartMenu: boolean }>`
   padding: 130px 18px 180px;
   position: absolute;
   top: 0;
