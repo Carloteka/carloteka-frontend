@@ -17,7 +17,7 @@ export const MenuContainer = styled.div`
   position: absolute;
   top: 0;
   width: 288px;
-  right: ${({ showCartMenu }) => (showCartMenu ? '0' : '-288px')};
+  right: ${({ $showCartMenu }) => ($showCartMenu ? '0' : '-288px')};
 
   display: flex;
   flex-direction: column;
@@ -29,7 +29,7 @@ export const MenuContainer = styled.div`
   @media screen and (min-width: 1440px) {
     padding: 112px 56px 151px;
 
-    right: ${({ showCartMenu }) => (showCartMenu ? '0' : '-599px')};
+    right: ${({ $showCartMenu }) => ($showCartMenu ? '0' : '-599px')};
 
     width: 599px;
     min-height: 1024px;

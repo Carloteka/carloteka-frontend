@@ -16,6 +16,21 @@ export const Paginator = ({
   const secondBtnRef = useRef() as React.MutableRefObject<HTMLButtonElement>;
   const thirdBtnRef = useRef() as React.MutableRefObject<HTMLButtonElement>;
 
+  let isCurrentFirst = true;
+  if (firstBtnRef.current) {
+    isCurrentFirst = currentPage == +firstBtnRef.current?.innerText;
+  }
+
+  let isCurrentSecond = false;
+  if (secondBtnRef.current) {
+    isCurrentSecond = currentPage == +secondBtnRef.current?.innerText;
+  }
+
+  let isCurrentThird = false;
+  if (thirdBtnRef.current) {
+    isCurrentThird = currentPage == +thirdBtnRef.current?.innerText;
+  }
+
   function startBtnAction() {
     const firstBtn: HTMLButtonElement = firstBtnRef.current;
     firstBtn.innerText = '1';
@@ -38,7 +53,7 @@ export const Paginator = ({
   }
 
   function nextBtnAction() {
-    if (pageCount && currentPage >= pageCount) {
+    if (currentPage >= pageCount) {
       return;
     }
     if (currentPage == +thirdBtnRef.current.innerText) {
@@ -66,10 +81,8 @@ export const Paginator = ({
     switch (button) {
       case 'start':
         if (
-          (currentPage <= 3 &&
-            currentPage == +thirdBtnRef.current?.innerText) ||
-          (currentPage <= 3 &&
-            currentPage == +secondBtnRef.current?.innerText) ||
+          (currentPage <= 3 && isCurrentThird) ||
+          (currentPage <= 3 && isCurrentSecond) ||
           currentPage < 2
         ) {
           answer = 'true';
@@ -77,17 +90,10 @@ export const Paginator = ({
         break;
 
       case 'prev':
-        if (
-          (currentPage <= 3 &&
-            currentPage == +thirdBtnRef.current?.innerText) ||
-          currentPage <= 2
-        ) {
+        if ((currentPage <= 3 && isCurrentThird) || currentPage <= 2) {
           answer = 'true';
         }
-        if (
-          currentPage >= 2 &&
-          currentPage == +firstBtnRef.current?.innerText
-        ) {
+        if (currentPage >= 2 && isCurrentFirst) {
           answer = 'false';
         }
         break;
@@ -103,9 +109,8 @@ export const Paginator = ({
 
       case 'next':
         if (
-          (pageCount - currentPage <= 2 &&
-            currentPage == +firstBtnRef.current?.innerText) ||
-          pageCount - currentPage <= 1
+          (pageCount - currentPage <= 2 && isCurrentFirst) ||
+          pageCount - currentPage < 1
         ) {
           answer = 'true';
         }
@@ -116,8 +121,7 @@ export const Paginator = ({
 
       case 'last':
         if (
-          (pageCount - currentPage < 3 &&
-            currentPage == +firstBtnRef.current?.innerText) ||
+          (pageCount - currentPage < 3 && isCurrentFirst) ||
           pageCount - currentPage <= 1
         ) {
           answer = 'true';
@@ -145,7 +149,7 @@ export const Paginator = ({
 
   return (
     <ul className={css.paginator}>
-      {pageCount && pageCount <= 1 ? null : (
+      {pageCount <= 1 ? null : (
         <>
           <li data-hidden={isBtnHidden('start')}>
             <button
@@ -195,14 +199,11 @@ export const Paginator = ({
                 : firstBtnRef.current.innerText}
             </button>
           </li>
-          <li
-            data-hidden={
-              pageCount && pageCount < +secondBtnRef?.current?.innerText
-            }
-          >
+          <li data-hidden={pageCount === currentPage && isCurrentFirst}>
             <button
               ref={secondBtnRef}
               type="button"
+              data-hidden={pageCount < +secondBtnRef?.current?.innerText}
               disabled={currentPage == +secondBtnRef?.current?.innerText}
               title="second button of page navigation"
               onClick={(e) => {
@@ -217,12 +218,13 @@ export const Paginator = ({
           </li>
           <li
             data-hidden={
-              pageCount && pageCount < +thirdBtnRef?.current?.innerText
+              !isCurrentThird && isCurrentFirst && pageCount - currentPage <= 1
             }
           >
             <button
               ref={thirdBtnRef}
               type="button"
+              data-hidden={pageCount < +thirdBtnRef?.current?.innerText}
               disabled={currentPage == +thirdBtnRef?.current?.innerText}
               title="third button of page navigation"
               onClick={(e) => {
@@ -248,10 +250,11 @@ export const Paginator = ({
               ...
             </button>
           </li>
-          <li data-hidden={isBtnHidden('next')}>
+          <li>
             <button
               type="button"
               data-type={'styled'}
+              data-hidden={isBtnHidden('next')}
               title="next page"
               onClick={() => {
                 nextBtnAction();

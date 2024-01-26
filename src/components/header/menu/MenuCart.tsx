@@ -71,7 +71,7 @@ export const MenuCart = ({ onClickHandle, showCartMenu }: MenuCartProps) => {
         style={{ display: showCartMenu ? 'flex' : 'none' }}
       ></Backdrop>
       {inCart?.length > 0 && (
-        <MenuContainer showCartMenu={showCartMenu}>
+        <MenuContainer $showCartMenu={showCartMenu}>
           <CloseButton onClick={() => onClickHandle(false)}>
             <svg width={24} height={24}>
               <use href={`${sprite}#close`} />

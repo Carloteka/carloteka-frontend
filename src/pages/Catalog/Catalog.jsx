@@ -192,21 +192,6 @@ const Catalog = () => {
     let newparams = {};
     let temp = params[field];
 
-    if (field === 'price') {
-      const priceTo = 'price_max';
-      const priceFrom = 'price_min';
-
-      newparams = {
-        ...params,
-      };
-
-      delete newparams[priceTo];
-      delete newparams[priceFrom];
-
-      setSearchParams(newparams);
-      return;
-    }
-
     if (
       field === 'price_min' ||
       field === 'price_max' ||
@@ -218,6 +203,12 @@ const Catalog = () => {
       };
 
       setSearchParams(newparams);
+
+      if (field === 'order_by') {
+        let s = location.search.replaceAll('%26', '&').replaceAll('%3D', '=');
+        getFilteredCategories(s);
+      }
+
       return;
     }
 
@@ -259,11 +250,21 @@ const Catalog = () => {
   const handleSubmit = (e) => {
     e?.preventDefault();
 
-    setSearchParams({ ...params, price_min: minValue, price_max: maxValue });
+    let tempPrice = {};
+    if (minValue !== 0) {
+      tempPrice.price_min = minValue;
+    }
+    if (maxValue !== 10000) {
+      tempPrice.price_max = maxValue;
+    }
+
+    setSearchParams({ ...params, ...tempPrice });
+
     let newparams = {};
     newparams = {
       ...params,
     };
+
     const priceTo = 'price_max';
     const priceFrom = 'price_min';
     if (newparams[priceTo] || newparams[priceFrom]) {
@@ -273,7 +274,6 @@ const Catalog = () => {
     }
 
     let s = location.search.replaceAll('%26', '&').replaceAll('%3D', '=');
-
     getFilteredCategories(s);
   };
 
@@ -290,8 +290,25 @@ const Catalog = () => {
     );
 
     setTags(newTags);
-    onChangeHandler(field, value);
 
+    if (field === 'price') {
+      setMaxValue(10000);
+      setMinValue(0);
+      let newparams = {};
+      newparams = {
+        ...params,
+      };
+
+      delete newparams.price_min;
+      delete newparams.price_max;
+
+      setSearchParams(newparams);
+      let s = location.search.replaceAll('%26', '&').replaceAll('%3D', '=');
+      getFilteredCategories(s);
+      return;
+    }
+
+    onChangeHandler(field, value);
     handleSubmit();
   }
 
@@ -307,7 +324,9 @@ const Catalog = () => {
     }
 
     setSearchParams(newparams);
-    handleSubmit();
+    let s = location.search.replaceAll('%26', '&').replaceAll('%3D', '=');
+    getFilteredCategories(s);
+    // handleSubmit();
   }
 
   function clearOffset() {
@@ -318,23 +337,46 @@ const Catalog = () => {
     }
   }
 
-  const sortedByStock = catalog.sort((a, b) => {
-    if (a.stock === 'IN_STOCK' && b.stock === 'IN_STOCK') {
-      return 0;
-    } else if (a.stock === 'IN_STOCK') {
-      return -1;
-    } else if (b.stock === 'IN_STOCK') {
-      return 1;
-    } else if (a.stock === 'BACKORDER' && b.stock === 'BACKORDER') {
-      return 0;
-    } else if (a.stock === 'BACKORDER') {
-      return -1;
-    } else if (b.stock === 'BACKORDER') {
-      return 1;
-    } else {
-      return a.stock - b.stock;
+  // const sortedByStock = catalog.sort((a, b) => {
+  //   if (a.stock === 'IN_STOCK' && b.stock === 'IN_STOCK') {
+  //     return 0;
+  //   } else if (a.stock === 'IN_STOCK') {
+  //     return -1;
+  //   } else if (b.stock === 'IN_STOCK') {
+  //     return 1;
+  //   } else if (a.stock === 'BACKORDER' && b.stock === 'BACKORDER') {
+  //     return 0;
+  //   } else if (a.stock === 'BACKORDER') {
+  //     return -1;
+  //   } else if (b.stock === 'BACKORDER') {
+  //     return 1;
+  //   } else {
+  //     return a.stock - b.stock;
+  //   }
+  // });
+
+  function getSortedGoods() {
+    if (params.order_by) {
+      return catalog;
     }
-  });
+    return catalog.sort((a, b) => {
+      if (a.stock === 'IN_STOCK' && b.stock === 'IN_STOCK') {
+        return 0;
+      } else if (a.stock === 'IN_STOCK') {
+        return -1;
+      } else if (b.stock === 'IN_STOCK') {
+        return 1;
+      } else if (a.stock === 'BACKORDER' && b.stock === 'BACKORDER') {
+        return 0;
+      } else if (a.stock === 'BACKORDER') {
+        return -1;
+      } else if (b.stock === 'BACKORDER') {
+        return 1;
+      } else {
+        return a.stock - b.stock;
+      }
+    });
+  }
 
   const [minValue, setMinValue] = useState(getPriceValue('price_min'));
   const [maxValue, setMaxValue] = useState(getPriceValue('price_max'));
@@ -573,7 +615,7 @@ const Catalog = () => {
               </FlexDiv>
 
               <GoodsList>
-                {sortedByStock?.map((el) => (
+                {getSortedGoods()?.map((el) => (
                   <li key={el.id}>
                     <CatalogCard item={el} />
                   </li>
