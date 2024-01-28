@@ -11,16 +11,17 @@ import {
 } from './Header.styled';
 import sprite from '../../images/sprite.svg';
 import { SearchBar } from './SearchBar/SearchBar';
-import { Menu } from './menu/Menu';
-import { MenuCart } from './menu/MenuCart';
 import { useState, useEffect, useContext } from 'react';
 import { CartContext } from '../Layout';
 
-export const Header = () => {
+interface HeaderProps {
+  setShowMenu: (arg0: boolean) => void;
+  setShowCartMenu: (arg0: boolean) => void;
+}
+
+export const Header = ({ setShowCartMenu, setShowMenu }: HeaderProps) => {
   const { amountInCart } = useContext(CartContext);
 
-  const [showMenu, setShowMenu] = useState(false);
-  const [showCartMenu, setShowCartMenu] = useState(false);
   const [inCart, setInCart] = useState<string[]>([]);
 
   let goodsInCart: string[] = [];
@@ -35,21 +36,19 @@ export const Header = () => {
     setInCart(goodsInCart);
   }, [setInCart, inCart, goodsInCart]);
 
-  function burgerMenuHandler() {
+  function openMenu() {
     document.body.style.overflowY = 'hidden';
-    setShowMenu(true);
   }
-
-  function onClose() {
-    document.body.style.overflowY = 'auto';
-    setShowMenu(false);
+  function openCartMenu() {
+    openMenu();
+    setShowCartMenu(true);
   }
 
   return (
     <HeaderContainer>
       <LimiterConatiner>
         <Logo to={'/'}>Brand Logo</Logo>
-        <Catalog to={'/catalog'} title="На стрінку Товарів">
+        <Catalog to={'/catalog'} title="На сторінку Товарів">
           Каталог
         </Catalog>
         <SearchBar />
@@ -60,7 +59,7 @@ export const Header = () => {
             </svg>
           </NavigationLink>
           <CartMenuBtn
-            onClick={() => inCart?.length > 0 && setShowCartMenu(true)}
+            onClick={() => inCart?.length > 0 && openCartMenu()}
             title={inCart?.length > 0 ? 'Меню Кошика' : 'Кошик пустий'}
           >
             <svg width={24} height={24}>
@@ -72,16 +71,16 @@ export const Header = () => {
           <BurgerMenuBtn
             type="button"
             title="Меню"
-            onClick={() => burgerMenuHandler()}
+            onClick={() => {
+              openMenu();
+              setShowMenu(true);
+            }}
           >
             <svg width={18} height={12}>
               <use href={`${sprite}#burger-menu`} />
             </svg>
           </BurgerMenuBtn>
         </Actions>
-        <Menu onClickHandle={onClose} showMenu={showMenu} />
-
-        <MenuCart onClickHandle={setShowCartMenu} showCartMenu={showCartMenu} />
       </LimiterConatiner>
     </HeaderContainer>
   );

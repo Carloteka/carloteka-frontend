@@ -1,5 +1,6 @@
 import {
-  Search,
+  SearchBox,
+  Form,
   Input,
   Backdrop,
   SearchResultDiv,
@@ -79,30 +80,34 @@ export const SearchBar = () => {
   };
 
   return (
-    <Search
-      onSubmit={handleSubmit}
-      style={{
-        boxShadow: query ? '1px 1px 7px 0 #c6b89e' : '',
-        background: query ? '#fff' : '',
-      }}
-    >
-      <Input
-        type={'search'}
-        name="query"
-        value={query}
-        placeholder="Пошук товарів"
-        onChange={(e) => handleChangeInput(e.target.value)}
-      />
-      <button
-        type="submit"
-        onClick={() => {
-          return false;
-        }}
-      >
-        <svg width={24} height={24}>
-          <use href={`${sprite}#search`} />
-        </svg>
-      </button>
+    <SearchBox>
+      <search>
+        <Form
+          onSubmit={handleSubmit}
+          style={{
+            boxShadow: query ? '1px 1px 7px 0 #c6b89e' : '',
+            background: query ? '#fff' : '',
+          }}
+        >
+          <Input
+            type={'search'}
+            name="query"
+            value={query}
+            placeholder="Пошук товарів"
+            onChange={(e) => handleChangeInput(e.target.value)}
+          />
+          <button
+            type="submit"
+            onClick={() => {
+              return false;
+            }}
+          >
+            <svg width={16} height={16}>
+              <use href={`${sprite}#search`} />
+            </svg>
+          </button>
+        </Form>
+      </search>
       {showResult && query && (
         <>
           <Backdrop onClick={() => setShowResult(false)}></Backdrop>
@@ -190,6 +195,6 @@ export const SearchBar = () => {
           </SearchResultDiv>
         </>
       )}
-    </Search>
+    </SearchBox>
   );
 };
