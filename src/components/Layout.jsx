@@ -3,6 +3,8 @@ import { Outlet } from 'react-router-dom';
 import { Loader } from './Loader/Loader';
 import { Header } from './header/Header';
 import { Footer } from './footer/Footer';
+import { MenuCart } from './header/menu/MenuCart';
+import { Menu } from './header/menu/Menu';
 
 export const CartContext = createContext({
   amountInCart: 0,
@@ -27,23 +29,35 @@ const Layout = () => {
     [amountInCart],
   );
 
+  const [showMenu, setShowMenu] = useState(false);
+  const [showCartMenu, setShowCartMenu] = useState(false);
+
+  function onClose() {
+    document.body.style.overflowY = 'auto';
+    setShowMenu(false);
+    setShowCartMenu(false);
+  }
+
   return (
     <CartContext.Provider value={value}>
-      {useMemo(
-        () => (
-          <>
-            <Header />
-            <main>
-              <Suspense fallback={<Loader />}>
-                <Outlet />
-              </Suspense>
-            </main>
+      <>
+        <Header setShowCartMenu={setShowCartMenu} setShowMenu={setShowMenu} />
+        <main>
+          <Menu
+            onClickHandle={onClose}
+            showMenu={showMenu}
+            setShowMenu={setShowMenu}
+          />
 
-            <Footer />
-          </>
-        ),
-        [],
-      )}
+          <MenuCart onClickHandle={onClose} showCartMenu={showCartMenu} />
+
+          <Suspense fallback={<Loader />}>
+            <Outlet />
+          </Suspense>
+        </main>
+
+        <Footer />
+      </>
     </CartContext.Provider>
   );
 };
