@@ -31,13 +31,17 @@ const GoodDetail = () => {
 
   const [good, setGood] = useState<Good>({} as Good);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     async function getGoodDetail() {
       try {
+        setIsLoading(true);
         const data = await fetchItemDetails(goodId);
         setArray(data.image_set);
         setGood(data);
         setIsFavorite(favoriteArray.includes(data.id));
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -104,6 +108,7 @@ const GoodDetail = () => {
   return (
     good && (
       <>
+        {isLoading && <Loader />}
         <PageTitle>{good.name}</PageTitle>
         <ContainerLimiter paddingTopMob={'56px'} paddingTopDesc={'56px'}>
           <SectionInfo>

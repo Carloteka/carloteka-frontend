@@ -28,6 +28,13 @@ export const Form = styled.form`
   height: 32px;
   display: flex;
   align-items: center;
+
+  svg {
+    @media screen and (min-width: 1440px) {
+      width: 24px;
+      height: 24px;
+    }
+  }
 `;
 
 export const Input = styled.input`
@@ -70,7 +77,7 @@ export const SearchResultDiv = styled.div`
   @media screen and (min-width: 1440px) {
     width: 100%;
     top: 38px;
-left: 0;
+    left: 0;
   }
 
   p:first-child {
@@ -120,17 +127,16 @@ export const GoodListResult = styled.li`
   li {
     border-bottom: 0.5px solid #cccbc7;
     justify-content: space-between;
+    width: 100%;
     a {
       padding-right: 4px;
       width: 160px;
       font-size: 13px;
+      overflow-y: hidden;
       @media screen and (min-width: 1440px) {
         font-size: 18px;
         width: 220px;
       }
-    }
-    @media screen and (min-width: 1440px) {
-      width: 220px;
     }
   }
 
