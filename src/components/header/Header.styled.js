@@ -97,6 +97,7 @@ export const Actions = styled.div`
 `;
 
 export const NavigationLink = styled(NavLink)`
+  position: relative;
   width: 40px;
   height: 40px;
   @media screen and (max-width: 1439px) {
@@ -119,7 +120,7 @@ export const CartMenuBtn = styled.button`
   position: relative;
 `;
 
-export const CartCounter = styled.span`
+export const Counter = styled.span`
   position: absolute;
   display: flex;
   justify-content: center;

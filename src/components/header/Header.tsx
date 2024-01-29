@@ -7,12 +7,12 @@ import {
   NavigationLink,
   CartMenuBtn,
   BurgerMenuBtn,
-  CartCounter,
+  Counter,
 } from './Header.styled';
 import sprite from '../../images/sprite.svg';
 import { SearchBar } from './SearchBar/SearchBar';
 import { useState, useEffect, useContext } from 'react';
-import { CartContext } from '../Layout';
+import { CartContext, FavoritesContext } from '../Layout';
 
 interface HeaderProps {
   setShowMenu: (arg0: boolean) => void;
@@ -21,10 +21,13 @@ interface HeaderProps {
 
 export const Header = ({ setShowCartMenu, setShowMenu }: HeaderProps) => {
   const { amountInCart } = useContext(CartContext);
+  const { amountInFavorites } = useContext(FavoritesContext);
 
-  const [inCart, setInCart] = useState<string[]>([]);
+  const [inCart, setInCart] = useState<object[]>([]);
+  const [inFavorites, setInFavorites] = useState<number[]>([]);
 
-  let goodsInCart: string[] = [];
+  let goodsInCart: object[] = [];
+  let goodsInFavorites: number[] = [];
 
   useEffect(() => {
     if (localStorage.getItem('cart')) {
@@ -33,8 +36,20 @@ export const Header = ({ setShowCartMenu, setShowMenu }: HeaderProps) => {
     if (inCart.length === goodsInCart.length) {
       return;
     }
+
     setInCart(goodsInCart);
   }, [setInCart, inCart, goodsInCart]);
+
+  useEffect(() => {
+    if (localStorage.getItem('favorite')) {
+      goodsInFavorites = JSON.parse(localStorage.getItem('favorite') as string);
+    }
+    if (inFavorites.length === goodsInFavorites.length) {
+      return;
+    }
+
+    setInFavorites(goodsInFavorites);
+  }, [setInFavorites, inFavorites, goodsInFavorites]);
 
   function openMenu() {
     document.body.style.overflowY = 'hidden';
@@ -57,6 +72,7 @@ export const Header = ({ setShowCartMenu, setShowMenu }: HeaderProps) => {
             <svg width={24} height={24}>
               <use href={`${sprite}#favorite`} />
             </svg>
+            {inFavorites?.length > 0 && <Counter>{amountInFavorites}</Counter>}
           </NavigationLink>
           <CartMenuBtn
             onClick={() => inCart?.length > 0 && openCartMenu()}
@@ -65,7 +81,7 @@ export const Header = ({ setShowCartMenu, setShowMenu }: HeaderProps) => {
             <svg width={24} height={24}>
               <use href={`${sprite}#cart`} />
             </svg>
-            {inCart?.length > 0 && <CartCounter>{amountInCart}</CartCounter>}
+            {inCart?.length > 0 && <Counter>{amountInCart}</Counter>}
           </CartMenuBtn>
 
           <BurgerMenuBtn

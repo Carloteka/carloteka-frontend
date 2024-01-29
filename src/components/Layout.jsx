@@ -12,9 +12,16 @@ export const CartContext = createContext({
     state;
   },
 });
+export const FavoritesContext = createContext({
+  amountInFavorites: 0,
+  setAmountInFavorites: (state) => {
+    state;
+  },
+});
 
 const Layout = () => {
   let cartArray = [];
+  let favoritesArray = [];
 
   if (localStorage.getItem('cart')) {
     cartArray = JSON.parse(localStorage.getItem('cart'));
@@ -22,11 +29,24 @@ const Layout = () => {
     localStorage.setItem('cart', JSON.stringify(cartArray));
   }
 
-  const [amountInCart, setAmountInCart] = useState(cartArray?.length);
+  if (localStorage.getItem('favorite')) {
+    favoritesArray = JSON.parse(localStorage.getItem('favorite'));
+  } else {
+    localStorage.setItem('favorite', JSON.stringify(favoritesArray));
+  }
 
-  const value = useMemo(
+  const [amountInCart, setAmountInCart] = useState(cartArray?.length);
+  const [amountInFavorites, setAmountInFavorites] = useState(
+    favoritesArray?.length,
+  );
+
+  const valueCart = useMemo(
     () => ({ amountInCart, setAmountInCart }),
     [amountInCart],
+  );
+  const valueFavorites = useMemo(
+    () => ({ amountInFavorites, setAmountInFavorites }),
+    [amountInFavorites],
   );
 
   const [showMenu, setShowMenu] = useState(false);
@@ -39,26 +59,28 @@ const Layout = () => {
   }
 
   return (
-    <CartContext.Provider value={value}>
-      <>
-        <Header setShowCartMenu={setShowCartMenu} setShowMenu={setShowMenu} />
-        <main>
-          <Menu
-            onClickHandle={onClose}
-            showMenu={showMenu}
-            setShowMenu={setShowMenu}
-          />
+    <FavoritesContext.Provider value={valueFavorites}>
+      <CartContext.Provider value={valueCart}>
+        <>
+          <Header setShowCartMenu={setShowCartMenu} setShowMenu={setShowMenu} />
+          <main>
+            <Menu
+              onClickHandle={onClose}
+              showMenu={showMenu}
+              setShowMenu={setShowMenu}
+            />
 
-          <MenuCart onClickHandle={onClose} showCartMenu={showCartMenu} />
+            <MenuCart onClickHandle={onClose} showCartMenu={showCartMenu} />
 
-          <Suspense fallback={<Loader />}>
-            <Outlet />
-          </Suspense>
-        </main>
+            <Suspense fallback={<Loader />}>
+              <Outlet />
+            </Suspense>
+          </main>
 
-        <Footer />
-      </>
-    </CartContext.Provider>
+          <Footer />
+        </>
+      </CartContext.Provider>
+    </FavoritesContext.Provider>
   );
 };
 
