@@ -15,7 +15,7 @@ export const Backdrop = styled.div`
 
 export const MenuContainer = styled.div<{ $showMenu: boolean }>`
   padding: 120px 16px 120px;
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   width: 100%;
