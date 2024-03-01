@@ -46,7 +46,11 @@ export const Footer = () => {
         <h3>Про нас</h3>
         <List>
           <li>
-            <Link to={'/about'} onClick={() => scrollToTop()}>
+            <Link
+              to={'/about'}
+              onClick={() => scrollToTop()}
+              className="littleText"
+            >
               Наша історія
             </Link>
           </li>

@@ -23,7 +23,7 @@ interface MenuProps {
 
 export const Menu = ({ onClickHandle, showMenu }: MenuProps) => {
   const tempString = localStorage.getItem('categories') as string;
-  const categories: Categories[] = JSON.parse(tempString);
+  const categories: Categories[] = tempString ? JSON.parse(tempString) : [];
 
   const [showList, setShowList] = useState<boolean>();
 
