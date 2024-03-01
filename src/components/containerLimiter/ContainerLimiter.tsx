@@ -29,9 +29,9 @@ export const Limiter = styled.div<StyleProp>`
   width: 288px;
   text-align: center;
 
-  @media screen and (min-width: 1024px) {
-    padding: 64px 0;
-    width: 960px;
+  @media screen and (min-width: 834px) {
+    padding: 56px 0;
+    width: 768px;
   }
 
   @media screen and (min-width: 1440px) {
