@@ -162,7 +162,11 @@ const GoodDetail = () => {
                     <use href={`${sprite}#favorite`} />
                   </svg>
                 </AddToFavoriteBtn>
-                <Link to={'/cart'} className="primaryBtn">
+                <Link
+                  to={'/delivery'}
+                  className="primaryBtn"
+                  onClick={() => toggleCart()}
+                >
                   Купити в один клік
                 </Link>
               </div>
