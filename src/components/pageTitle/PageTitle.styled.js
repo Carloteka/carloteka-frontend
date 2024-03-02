@@ -22,7 +22,7 @@ export const Wrapper = styled.div`
 
 export const Title = styled.h1`
   padding: 10px 16px;
-  width: 320px;
+  min-width: 320px;
   text-align: center;
 
   @media screen and (min-width: 834px) {

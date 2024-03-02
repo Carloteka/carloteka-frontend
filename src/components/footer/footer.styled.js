@@ -22,6 +22,14 @@ export const Wrapper = styled.footer`
   div:first-child {
     width: 226px;
   }
+  div:nth-child(2) {
+    @media screen and (min-width: 834px) {
+      width: 216px;
+    }
+  }
+  div:last-child {
+    width: 263px;
+  }
 
   h3 {
     margin-bottom: 16px;

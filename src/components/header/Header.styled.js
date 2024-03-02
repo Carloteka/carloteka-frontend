@@ -25,7 +25,7 @@ export const HeaderContainer = styled.header`
 
 export const LimiterConatiner = styled.div`
   margin: 0 auto;
-  width: 288px;
+  min-width: 288px;
   height: 100%;
   display: flex;
   align-content: space-between;

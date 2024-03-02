@@ -56,6 +56,7 @@ const Layout = () => {
     document.body.style.overflowY = 'auto';
     setShowMenu(false);
     setShowCartMenu(false);
+    console.log('here');
   }
 
   return (

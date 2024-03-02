@@ -4,13 +4,19 @@ import { Link } from 'react-router-dom';
 export const SearchBox = styled.div`
   position: relative;
   margin-right: 0;
+  width: 100%;
   display: flex;
+
+  @media screen and (min-width: 834px) {
+    width: auto;
+  }
   @media screen and (min-width: 1440px) {
     margin-right: 142px;
   }
 
   search {
-    width: 208px;
+    min-width: 208px;
+    width: 100%;
     @media screen and (min-width: 834px) {
       width: 398px;
     }
@@ -40,6 +46,7 @@ export const Form = styled.form`
 export const Input = styled.input`
   padding: 0;
   width: 176px;
+  width: 92%;
   border: none;
   border-radius: 0;
   background-color: inherit;
@@ -58,7 +65,7 @@ export const Input = styled.input`
   &::placeholder {
     font-size: 24px;
     line-height: calc(25 / 24);
-    letter-spacing: -0.04rem;
+    letter-spacing: -0.06rem;
   }
 
   &:focus {
