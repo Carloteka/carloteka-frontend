@@ -238,7 +238,7 @@ const Delivery = () => {
   return (
     inCart.length > 0 && (
       <>
-        {isLoading && <Loader />}
+        {/* {isLoading && <Loader />} */}
         <PageTitle>Доставка</PageTitle>
         <ContainerLimiter paddingTopMob={'24px'} paddingTopDesc={'80px'}>
           <DeliveryBox>
@@ -311,7 +311,9 @@ const Delivery = () => {
                       className="react-select-container"
                       classNamePrefix="rs"
                       name={'oblast'}
-                      placeholder={'Оберіть регіон'}
+                      placeholder={
+                        isLoading ? 'Завантаження' : 'Оберіть регіон'
+                      }
                       options={
                         delivery?.country?.value === 'Україна'
                           ? getOptions(
@@ -336,7 +338,9 @@ const Delivery = () => {
                         className="react-select-container"
                         classNamePrefix="rs"
                         name={'city'}
-                        placeholder={'Оберіть місто'}
+                        placeholder={
+                          isLoading ? 'Завантаження' : 'Оберіть місто'
+                        }
                         options={
                           delivery?.oblast?.value
                             ? getOptions(
@@ -372,6 +376,8 @@ const Delivery = () => {
                       placeholder={
                         warehouses[0] === 404
                           ? warehouseError
+                          : isLoading
+                          ? 'Завантаження'
                           : 'Оберіть номер відділення'
                       }
                       options={
