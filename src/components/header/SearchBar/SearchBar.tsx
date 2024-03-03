@@ -110,6 +110,7 @@ export const SearchBar = () => {
               onClick={() => {
                 return false;
               }}
+              title="Search"
             >
               <svg width={16} height={16}>
                 <use href={`${sprite}#search`} />

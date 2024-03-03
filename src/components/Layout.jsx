@@ -3,8 +3,8 @@ import { Outlet } from 'react-router-dom';
 import { Loader } from './Loader/Loader';
 import { Header } from './header/Header';
 import { Footer } from './footer/Footer';
-import { MenuCart } from './header/menu/MenuCart';
-import { Menu } from './header/menu/Menu';
+import { MenuCart } from './MenuCart/MenuCart';
+import { Menu } from './Menu/Menu';
 
 export const CartContext = createContext({
   amountInCart: 0,

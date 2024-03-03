@@ -32,6 +32,7 @@ export const Limiter = styled.div<StyleProp>`
   @media screen and (min-width: 834px) {
     padding: 56px 0;
     width: 768px;
+    text-align: left;
   }
 
   @media screen and (min-width: 1440px) {
