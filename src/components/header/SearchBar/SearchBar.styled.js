@@ -11,7 +11,7 @@ export const SearchBox = styled.div`
     width: auto;
   }
   @media screen and (min-width: 1440px) {
-    margin-right: 142px;
+    margin-right: 106px;
   }
 
   search {
@@ -19,6 +19,9 @@ export const SearchBox = styled.div`
     width: 100%;
     @media screen and (min-width: 834px) {
       width: 398px;
+    }
+    @media screen and (min-width: 1440px) {
+      width: 528px;
     }
   }
 `;
