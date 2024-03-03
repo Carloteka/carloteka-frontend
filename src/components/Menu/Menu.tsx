@@ -14,7 +14,7 @@ import sprite from '../../images/sprite.svg';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { socialLinks } from '../../socialLinks';
-import { Categories } from '../../@types/custom';
+import { Categories } from '../../../@types/custom'; 
 
 interface MenuProps {
   onClickHandle: () => void;

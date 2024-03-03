@@ -12,7 +12,7 @@ import {
 import { toggleCartInLocalStorage } from '../../utils/toggleCartInLocalStorage';
 import sprite from '../../images/sprite.svg';
 import { Link } from 'react-router-dom';
-import { Good } from '../../@types/custom';
+import { Good } from '../../../@types/custom';
 
 interface MenuCartProps {
   onClickHandle: () => void;
