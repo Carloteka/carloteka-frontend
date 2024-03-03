@@ -68,7 +68,7 @@ export const Logo = styled(Link)`
   }
 
   @media screen and (min-width: 1440px) {
-    margin-right: 182px;
+    margin-right: 144px;
     min-width: 80px;
     height: 80px;
     word-spacing: -4px;
@@ -89,7 +89,7 @@ export const Catalog = styled(NavLink)`
     margin-right: 0;
   }
   @media screen and (min-width: 1440px) {
-    margin-right: 80px;
+    margin-right: 141px;
   }
 `;
 
@@ -119,8 +119,8 @@ export const Actions = styled.div`
 
   @media screen and (min-width: 1440px) {
     justify-content: flex-end;
-    gap: 116px;
-    width: 368px;
+    gap: 80px;
+    width: 232px;
   }
 `;
 
