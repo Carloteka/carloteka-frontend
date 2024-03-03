@@ -61,7 +61,7 @@ export const Input = styled.input`
   }
 
   @media screen and (min-width: 1440px) {
-    padding: 0 16px 0;
+    padding-right: 16px;
     width: 366px;
   }
 
