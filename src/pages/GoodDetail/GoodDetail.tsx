@@ -142,6 +142,7 @@ const GoodDetail = () => {
                   type="button"
                   onClick={() => toggleCart()}
                   className="secondaryBtn"
+                  title="Add to the cart"
                 >
                   Додати до кошика
                 </AddToCartBtn>
@@ -151,6 +152,7 @@ const GoodDetail = () => {
                     backgroundColor: isFavorite ? '#2D3F24' : 'transparent',
                   }}
                   onClick={() => toggleFavorite()}
+                  title="Add to favorites"
                 >
                   <svg
                     width={24}

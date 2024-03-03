@@ -107,13 +107,18 @@ export const Contacts = styled.div`
   h3 {
     margin-bottom: 10px;
   }
+  ul:first-child {
+    margin-bottom: 13px;
+  }
   li {
     margin-bottom: 9px;
+  }
+  li:last-child {
+    margin-bottom: 0;
   }
 `;
 
 export const Tel = styled.li`
-  margin-bottom: 13px;
   color: #2d3f24;
   a {
     font-weight: 400;

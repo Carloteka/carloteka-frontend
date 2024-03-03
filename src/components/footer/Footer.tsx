@@ -28,17 +28,24 @@ export const Footer = () => {
                 +380671111111
               </a>
             </li>
-            <Socials>
-              {socialLinks.map((el) => (
-                <li key={el.social}>
-                  <a href={el.href} target="_blank" rel="noopener noreferrer">
-                    <svg width={24} height={24}>
-                      <use href={`${sprite}#${el.social}`} />
-                    </svg>
-                  </a>
-                </li>
-              ))}
-            </Socials>
+            <li>
+              <Socials>
+                {socialLinks.map((el) => (
+                  <li key={el.social}>
+                    <a
+                      href={el.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={el.social}
+                    >
+                      <svg width={24} height={24}>
+                        <use href={`${sprite}#${el.social}`} />
+                      </svg>
+                    </a>
+                  </li>
+                ))}
+              </Socials>
+            </li>
           </List>
         </address>
       </div>
