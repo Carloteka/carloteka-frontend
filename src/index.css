@@ -144,7 +144,6 @@ h1 {
   font-weight: 600;
   font-size: 35px;
   line-height: calc(46 / 35);
-
   @media screen and (min-width: 834px) {
     font-size: 50px;
     line-height: calc(59 / 50);
