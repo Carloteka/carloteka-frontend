@@ -35,6 +35,7 @@ export const LimiterConatiner = styled.div`
 
   @media screen and (min-width: 834px) {
     width: 768px;
+    gap: 0px;
   }
 
   @media screen and (min-width: 1440px) {
@@ -89,7 +90,7 @@ export const Catalog = styled(NavLink)`
     margin-right: 0;
   }
   @media screen and (min-width: 1440px) {
-    margin-right: 141px;
+    margin-right: 131px;
   }
 `;
 

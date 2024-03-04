@@ -108,7 +108,7 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
                 : `http://localhost:8000/${mini_image}`
             }
             alt="img першої категорії"
-            width={304}
+            width={288}
             height={304}
             style={{
               opacity:
