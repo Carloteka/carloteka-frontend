@@ -70,70 +70,77 @@ export const MenuCart = ({ onClickHandle, showCartMenu }: MenuCartProps) => {
         onClick={() => onClickHandle()}
         style={{ display: showCartMenu ? 'flex' : 'none' }}
       ></Backdrop>
-      {inCart?.length > 0 && (
-        <MenuContainer $showCartMenu={showCartMenu}>
-          <CloseButton onClick={() => onClickHandle()} title="Close menu">
-            <svg width={24} height={24}>
-              <use href={`${sprite}#close`} />
-            </svg>
-          </CloseButton>
-          <ul>
-            {inCart?.map((el: Good) => (
-              <Card key={el.id}>
-                <Img
-                  src={
-                    import.meta.env.PROD
-                      ? `http://carloteka.com/${el.image_set[0].image}`
-                      : `http://localhost:8000/${el.image_set[0].image}`
-                  }
-                  width={127}
-                  height={158}
-                  alt={el.name}
-                  loading="lazy"
-                />
-                <div>
-                  <h4>{el.name}</h4>
-                  <Price>Ціна: ₴ {el.price}</Price>
-                  <p>Кількість: {el.quantity}</p>
-                </div>
 
-                <button
-                  type="button"
-                  onClick={() => {
-                    setAmountInCart((amountInCart: number) => amountInCart - 1);
-                    delFromCart(el.id);
-                  }}
-                  title="Remove good from cart"
-                >
-                  <svg width={9} height={8}>
-                    <use href={`${sprite}#del-x`} />
-                  </svg>
-                </button>
-              </Card>
-            ))}
-          </ul>
+      <MenuContainer $showCartMenu={showCartMenu}>
+        <CloseButton onClick={() => onClickHandle()} title="Close menu">
+          <svg width={24} height={24}>
+            <use href={`${sprite}#close`} />
+          </svg>
+        </CloseButton>
+        {inCart?.length > 0 ? (
+          <>
+            <ul>
+              {inCart?.map((el: Good) => (
+                <Card key={el.id}>
+                  <Img
+                    src={
+                      import.meta.env.PROD
+                        ? `http://carloteka.com/${el.image_set[0].image}`
+                        : `http://localhost:8000/${el.image_set[0].image}`
+                    }
+                    width={127}
+                    height={158}
+                    alt={el.name}
+                    loading="lazy"
+                  />
+                  <div>
+                    <h4>{el.name}</h4>
+                    <Price>Ціна: ₴ {el.price}</Price>
+                    <p>Кількість: {el.quantity}</p>
+                  </div>
 
-          <Total>
-            <p>Вартість:</p>
-            <p>₴ {getTotalPrice().toFixed(2)}</p>
-          </Total>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAmountInCart(
+                        (amountInCart: number) => amountInCart - 1,
+                      );
+                      delFromCart(el.id);
+                    }}
+                    title="Remove good from cart"
+                  >
+                    <svg width={9} height={8}>
+                      <use href={`${sprite}#del-x`} />
+                    </svg>
+                  </button>
+                </Card>
+              ))}
+            </ul>
 
-          <Link
-            to={'/cart'}
-            onClick={() => onClickHandle()}
-            className="primaryBtn"
-          >
-            переглянути кошик
-          </Link>
-          <Link
-            to={'/delivery'}
-            onClick={() => onClickHandle()}
-            className="primaryBtn"
-          >
-            Купити
-          </Link>
-        </MenuContainer>
-      )}
+            <Total>
+              <p>Вартість:</p>
+              <p>₴ {getTotalPrice().toFixed(2)}</p>
+            </Total>
+
+            <Link
+              to={'/cart'}
+              onClick={() => onClickHandle()}
+              className="primaryBtn"
+            >
+              переглянути кошик
+            </Link>
+            <Link
+              to={'/delivery'}
+              onClick={() => onClickHandle()}
+              className="primaryBtn"
+            >
+              Купити
+            </Link>
+          </>
+        ) : (
+          <p>нічого нема</p>
+        )}
+      </MenuContainer>
     </>
   );
 };

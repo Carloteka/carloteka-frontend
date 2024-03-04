@@ -75,7 +75,7 @@ export const Header = ({ setShowCartMenu, setShowMenu }: HeaderProps) => {
             {inFavorites?.length > 0 && <Counter>{amountInFavorites}</Counter>}
           </NavigationLink>
           <CartMenuBtn
-            onClick={() => inCart?.length > 0 && openCartMenu()}
+            onClick={() => openCartMenu()}
             title={inCart?.length > 0 ? 'Меню Кошика' : 'Кошик пустий'}
           >
             <svg width={24} height={24}>
