@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Loader } from '../../components/Loader/Loader';
+// import { Loader } from '../../components/Loader/Loader';
 import { PageTitle } from '../../components/pageTitle/PageTitle';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
 import { InputMask } from 'primereact/inputmask';
@@ -20,6 +20,7 @@ import {
   fetchNPSettlements,
   fetchNPWarehouses,
 } from '../../api/api';
+import { checkLocalStorage } from '../../utils/checkLocalStorage';
 
 type InputObject = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,11 +28,13 @@ type InputObject = {
   name?: string;
 };
 
-type NPItemObject = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Ref?: string;
-  Description?: string;
-};
+type NPItemObject =
+  | {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      Ref?: string;
+      Description: string;
+    }
+  | undefined;
 
 const Delivery = () => {
   const navigate = useNavigate();
@@ -43,17 +46,32 @@ const Delivery = () => {
 
   const [delivery, setDelivery] = useState<InputObject>();
 
-  const [areasUkr, setAreasUkr] = useState<{ Description: string }[]>([]);
-  const [settlements, setSettlements] = useState<[]>([]);
-  const [warehouses, setWarehouses] = useState([]);
-  const [city, setCity] = useState<object>({});
-  console.log(city);
+  const regionsOptions = checkLocalStorage('regionsOptions');
+  const cityOptions = checkLocalStorage('cityOptions');
+  const officeOptions = checkLocalStorage('officeOptions');
+
+  const deliveryData = checkLocalStorage('delivery');
+  const c = deliveryData?.city;
+  c.Description = c.value;
+  const o = deliveryData?.office?.value;
+
+  const [areasUkr, setAreasUkr] =
+    useState<{ Description: string }[]>(regionsOptions);
+  const [settlements, setSettlements] = useState<[]>(cityOptions);
+  const [warehouses, setWarehouses] = useState(
+    officeOptions === 404 ? [] : officeOptions,
+  );
+  const [city, setCity] = useState<NPItemObject>(c);
+  const [office, setOffice] = useState<NPItemObject>(o);
+  // console.log(warehouses);
+  console.log(checkLocalStorage('delivery')?.city?.value, 'office');
 
   async function getNPAreas() {
     try {
       setIsLoading(true);
       const data = await fetchNPAreas();
       setAreasUkr(data);
+      localStorage.setItem('regionsOptions', JSON.stringify(data));
       setIsLoading(false);
     } catch (error) {
       console.log(error);
@@ -65,6 +83,15 @@ const Delivery = () => {
       setIsLoading(true);
       const data = await fetchNPSettlements(Ref);
       setSettlements(data);
+
+      localStorage.setItem('cityOptions', JSON.stringify(data));
+      if (
+        !data.some(
+          (el: NPItemObject) => el?.Description === delivery?.city?.value,
+        )
+      ) {
+        setCity(undefined);
+      }
       setIsLoading(false);
     } catch (error) {
       console.log(error);
@@ -76,6 +103,7 @@ const Delivery = () => {
       setIsLoading(true);
       const data = await fetchNPWarehouses(Ref);
       setWarehouses(data === 404 ? [data] : data);
+      localStorage.setItem('officeOptions', JSON.stringify(data));
       setIsLoading(false);
     } catch (error) {
       console.log(error);
@@ -83,10 +111,7 @@ const Delivery = () => {
   }
 
   useEffect(() => {
-    if (!localStorage.getItem('delivery')) {
-      localStorage.setItem('delivery', JSON.stringify({}));
-    }
-    const deliveryData = JSON.parse(localStorage.getItem('delivery') as string);
+    const deliveryData = checkLocalStorage('delivery');
     setDelivery(deliveryData);
   }, []);
 
@@ -172,10 +197,7 @@ const Delivery = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function saveValue(e: any | string, field: string) {
     // console.log(e);
-    if (!localStorage.getItem('delivery')) {
-      localStorage.setItem('delivery', JSON.stringify({}));
-    }
-    const temp = JSON.parse(localStorage.getItem('delivery') as string);
+    const temp = checkLocalStorage('delivery');
     let newArray;
     if (typeof e === 'string') {
       newArray = { ...temp, [field]: e };
@@ -189,7 +211,7 @@ const Delivery = () => {
     }
     if (field === 'oblast') {
       const area: NPItemObject | undefined = areasUkr.find(
-        (el: NPItemObject) => el.Description === e.value,
+        (el: NPItemObject) => el?.Description === e.value,
       );
       if (area) {
         getNPSettlements(area?.Ref as string);
@@ -197,13 +219,22 @@ const Delivery = () => {
     }
     if (field === 'city') {
       const town: NPItemObject | undefined = settlements.find(
-        (el: NPItemObject) => el.Description === e.value,
+        (el: NPItemObject) => el?.Description === e.value,
       );
       if (town) {
         setCity(town);
+        setOffice(undefined);
         getNPWarehouses(town['Ref'] as string);
+
+        const newArray = JSON.parse(localStorage.getItem('delivery') as string);
+        delete newArray.office;
+        localStorage.setItem('delivery', JSON.stringify(newArray));
       }
     }
+    if (field === 'office') {
+      setOffice(e.value);
+    }
+
     // if (field === 'post' && e.value === 'novaposhta') {
     //   getNPWarehouses(city.Ref);
     // }
@@ -246,7 +277,7 @@ const Delivery = () => {
               <h2>Адреса доставки</h2>
               <FlexContainer>
                 <label className="short">
-                  Ім’я
+                  Ім&apos;я
                   <input
                     placeholder="Тарас"
                     name="name"
@@ -304,7 +335,7 @@ const Delivery = () => {
                     />
                   </label>
                 )}
-                {delivery?.country && (
+                {delivery?.country?.value === 'Україна' && (
                   <label>
                     Регіон
                     <StyledSelect
@@ -330,7 +361,7 @@ const Delivery = () => {
                     />
                   </label>
                 )}
-                {delivery?.oblast && (
+                {delivery?.country?.value === 'Україна' && delivery?.oblast && (
                   <>
                     <label>
                       Місто
@@ -355,7 +386,7 @@ const Delivery = () => {
                         styles={reactSelectStyle}
                         required
                         onChange={(e) => saveValue(e as object, 'city')}
-                        value={delivery?.city ? delivery?.city : undefined}
+                        value={city ? getOptions([city.Description]) : []}
                       />
                     </label>
                     {delivery?.city && warehouses[0] === 404 && (
@@ -366,7 +397,7 @@ const Delivery = () => {
                     )}
                   </>
                 )}
-                {delivery?.city && (
+                {delivery?.country?.value === 'Україна' && delivery?.city && (
                   <label>
                     Номер відділення
                     <StyledSelect
@@ -392,20 +423,24 @@ const Delivery = () => {
                       }
                       styles={reactSelectStyle}
                       required
-                      onChange={(e: { value: string; label: string }) =>
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      onChange={(e: any) =>
                         saveValue(
-                          { value: e.value, label: e.value } as object,
+                          {
+                            value: e.value,
+                            label: e.value,
+                          } as object,
                           'office',
                         )
                       }
                       value={
-                        typeof warehouses === 'string'
-                          ? { value: warehouses, label: warehouses }
-                          : delivery?.office && typeof warehouses !== 'number'
-                          ? delivery?.office
-                          : undefined
+                        office
+                          ? getOfficeOptions([office as unknown as string])
+                          : []
                       }
-                      isDisabled={!delivery?.city || warehouses[0] === 404}
+                      isDisabled={
+                        !city || !delivery?.city || warehouses[0] === 404
+                      }
                     />
                   </label>
                 )}
