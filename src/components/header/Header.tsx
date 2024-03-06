@@ -67,7 +67,7 @@ export const Header = ({ setShowCartMenu, setShowMenu }: HeaderProps) => {
         </Catalog>
         <SearchBar />
         <Actions>
-          <NavigationLink to={'/favorites'} title="На сторінку Обраних">
+          <NavigationLink to={'/favorites'} title="На сторінку Список бажань">
             <svg width={24} height={24}>
               <use href={`${sprite}#favorite`} />
             </svg>
