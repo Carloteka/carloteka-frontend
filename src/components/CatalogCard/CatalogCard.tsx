@@ -10,9 +10,12 @@ import {
   Star,
 } from './CatalogCard.styled';
 import sprite from '../../images/sprite.svg';
-import { toggleLocalStorage } from '../../utils/toggleLocalStorage';
-import { toggleCartInLocalStorage } from '../../utils/toggleCartInLocalStorage';
-import { getBanner } from '../../utils/getBanner';
+import {
+  toggleLocalStorage,
+  toggleCartInLocalStorage,
+  getBanner,
+  checkLocalStorage,
+} from '../../utils';
 import { Good as Popular } from '../../../@types/custom';
 
 interface SliderItemProps {
@@ -25,23 +28,14 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
   const { setAmountInCart } = useContext(CartContext);
   const { setAmountInFavorites } = useContext(FavoritesContext);
 
-  let cartArray: { id: number; amount: number }[] = [];
-  let favoriteArray: number[] = [];
-
-  if (localStorage.getItem('cart')) {
-    cartArray = JSON.parse(localStorage.getItem('cart') as string);
-  } else {
-    localStorage.setItem('cart', JSON.stringify(cartArray));
-  }
-
-  if (localStorage.getItem('favorite')) {
-    favoriteArray = JSON.parse(localStorage.getItem('favorite') as string);
-  } else {
-    localStorage.setItem('favorite', JSON.stringify(favoriteArray));
-  }
+  const cartArray: { id: number; amount: number }[] = checkLocalStorage(
+    'cart',
+    [],
+  );
+  const favoriteArray: { id: number }[] = checkLocalStorage('favorite', []);
 
   const isInCart: boolean = cartArray.some((el) => el.id === id);
-  const isInFavorite: boolean = favoriteArray.includes(id);
+  const isInFavorite: boolean = favoriteArray.some((el) => el.id === id);
   const [inCart, setInCart] = useState(isInCart);
   const [isFavorite, setIsFavorite] = useState(isInFavorite);
 
@@ -53,7 +47,7 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
     );
   }
   function toggleFavorite() {
-    toggleLocalStorage(isFavorite, 'favorite', id);
+    toggleLocalStorage(isFavorite, 'favorite', item);
     setIsFavorite((prev) => !prev);
     setAmountInFavorites((amountInFavorites: number) =>
       isFavorite ? amountInFavorites - 1 : amountInFavorites + 1,

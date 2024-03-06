@@ -27,6 +27,7 @@ import visaImg from '../../images/visa.png';
 import photo from '../../images/photo.jpg';
 import GooglePayButton from '@google-pay/button-react';
 import { Good } from '../../../@types/custom';
+import { checkLocalStorage } from '../../utils';
 
 const Payment = () => {
   const { setAmountInCart } = useContext(CartContext);
@@ -38,11 +39,12 @@ const Payment = () => {
   const [paymentMethod, setPaymentMethod] = useState<undefined | string>();
   const [card] = useState<string>('visa');
 
-  let goodsInCart: { id: number; amount: number }[] = [];
+  const goodsInCart: { id: number; amount: number }[] = checkLocalStorage(
+    'cart',
+    [],
+  );
 
-  if (localStorage.getItem('cart')) {
-    goodsInCart = JSON.parse(localStorage.getItem('cart') as string);
-  } else {
+  if (goodsInCart.length === 0) {
     navigate('/cart');
   }
 
@@ -52,11 +54,7 @@ const Payment = () => {
     }
   }, []);
 
-  let goods: [] = [];
-
-  if (localStorage.getItem('goods')) {
-    goods = JSON.parse(localStorage.getItem('goods') as string);
-  }
+  const goods: [] = checkLocalStorage('goods', []);
 
   const goodsInCartArray = goods.filter(
     (el: { id: number; quantity: number }) =>
@@ -122,10 +120,7 @@ const Payment = () => {
   }
 
   function getDeliveryInfo(term: string) {
-    if (!localStorage.getItem('delivery')) {
-      localStorage.setItem('delivery', JSON.stringify({}));
-    }
-    const deliveryData = JSON.parse(localStorage.getItem('delivery') as string);
+    const deliveryData = checkLocalStorage('delivery', {});
     const { post, office, city, country } = deliveryData;
     return term
       ? `${post.value === 'novaposhta' ? '1-3 ' : '3-12 '}`

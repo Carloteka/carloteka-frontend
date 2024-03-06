@@ -4,6 +4,7 @@ import { Increment } from '../Increment/Increment';
 import { Img, Name, Div, Price, TotalPrice, DelBtn } from './CartCard.styled';
 import sprite from '../../images/sprite.svg';
 import { Good } from '../../../@types/custom';
+import { checkLocalStorage } from '../../utils';
 
 interface CartCardProps {
   good: Good;
@@ -18,11 +19,7 @@ export const CartCard = ({ good, onClickDelete, increment }: CartCardProps) => {
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
-    if (!localStorage.getItem('cart')) {
-      localStorage.setItem('cart', JSON.stringify([]));
-    }
-
-    const newArray = JSON.parse(localStorage.getItem('cart') as string);
+    const newArray = checkLocalStorage('cart', []);
 
     const temp = newArray.find((el: { id: number }) => el.id === good.id);
 

@@ -5,6 +5,7 @@ import { Header } from './header/Header';
 import { Footer } from './footer/Footer';
 import { MenuCart } from './MenuCart/MenuCart';
 import { Menu } from './Menu/Menu';
+import { checkLocalStorage } from '../utils';
 
 export const CartContext = createContext({
   amountInCart: 0,
@@ -20,20 +21,8 @@ export const FavoritesContext = createContext({
 });
 
 const Layout = () => {
-  let cartArray = [];
-  let favoritesArray = [];
-
-  if (localStorage.getItem('cart')) {
-    cartArray = JSON.parse(localStorage.getItem('cart'));
-  } else {
-    localStorage.setItem('cart', JSON.stringify(cartArray));
-  }
-
-  if (localStorage.getItem('favorite')) {
-    favoritesArray = JSON.parse(localStorage.getItem('favorite'));
-  } else {
-    localStorage.setItem('favorite', JSON.stringify(favoritesArray));
-  }
+  const cartArray = checkLocalStorage('cart', []);
+  const favoritesArray = checkLocalStorage('favorite', []);
 
   const [amountInCart, setAmountInCart] = useState(cartArray?.length);
   const [amountInFavorites, setAmountInFavorites] = useState(
@@ -56,7 +45,6 @@ const Layout = () => {
     document.body.style.overflowY = 'auto';
     setShowMenu(false);
     setShowCartMenu(false);
-    console.log('here');
   }
 
   return (

@@ -27,6 +27,7 @@ import {
 
 import sprite from '../../images/sprite.svg';
 import { fetchAllGoods, fetchFilteredGoods } from '../../api/api.js';
+import { checkLocalStorage } from '../../utils';
 
 import MultiRangeSlider from 'multi-range-slider-react';
 
@@ -71,11 +72,7 @@ const Catalog = () => {
     return sortBy;
   }
 
-  let categories = [];
-
-  if (localStorage.getItem('categories')) {
-    categories = JSON.parse(localStorage.getItem('categories'));
-  }
+  const categories = checkLocalStorage('categories', []);
 
   const [catalog, setCatalog] = useState([]);
 

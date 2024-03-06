@@ -13,14 +13,13 @@ import {
 } from './Delivery.styled';
 import { InvoiceInfo } from '../../components/InvoiceInfo/InvoiceInfo';
 import sprite from '../../images/sprite.svg';
-import { reactSelectStyle } from '../../utils/reactSelectStyle';
 import { Good } from '../../../@types/custom';
 import {
   fetchNPAreas,
   fetchNPSettlements,
   fetchNPWarehouses,
 } from '../../api/api';
-import { checkLocalStorage } from '../../utils/checkLocalStorage';
+import { reactSelectStyle, checkLocalStorage } from '../../utils';
 
 type InputObject = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -46,11 +45,11 @@ const Delivery = () => {
 
   const [delivery, setDelivery] = useState<InputObject>();
 
-  const regionsOptions = checkLocalStorage('regionsOptions');
-  const cityOptions = checkLocalStorage('cityOptions');
-  const officeOptions = checkLocalStorage('officeOptions');
+  const regionsOptions = checkLocalStorage('regionsOptions', []);
+  const cityOptions = checkLocalStorage('cityOptions', []);
+  const officeOptions = checkLocalStorage('officeOptions', []);
 
-  const deliveryData = checkLocalStorage('delivery');
+  const deliveryData = checkLocalStorage('delivery', {});
   const c = deliveryData?.city;
   c.Description = c.value;
   const o = deliveryData?.office?.value;
@@ -64,7 +63,7 @@ const Delivery = () => {
   const [city, setCity] = useState<NPItemObject>(c);
   const [office, setOffice] = useState<NPItemObject>(o);
   // console.log(warehouses);
-  console.log(checkLocalStorage('delivery')?.city?.value, 'office');
+  console.log(checkLocalStorage('delivery', {})?.city?.value, 'office');
 
   async function getNPAreas() {
     try {
@@ -111,7 +110,7 @@ const Delivery = () => {
   }
 
   useEffect(() => {
-    const deliveryData = checkLocalStorage('delivery');
+    const deliveryData = checkLocalStorage('delivery', {});
     setDelivery(deliveryData);
   }, []);
 
@@ -126,9 +125,7 @@ const Delivery = () => {
 
   let goods: [] = [];
 
-  if (localStorage.getItem('goods')) {
-    goods = JSON.parse(localStorage.getItem('goods') as string);
-  }
+  goods = checkLocalStorage('goods', []);
 
   const goodsInCartArray = goods.filter(
     (el: { id: number; quantity: number }) =>
@@ -197,7 +194,7 @@ const Delivery = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function saveValue(e: any | string, field: string) {
     // console.log(e);
-    const temp = checkLocalStorage('delivery');
+    const temp = checkLocalStorage('delivery', {});
     let newArray;
     if (typeof e === 'string') {
       newArray = { ...temp, [field]: e };
