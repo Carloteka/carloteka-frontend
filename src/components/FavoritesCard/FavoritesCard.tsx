@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { CartContext } from '../Layout';
+import { CartContext, FavoritesContext } from '../Layout';
 import {
   FlexContainer,
   Img,
@@ -12,7 +12,7 @@ import {
   BuyBtn,
 } from './FavoritesCard.styled';
 import sprite from '../../images/sprite.svg';
-import { toggleCartInLocalStorage } from '../../utils/toggleCartInLocalStorage';
+import { toggleCartInLocalStorage, checkLocalStorage } from '../../utils';
 import { Good } from '../../../@types/custom';
 
 interface FavoritesCardProps {
@@ -24,11 +24,18 @@ export const FavoritesCard = ({ good, onClickDelete }: FavoritesCardProps) => {
   const { image_set, name, price, id, stars } = good;
 
   const { setAmountInCart } = useContext(CartContext);
+  const { setAmountInFavorites } = useContext(FavoritesContext);
   // const [quantity, setQuantity] = useState(1);
 
   function buyBtnHandle() {
-    toggleCartInLocalStorage(false, id);
+    setAmountInFavorites((amountInFavorites: number) => amountInFavorites - 1);
+    onClickDelete(id);
+    const cartArray = checkLocalStorage('cart', []);
+    if (cartArray.some((el: { id: number }) => el.id === id)) {
+      return;
+    }
     setAmountInCart((amountInCart: number) => amountInCart + 1);
+    toggleCartInLocalStorage(false, id);
   }
 
   // useEffect(() => {
@@ -90,7 +97,9 @@ export const FavoritesCard = ({ good, onClickDelete }: FavoritesCardProps) => {
         <DelBtn
           type="button"
           onClick={() => {
-            setAmountInCart((amountInCart: number) => amountInCart - 1);
+            setAmountInFavorites(
+              (amountInFavorites: number) => amountInFavorites - 1,
+            );
             onClickDelete(id);
           }}
         >

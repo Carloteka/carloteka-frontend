@@ -17,9 +17,12 @@ import {
 import { Slider } from '../../components/category-card/slider/Slider';
 import sprite from '../../images/sprite.svg';
 import { fetchItemDetails } from '../../api/api';
-import { toggleLocalStorage } from '../../utils/toggleLocalStorage';
-import { addToCart } from '../../utils/addToCart';
-import { getBanner } from '../../utils/getBanner';
+import {
+  addToCart,
+  getBanner,
+  toggleLocalStorage,
+  checkLocalStorage,
+} from '../../utils';
 import { Good } from '../../../@types/custom';
 
 type Image = { image: string };
@@ -41,7 +44,7 @@ const GoodDetail = () => {
         const data = await fetchItemDetails(goodId);
         setArray(data.image_set);
         setGood(data);
-        setIsFavorite(favoriteArray.includes(data.id));
+        setIsFavorite(favoriteArray.some((el) => el.id === data.id));
         setIsLoading(false);
       } catch (error) {
         console.log(error);
@@ -50,15 +53,9 @@ const GoodDetail = () => {
     getGoodDetail();
   }, [goodId]);
 
-  let favoriteArray: number[] = [];
+  const favoriteArray: { id: number }[] = checkLocalStorage('favorite', []);
 
-  if (localStorage.getItem('favorite')) {
-    favoriteArray = JSON.parse(localStorage.getItem('favorite') as string);
-  } else {
-    localStorage.setItem('favorite', JSON.stringify(favoriteArray));
-  }
-
-  const isInFavorite: boolean = favoriteArray.includes(good?.id);
+  const isInFavorite: boolean = favoriteArray.some((el) => el.id === good?.id);
   const [isFavorite, setIsFavorite] = useState(isInFavorite);
 
   const [amount, setAmount] = useState(1);
@@ -95,7 +92,7 @@ const GoodDetail = () => {
   }
 
   function toggleFavorite() {
-    toggleLocalStorage(isFavorite, 'favorite', good.id);
+    toggleLocalStorage(isFavorite, 'favorite', { id: good.id });
     setIsFavorite((prev) => !prev);
     setAmountInFavorites((amountInFavorites: number) =>
       isFavorite ? amountInFavorites - 1 : amountInFavorites + 1,

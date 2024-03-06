@@ -9,10 +9,10 @@ import {
   Price,
   Total,
 } from './MenuCart.styled';
-import { toggleCartInLocalStorage } from '../../utils/toggleCartInLocalStorage';
 import sprite from '../../images/sprite.svg';
 import { Link } from 'react-router-dom';
 import { Good } from '../../../@types/custom';
+import { toggleCartInLocalStorage, checkLocalStorage } from '../../utils';
 
 interface MenuCartProps {
   onClickHandle: () => void;
@@ -25,17 +25,12 @@ export const MenuCart = ({ onClickHandle, showCartMenu }: MenuCartProps) => {
   const [inCart, setInCart] = useState<Good[]>([]);
 
   useEffect(() => {
-    let goodsInCart: { id: number; amount: number }[] = [];
+    const goodsInCart: { id: number; amount: number }[] = checkLocalStorage(
+      'cart',
+      [],
+    );
 
-    if (localStorage.getItem('cart')) {
-      goodsInCart = JSON.parse(localStorage.getItem('cart') as string);
-    }
-
-    let goods: [] = [];
-
-    if (localStorage.getItem('goods')) {
-      goods = JSON.parse(localStorage.getItem('goods') as string);
-    }
+    const goods: [] = checkLocalStorage('goods', []);
 
     const goodsInCartArray = goods.filter(
       (el: { id: number; quantity: number }) =>

@@ -19,25 +19,23 @@ import {
   GoToPayment,
 } from './Cart.styled';
 import { CartCard } from '../../components/CartCard/CartCard';
-import { toggleCartInLocalStorage } from '../../utils/toggleCartInLocalStorage';
-import { addToCart } from '../../utils/addToCart';
+import {
+  addToCart,
+  toggleCartInLocalStorage,
+  checkLocalStorage,
+} from '../../utils';
 import sprite from '../../images/sprite.svg';
 import { Good } from '../../../@types/custom';
 
 const Cart = () => {
   const { setAmountInCart } = useContext(CartContext);
 
-  let goodsInCart: { id: number; amount: number }[] = [];
+  const goodsInCart: { id: number; amount: number }[] = checkLocalStorage(
+    'cart',
+    [],
+  );
 
-  if (localStorage.getItem('cart')) {
-    goodsInCart = JSON.parse(localStorage.getItem('cart') as string);
-  }
-
-  let goods: [] = [];
-
-  if (localStorage.getItem('goods')) {
-    goods = JSON.parse(localStorage.getItem('goods') as string);
-  }
+  const goods: [] = checkLocalStorage('goods', []);
 
   const goodsInCartArray = goods.filter(
     (el: { id: number; quantity: number }) =>
