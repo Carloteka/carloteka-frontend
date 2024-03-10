@@ -79,8 +79,8 @@ export const Form = styled.form`
     margin-bottom: 0;
   }
   input {
-    width: 18px;
-    height: 18px;
+    min-width: 18px;
+    min-height: 18px;
     cursor: pointer;
   }
 `;
