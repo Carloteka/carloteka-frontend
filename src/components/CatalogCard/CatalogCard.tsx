@@ -10,12 +10,7 @@ import {
   Star,
 } from './CatalogCard.styled';
 import sprite from '../../images/sprite.svg';
-import {
-  toggleLocalStorage,
-  toggleCartInLocalStorage,
-  getBanner,
-  checkLocalStorage,
-} from '../../utils';
+import { toggleLocalStorage, getBanner, checkLocalStorage } from '../../utils';
 import { Good as Popular } from '../../../@types/custom';
 
 interface SliderItemProps {
@@ -40,7 +35,7 @@ export const CatalogCard = ({ item }: SliderItemProps) => {
   const [isFavorite, setIsFavorite] = useState(isInFavorite);
 
   function toggleCart() {
-    toggleCartInLocalStorage(inCart, id);
+    toggleLocalStorage(inCart, 'cart', item);
     setInCart((prev) => !prev);
     setAmountInCart((amountInCart: number) =>
       isInCart ? amountInCart - 1 : amountInCart + 1,

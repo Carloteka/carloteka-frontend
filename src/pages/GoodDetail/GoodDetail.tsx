@@ -100,7 +100,7 @@ const GoodDetail = () => {
   }
 
   function toggleCart() {
-    const isNeedAddNewToCart = addToCart(amount, good.id, 'add');
+    const isNeedAddNewToCart = addToCart(amount, good, 'add');
 
     isNeedAddNewToCart &&
       setAmountInCart((amountInCart: number) => amountInCart + 1);
@@ -129,7 +129,7 @@ const GoodDetail = () => {
               <div>
                 <Increment
                   increment={increment}
-                  id={good.id}
+                  good={good}
                   quantity={amount}
                   setQuantity={() => {
                     return;

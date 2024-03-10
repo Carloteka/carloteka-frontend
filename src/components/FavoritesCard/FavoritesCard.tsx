@@ -12,7 +12,7 @@ import {
   BuyBtn,
 } from './FavoritesCard.styled';
 import sprite from '../../images/sprite.svg';
-import { toggleCartInLocalStorage, checkLocalStorage } from '../../utils';
+import { toggleLocalStorage, checkLocalStorage } from '../../utils';
 import { Good } from '../../../@types/custom';
 
 interface FavoritesCardProps {
@@ -25,7 +25,6 @@ export const FavoritesCard = ({ good, onClickDelete }: FavoritesCardProps) => {
 
   const { setAmountInCart } = useContext(CartContext);
   const { setAmountInFavorites } = useContext(FavoritesContext);
-  // const [quantity, setQuantity] = useState(1);
 
   function buyBtnHandle() {
     setAmountInFavorites((amountInFavorites: number) => amountInFavorites - 1);
@@ -35,7 +34,7 @@ export const FavoritesCard = ({ good, onClickDelete }: FavoritesCardProps) => {
       return;
     }
     setAmountInCart((amountInCart: number) => amountInCart + 1);
-    toggleCartInLocalStorage(false, id);
+    toggleLocalStorage(false, 'cart', good);
   }
 
   // useEffect(() => {

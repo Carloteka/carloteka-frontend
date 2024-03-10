@@ -19,37 +19,17 @@ import {
   GoToPayment,
 } from './Cart.styled';
 import { CartCard } from '../../components/CartCard/CartCard';
-import {
-  addToCart,
-  toggleCartInLocalStorage,
-  checkLocalStorage,
-} from '../../utils';
+import { addToCart, toggleLocalStorage, checkLocalStorage } from '../../utils';
 import sprite from '../../images/sprite.svg';
 import { Good } from '../../../@types/custom';
 
 const Cart = () => {
   const { setAmountInCart } = useContext(CartContext);
 
-  const goodsInCart: { id: number; amount: number }[] = checkLocalStorage(
-    'cart',
-    [],
-  );
+  const goodsInCart: Good[] = checkLocalStorage('cart', []);
 
-  const goods: [] = checkLocalStorage('goods', []);
-
-  const goodsInCartArray = goods.filter(
-    (el: { id: number; quantity: number }) =>
-      goodsInCart.some((item) => {
-        if (el.id === item.id) {
-          el.quantity = item.amount;
-          return true;
-        } else return false;
-      }),
-  );
-
-  const [inCart, setInCart] = useState<Good[]>(
-    goodsInCartArray.filter((el: { id: number }) => el.id !== 0),
-  );
+  const [inCart, setInCart] = useState<Good[]>(goodsInCart);
+  console.log(inCart);
 
   function clearCart() {
     localStorage.cart = [];
@@ -58,10 +38,8 @@ const Cart = () => {
   }
 
   function delFromCart(id: number) {
-    const newArray = goodsInCartArray.filter(
-      (el: { id: number }) => el.id !== id,
-    );
-    toggleCartInLocalStorage(true, id);
+    const newArray = goodsInCart.filter((el: { id: number }) => el.id !== id);
+    toggleLocalStorage(true, id);
     setInCart(newArray);
   }
 
@@ -73,12 +51,13 @@ const Cart = () => {
     );
   }
 
-  function increment(amount: number, id: number) {
+  function increment(amount: number, good: Good) {
     const newArray: Good[] = [...inCart];
-    newArray[inCart.findIndex((el: { id: number }) => el.id === id)].quantity =
-      amount;
+    newArray[
+      inCart.findIndex((el: { id: number }) => el.id === good.id)
+    ].quantity = amount;
 
-    addToCart(amount, id, 'replace');
+    addToCart(amount, good, 'replace');
     setInCart(newArray);
   }
 
@@ -124,8 +103,8 @@ const Cart = () => {
             <svg width={124} height={124}>
               <use href={`${sprite}#cart`} />
             </svg>
-            <h2>Ваш кошик пустий</h2>
-            <GoToCatalog to={'/catalog'} className="secondaryBtn">
+            <h2>Ваш кошик порожній</h2>
+            <GoToCatalog to={'/catalog'} className="primaryBtn">
               <svg width={14} height={9}>
                 <use href={`${sprite}#arrow-right`} />
               </svg>

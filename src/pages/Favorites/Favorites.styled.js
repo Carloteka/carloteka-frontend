@@ -76,6 +76,11 @@ export const EmptyMessage = styled.div`
     }
   }
 
+  & > a {
+    margin: 0 auto;
+    height: 48px;
+  }
+
   & > svg {
     fill: #101010;
     @media screen and (min-width: 1440px) {
@@ -89,13 +94,15 @@ export const GoToCatalog = styled(Link)`
   margin: 0 auto;
   padding: 14.5px 8px;
 
-  justify-content: flex-start;
+  // justify-content: flex-start;
 
-  font-weight: 500;
-
-  @media screen and (min-width: 1440px) {
+  @media screen and (min-width: 834px) {
+    margin: 0;
     padding: 14.5px 24px;
-    width: 418px;
+    width: 328px;
+  }
+  @media screen and (min-width: 1440px) {
+    width: 415px;
   }
 
   & > svg {

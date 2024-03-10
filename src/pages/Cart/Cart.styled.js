@@ -108,19 +108,20 @@ export const GoToCatalog = styled(Link)`
   margin: 0 0 16px 0;
   padding: 14.5px 24px;
 
-  justify-content: flex-start;
+  // justify-content: flex-start;
 
-  font-weight: 500;
-
-  @media screen and (min-width: 1440px) {
+  @media screen and (min-width: 834px) {
     margin: 0;
     padding: 14.5px 24px;
+    width: 328px;
+  }
+  @media screen and (min-width: 1440px) {
     width: 415px;
   }
 
   & > svg {
     margin-right: 15px;
-    fill: #2d3f24;
+    fill: #fff;
     transform: rotate(180deg);
     @media screen and (min-width: 1440px) {
       margin-right: 49px;

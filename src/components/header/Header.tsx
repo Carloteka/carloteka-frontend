@@ -77,7 +77,7 @@ export const Header = ({ setShowCartMenu, setShowMenu }: HeaderProps) => {
           </NavigationLink>
           <CartMenuBtn
             onClick={() => openCartMenu()}
-            title={inCart?.length > 0 ? 'Меню Кошика' : 'Кошик пустий'}
+            title={inCart?.length > 0 ? 'Меню Кошика' : 'Кошик порожній'}
           >
             <svg width={24} height={24}>
               <use href={`${sprite}#cart`} />
