@@ -9,7 +9,7 @@ import { checkLocalStorage } from '../../utils';
 interface CartCardProps {
   good: Good;
   onClickDelete: (id: number) => void;
-  increment: (quantity: number, id: number) => void;
+  increment: (quantity: number, good: Good) => void;
 }
 
 export const CartCard = ({ good, onClickDelete, increment }: CartCardProps) => {
@@ -21,9 +21,9 @@ export const CartCard = ({ good, onClickDelete, increment }: CartCardProps) => {
   useEffect(() => {
     const newArray = checkLocalStorage('cart', []);
 
-    const temp = newArray.find((el: { id: number }) => el.id === good.id);
+    const temp = newArray.find((el: { id: number }) => el.id === id);
 
-    setQuantity(temp.amount);
+    setQuantity(temp?.quantity ? temp.quantity : 1);
   }, [quantity]);
 
   return (
@@ -48,7 +48,7 @@ export const CartCard = ({ good, onClickDelete, increment }: CartCardProps) => {
         <p>Кількість</p>
         <Increment
           increment={increment}
-          id={id}
+          good={good}
           quantity={quantity}
           setQuantity={setQuantity}
         />

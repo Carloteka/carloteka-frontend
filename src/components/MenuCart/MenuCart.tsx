@@ -12,7 +12,7 @@ import {
 import sprite from '../../images/sprite.svg';
 import { Link } from 'react-router-dom';
 import { Good } from '../../../@types/custom';
-import { toggleCartInLocalStorage, checkLocalStorage } from '../../utils';
+import { toggleLocalStorage, checkLocalStorage } from '../../utils';
 
 interface MenuCartProps {
   onClickHandle: () => void;
@@ -25,29 +25,14 @@ export const MenuCart = ({ onClickHandle, showCartMenu }: MenuCartProps) => {
   const [inCart, setInCart] = useState<Good[]>([]);
 
   useEffect(() => {
-    const goodsInCart: { id: number; amount: number }[] = checkLocalStorage(
-      'cart',
-      [],
-    );
+    const goodsInCart: Good[] = checkLocalStorage('cart', []);
 
-    const goods: [] = checkLocalStorage('goods', []);
-
-    const goodsInCartArray = goods.filter(
-      (el: { id: number; quantity: number }) =>
-        goodsInCart.some((item) => {
-          if (el.id === item.id) {
-            el.quantity = item.amount;
-            return true;
-          } else return false;
-        }),
-    );
-
-    setInCart(goodsInCartArray.filter((el: { id: number }) => el.id !== 0));
+    setInCart(goodsInCart);
   }, [amountInCart]);
 
   function delFromCart(id: number) {
     const newArray = inCart.filter((el: { id: number }) => el.id !== id);
-    toggleCartInLocalStorage(true, id);
+    toggleLocalStorage(true, 'cart', { id });
     setInCart(newArray);
   }
 
@@ -91,7 +76,7 @@ export const MenuCart = ({ onClickHandle, showCartMenu }: MenuCartProps) => {
                   <div>
                     <h4>{el.name}</h4>
                     <Price>Ціна: ₴ {el.price}</Price>
-                    <p>Кількість: {el.quantity}</p>
+                    <p>Кількість: {el?.quantity ? el.quantity : 1}</p>
                   </div>
 
                   <button

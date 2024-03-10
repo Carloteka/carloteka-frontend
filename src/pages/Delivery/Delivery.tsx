@@ -39,8 +39,6 @@ const Delivery = () => {
   const navigate = useNavigate();
   const warehouseError = 'У цьому населенному пункті не має відділень';
 
-  let goodsInCart: { id: number; amount: number }[] = [];
-
   const [isLoading, setIsLoading] = useState(false);
 
   const [delivery, setDelivery] = useState<InputObject>();
@@ -50,8 +48,10 @@ const Delivery = () => {
   const officeOptions = checkLocalStorage('officeOptions', []);
 
   const deliveryData = checkLocalStorage('delivery', {});
-  const c = deliveryData?.city;
-  c.Description = c.value;
+
+  const c: { Description: string; value: string } = { ...deliveryData?.city };
+
+  c.Description = c?.value ? c.value : '';
   const o = deliveryData?.office?.value;
 
   const [areasUkr, setAreasUkr] =
@@ -70,7 +70,7 @@ const Delivery = () => {
       setIsLoading(true);
       const data = await fetchNPAreas();
       setAreasUkr(data);
-      localStorage.setItem('regionsOptions', JSON.stringify(data));
+      localStorage.setItem('regionsOptions', JSON.stringify(data ? data : []));
       setIsLoading(false);
     } catch (error) {
       console.log(error);
@@ -83,7 +83,7 @@ const Delivery = () => {
       const data = await fetchNPSettlements(Ref);
       setSettlements(data);
 
-      localStorage.setItem('cityOptions', JSON.stringify(data));
+      localStorage.setItem('cityOptions', JSON.stringify(data ? data : []));
       if (
         !data.some(
           (el: NPItemObject) => el?.Description === delivery?.city?.value,
@@ -102,7 +102,7 @@ const Delivery = () => {
       setIsLoading(true);
       const data = await fetchNPWarehouses(Ref);
       setWarehouses(data === 404 ? [data] : data);
-      localStorage.setItem('officeOptions', JSON.stringify(data));
+      localStorage.setItem('officeOptions', JSON.stringify(data ? data : []));
       setIsLoading(false);
     } catch (error) {
       console.log(error);
@@ -114,32 +114,12 @@ const Delivery = () => {
     setDelivery(deliveryData);
   }, []);
 
-  if (localStorage.getItem('cart')) {
-    goodsInCart = JSON.parse(localStorage.getItem('cart') as string);
-    if (goodsInCart.length === 0) {
-      navigate('/cart');
-    }
-  } else {
+  const goodsInCart = checkLocalStorage('cart', []);
+  if (goodsInCart.length === 0) {
     navigate('/cart');
   }
 
-  let goods: [] = [];
-
-  goods = checkLocalStorage('goods', []);
-
-  const goodsInCartArray = goods.filter(
-    (el: { id: number; quantity: number }) =>
-      goodsInCart.some((item) => {
-        if (el.id === item.id) {
-          el.quantity = item.amount;
-          return true;
-        } else return false;
-      }),
-  );
-
-  const [inCart] = useState<Good[]>(
-    goodsInCartArray.filter((el: { id: number }) => el.id !== 0),
-  );
+  const [inCart] = useState<Good[]>(goodsInCart);
 
   function submitHandle(e: React.FormEvent) {
     e.preventDefault();

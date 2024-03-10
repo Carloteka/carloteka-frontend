@@ -64,7 +64,7 @@ const Favorites = () => {
             <svg width={124} height={124}>
               <use href={`${sprite}#favorite`} />
             </svg>
-            <h2>Список бажань пустий</h2>
+            <h2>Список бажань порожній</h2>
             <GoToCatalog to={'/catalog'} className="primaryBtn">
               <svg width={14} height={9}>
                 <use href={`${sprite}#arrow-right`} />
