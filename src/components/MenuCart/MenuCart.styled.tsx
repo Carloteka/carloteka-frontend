@@ -19,7 +19,7 @@ export const MenuContainer = styled.div<{ $showCartMenu: boolean }>`
   width: 100%;
   height: 100vh;
   overflow-y: scroll;
-  right: ${({ $showCartMenu }) => ($showCartMenu ? '0' : '-288px')};
+  right: ${({ $showCartMenu }) => ($showCartMenu ? '0' : '-100%')};
 
   display: flex;
   flex-direction: column;
