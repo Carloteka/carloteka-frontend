@@ -67,7 +67,7 @@ export const MenuCart = ({ onClickHandle, showCartMenu }: MenuCartProps) => {
       ></Backdrop>
 
       <MenuContainer $showCartMenu={showCartMenu}>
-        <CloseButton onClick={() => onClickHandle()} title="Close menu">
+        <CloseButton onClick={() => onClickHandle()} title="Закрити меню">
           <svg width={24} height={24}>
             <use href={`${sprite}#close`} />
           </svg>
@@ -102,7 +102,7 @@ export const MenuCart = ({ onClickHandle, showCartMenu }: MenuCartProps) => {
                       );
                       delFromCart(el.id);
                     }}
-                    title="Remove good from cart"
+                    title="Видалити товар з кошика"
                   >
                     <svg width={9} height={8}>
                       <use href={`${sprite}#del-x`} />
