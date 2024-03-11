@@ -126,3 +126,49 @@ export const fetchNPWarehouses = async (SettlementRef) => {
     return error.response.status;
   }
 };
+
+export const createContact = async (body) => {
+  try {
+    const response = await axios.post('/shop/np/contact/create/', body);
+    const arrayData = response.data;
+    // console.log(response);
+    return arrayData;
+  } catch (error) {
+    console.log(error);
+    return error.response.status;
+  }
+};
+
+export const createWaybill = async (body) => {
+  try {
+    const response = await axios.post('/shop/np/waybill/create/', body);
+    const arrayData = response.data;
+    // console.log(response);
+    return arrayData;
+  } catch (error) {
+    console.log(error);
+    return error.response.status;
+  }
+};
+
+export const createOrder = async (body) => {
+  // let header = new Headers({
+  //   'X-CSRFTOKEN':
+  //     'o0ps1wMeYcG6jzSFdLYEqQOZnKFrO6Yu9Ia5mlFWybSJs68qQ7QeWWLiXdKJ9YYF',
+  // });
+
+  try {
+    const response = await axios.post('/shop/np/orders/create/', body, {
+      header: {
+        'X-CSRFTOKEN':
+          'o0ps1wMeYcG6jzSFdLYEqQOZnKFrO6Yu9Ia5mlFWybSJs68qQ7QeWWLiXdKJ9YYF',
+      },
+    });
+    const arrayData = response.data;
+    console.log(response);
+    return arrayData;
+  } catch (error) {
+    console.log(error);
+    return error.response.status;
+  }
+};

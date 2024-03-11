@@ -18,8 +18,16 @@ import {
   fetchNPAreas,
   fetchNPSettlements,
   fetchNPWarehouses,
+  createContact,
+  createWaybill,
+  createOrder,
 } from '../../api/api';
-import { reactSelectStyle, checkLocalStorage } from '../../utils';
+import {
+  reactSelectStyle,
+  checkLocalStorage,
+  getTotalPrice,
+  // getTotalVolume,
+} from '../../utils';
 
 type InputObject = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -60,10 +68,10 @@ const Delivery = () => {
   const [warehouses, setWarehouses] = useState(
     officeOptions === 404 ? [] : officeOptions,
   );
-  const [city, setCity] = useState<NPItemObject>(c);
+  const [town, setTown] = useState<NPItemObject>(c);
   const [office, setOffice] = useState<NPItemObject>(o);
   // console.log(warehouses);
-  console.log(checkLocalStorage('delivery', {})?.city?.value, 'office');
+  // console.log(checkLocalStorage('delivery', {})?.city?.value, 'office');
 
   async function getNPAreas() {
     try {
@@ -89,7 +97,7 @@ const Delivery = () => {
           (el: NPItemObject) => el?.Description === delivery?.city?.value,
         )
       ) {
-        setCity(undefined);
+        setTown(undefined);
       }
       setIsLoading(false);
     } catch (error) {
@@ -157,7 +165,24 @@ const Delivery = () => {
     }
 
     const deliveryDataForBackend = updateValues(delivery as InputObject);
-
+    deliveryDataForBackend.phone = deliveryDataForBackend.phone.replaceAll(
+      ' ',
+      '',
+    );
+    const {
+      first_name,
+      last_name,
+      phone,
+      email,
+      country,
+      oblast: region,
+      city,
+      post,
+      office,
+      payment: payment_method,
+      comment,
+    } = deliveryDataForBackend;
+    console.log(deliveryDataForBackend);
     // const deliveryDataForBackend = { ...delivery };
     // for (const key in delivery) {
     //   if (typeof delivery[key] === 'object') {
@@ -165,10 +190,86 @@ const Delivery = () => {
     //   }
     // }
 
-    console.log('send to backend', deliveryDataForBackend);
+    function getOfficeObj() {
+      const officeOptionsObjs = checkLocalStorage('officeOptions', []);
+      const officeObj = officeOptionsObjs.find(
+        (el: { Description: string }) =>
+          el.Description === delivery?.office.value,
+      );
+      return officeObj;
+    }
+    const officeObj = getOfficeObj();
 
-    navigate('/payment');
-    // e.form.reset();
+    const cost = getTotalPrice(inCart);
+    // const volume_general = +getTotalVolume(inCart).toFixed(3);
+    const volume_general = 0.029;
+    // const weight = +(0.3 * volume_general).toFixed(2);
+    const weight = 0.029;
+    const items = inCart.map((el) => {
+      return { quantity: el.quantity, item: el.id };
+    });
+    console.log(items, 'items');
+
+    async function createOrders() {
+      try {
+        setIsLoading(true);
+        const contact = await createContact({
+          first_name,
+          middle_name: 'Петрович',
+          last_name,
+          phone,
+          email,
+        });
+
+        const waybill = await createWaybill({
+          description: "Дерев'яні вироби",
+          cost,
+          volume_general,
+          weight,
+          recipient_contact: contact.Ref,
+          recipient_address: officeObj.Ref,
+          recipient_warehouse_index: officeObj.WarehouseIndex,
+          recipient_phone: phone,
+        });
+        console.log(waybill, 'waybill');
+
+        const order = await createOrder({
+          items,
+          waybill_np: {
+            ref: waybill.Ref,
+            int_doc_number: waybill.IntDocNumber,
+            cost_on_site: waybill.CostOnSite,
+            estimated_delivery_date: waybill.EstimatedDeliveryDate,
+          },
+          payment_status: 'None',
+          acq_id: 0,
+          first_name,
+          last_name,
+          email,
+          phone_number: phone,
+          total_amount: cost,
+          country,
+          region,
+          city,
+          delivery_service: post,
+          postoffice: office,
+          postbox: null,
+          status: 'new',
+          payment_method,
+          comment,
+        });
+        console.log(order, 'order');
+        if (order?.order_id) {
+          navigate('/payment');
+          // e.form.reset();
+        }
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    createOrders();
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -195,13 +296,13 @@ const Delivery = () => {
       }
     }
     if (field === 'city') {
-      const town: NPItemObject | undefined = settlements.find(
+      const choosenCity: NPItemObject | undefined = settlements.find(
         (el: NPItemObject) => el?.Description === e.value,
       );
-      if (town) {
-        setCity(town);
+      if (choosenCity) {
+        setTown(choosenCity);
         setOffice(undefined);
-        getNPWarehouses(town['Ref'] as string);
+        getNPWarehouses(choosenCity['Ref'] as string);
 
         const newArray = JSON.parse(localStorage.getItem('delivery') as string);
         delete newArray.office;
@@ -212,8 +313,8 @@ const Delivery = () => {
       setOffice(e.value);
     }
 
-    // if (field === 'post' && e.value === 'novaposhta') {
-    //   getNPWarehouses(city.Ref);
+    // if (field === 'post' && e.value === 'nova_post') {
+    //   getNPWarehouses(town.Ref);
     // }
 
     setDelivery(newArray);
@@ -257,11 +358,11 @@ const Delivery = () => {
                   Ім&apos;я
                   <input
                     placeholder="Тарас"
-                    name="name"
+                    name="first_name"
                     type="text"
                     className="short"
                     required
-                    onBlur={(e) => saveValue(e.target.value, 'name')}
+                    onBlur={(e) => saveValue(e.target.value, 'first_name')}
                     defaultValue={delivery?.name ? delivery?.name : undefined}
                   />
                 </label>
@@ -269,13 +370,13 @@ const Delivery = () => {
                   Прізвище
                   <input
                     placeholder="Шевченко"
-                    name="surname"
+                    name="last_name"
                     type="text"
                     className="short"
                     required
-                    onBlur={(e) => saveValue(e.target.value, 'surname')}
+                    onBlur={(e) => saveValue(e.target.value, 'last_name')}
                     defaultValue={
-                      delivery?.surname ? delivery?.surname : undefined
+                      delivery?.last_name ? delivery?.last_name : undefined
                     }
                   />
                 </label>
@@ -288,7 +389,7 @@ const Delivery = () => {
                     placeholder={'Оберіть службу доставки'}
                     options={getOptions(
                       ['Нова Пошта (1-3 днів)', 'Укрпошта (3-12 днів)'],
-                      ['novaposhta', 'ukrpost'],
+                      ['nova_post', 'ukr_post'],
                     )}
                     styles={reactSelectStyle}
                     required
@@ -363,7 +464,7 @@ const Delivery = () => {
                         styles={reactSelectStyle}
                         required
                         onChange={(e) => saveValue(e as object, 'city')}
-                        value={city ? getOptions([city.Description]) : []}
+                        value={town ? getOptions([town.Description]) : []}
                       />
                     </label>
                     {delivery?.city && warehouses[0] === 404 && (
@@ -389,7 +490,7 @@ const Delivery = () => {
                           : 'Оберіть номер відділення'
                       }
                       options={
-                        delivery?.post?.value === 'novaposhta' &&
+                        delivery?.post?.value === 'nova_post' &&
                         warehouses[0] !== 404
                           ? getOfficeOptions(
                               warehouses?.map((el: { Description: string }) => {
@@ -416,7 +517,7 @@ const Delivery = () => {
                           : []
                       }
                       isDisabled={
-                        !city || !delivery?.city || warehouses[0] === 404
+                        !town || !delivery?.city || warehouses[0] === 404
                       }
                     />
                   </label>
@@ -429,7 +530,10 @@ const Delivery = () => {
                     classNamePrefix="rs"
                     name={'payment'}
                     placeholder={'Оберіть вид оплати'}
-                    options={getOptions(['Оплата онлайн', 'Оплата Готівкою'])}
+                    options={getOptions(
+                      ['Оплата онлайн', 'Оплата Готівкою'],
+                      ['online', 'cod'],
+                    )}
                     styles={reactSelectStyle}
                     required
                     onChange={(e) => saveValue(e as object, 'payment')}
@@ -480,7 +584,7 @@ const Delivery = () => {
               </button>
             </Form>
             <aside>
-              <InvoiceInfo inCart={inCart} />
+              <InvoiceInfo inCart={inCart} total={getTotalPrice(inCart)} />
 
               <button type="submit" form="delivery" className="primaryBtn">
                 продовжити

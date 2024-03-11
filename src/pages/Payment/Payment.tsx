@@ -27,7 +27,7 @@ import visaImg from '../../images/visa.png';
 import photo from '../../images/photo.jpg';
 import GooglePayButton from '@google-pay/button-react';
 import { Good } from '../../../@types/custom';
-import { checkLocalStorage } from '../../utils';
+import { checkLocalStorage, getTotalPrice } from '../../utils';
 
 const Payment = () => {
   const { setAmountInCart } = useContext(CartContext);
@@ -69,14 +69,6 @@ const Payment = () => {
   const [inCart, setInCart] = useState<Good[]>(
     goodsInCartArray.filter((el: { id: number }) => el.id !== 0),
   );
-
-  function getTotalPrice() {
-    return inCart.reduce(
-      (total: number, el: { quantity: number; price: number }) =>
-        el.price * (el?.quantity ? el.quantity : 1) + total,
-      0,
-    );
-  }
 
   function clearCart() {
     localStorage.cart = [];
@@ -178,7 +170,7 @@ const Payment = () => {
                   </DivBorderBottom>
                   <div>
                     <span>Разом</span>
-                    <p> ₴ {getTotalPrice()}</p>
+                    <p> ₴ {getTotalPrice(inCart)}</p>
                   </div>
                 </OrderInfoDiv>
                 <DeliveryInfoDiv>
@@ -318,7 +310,7 @@ const Payment = () => {
               </div>
 
               <aside style={{ paddingTop: '0' }}>
-                <InvoiceInfo inCart={inCart} />
+                <InvoiceInfo inCart={inCart} total={getTotalPrice(inCart)} />
               </aside>
             </DeliveryBox>
           )}

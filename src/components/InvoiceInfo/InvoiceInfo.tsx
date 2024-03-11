@@ -5,26 +5,14 @@ import {
   PolicyLink,
 } from './InvoiceInfo.styled';
 import { Good } from '../../../@types/custom';
-// type Good = {
-//   name: string;
-//   price: number;
-//   id_name: string;
-//   quantity: number;
-// };
+// import { getTotalPrice } from '../../utils';
 
 interface InvoiceInfoProps {
   inCart: Good[];
+  total: string;
 }
 
-export const InvoiceInfo = ({ inCart }: InvoiceInfoProps) => {
-  function getTotalPrice() {
-    return inCart.reduce(
-      (total: number, el: { quantity: number; price: number }) =>
-        el.price * (el?.quantity ? el.quantity : 1) + total,
-      0,
-    );
-  }
-
+export const InvoiceInfo = ({ inCart, total }: InvoiceInfoProps) => {
   return (
     <InfoBox>
       <h3>Ваше замовлення</h3>
@@ -54,7 +42,7 @@ export const InvoiceInfo = ({ inCart }: InvoiceInfoProps) => {
 
       <Total>
         <p>Загальна сума:</p>
-        <p>₴ {getTotalPrice() + 95}</p>
+        <p>₴ {total + 95}</p>
       </Total>
 
       <h3>Метод оплати</h3>
