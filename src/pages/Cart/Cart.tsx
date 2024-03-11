@@ -19,7 +19,12 @@ import {
   GoToPayment,
 } from './Cart.styled';
 import { CartCard } from '../../components/CartCard/CartCard';
-import { addToCart, toggleLocalStorage, checkLocalStorage } from '../../utils';
+import {
+  addToCart,
+  toggleLocalStorage,
+  checkLocalStorage,
+  getTotalPrice,
+} from '../../utils';
 import sprite from '../../images/sprite.svg';
 import { Good } from '../../../@types/custom';
 
@@ -41,14 +46,6 @@ const Cart = () => {
     const newArray = goodsInCart.filter((el: { id: number }) => el.id !== id);
     toggleLocalStorage(true, id);
     setInCart(newArray);
-  }
-
-  function getTotalPrice() {
-    return inCart.reduce(
-      (total: number, el: { quantity: number; price: number }) =>
-        el.price * (el?.quantity ? el.quantity : 1) + total,
-      0,
-    );
   }
 
   function increment(amount: number, good: Good) {
@@ -132,11 +129,11 @@ const Cart = () => {
               <div>
                 <div>
                   <p>Ціна</p>
-                  <p>₴ {getTotalPrice()}</p>
+                  <p>₴ {getTotalPrice(inCart)}</p>
                 </div>
                 <div>
                   <p>Загальна вартість</p>
-                  <p>₴{getTotalPrice()}</p>
+                  <p>₴{getTotalPrice(inCart)}</p>
                 </div>
               </div>
 

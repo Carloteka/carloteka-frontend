@@ -12,7 +12,11 @@ import {
 import sprite from '../../images/sprite.svg';
 import { Link } from 'react-router-dom';
 import { Good } from '../../../@types/custom';
-import { toggleLocalStorage, checkLocalStorage } from '../../utils';
+import {
+  toggleLocalStorage,
+  checkLocalStorage,
+  getTotalPrice,
+} from '../../utils';
 
 interface MenuCartProps {
   onClickHandle: () => void;
@@ -34,14 +38,6 @@ export const MenuCart = ({ onClickHandle, showCartMenu }: MenuCartProps) => {
     const newArray = inCart.filter((el: { id: number }) => el.id !== id);
     toggleLocalStorage(true, 'cart', { id });
     setInCart(newArray);
-  }
-
-  function getTotalPrice() {
-    return inCart.reduce(
-      (total: number, el: { quantity: number; price: number }) =>
-        el.price * (el?.quantity ? el.quantity : 1) + total,
-      0,
-    );
   }
 
   return (
@@ -99,7 +95,7 @@ export const MenuCart = ({ onClickHandle, showCartMenu }: MenuCartProps) => {
 
             <Total>
               <p>Вартість:</p>
-              <p>₴ {getTotalPrice().toFixed(2)}</p>
+              <p>₴ {getTotalPrice(inCart)}</p>
             </Total>
 
             <Link
