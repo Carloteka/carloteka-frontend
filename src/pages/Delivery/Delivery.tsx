@@ -70,8 +70,6 @@ const Delivery = () => {
   const [warehouses, setWarehouses] = useState(officeOptions);
   const [town, setTown] = useState<NPItemObject>(c);
   const [office, setOffice] = useState<NPItemObject>(o);
-  // console.log(warehouses);
-  // console.log(checkLocalStorage('delivery', {})?.city?.value, 'office');
 
   async function getNPAreas() {
     try {
@@ -233,7 +231,7 @@ const Delivery = () => {
     // const weight = +(0.3 * volume_general).toFixed(2);
     const weight = 0.029;
     const items = inCart.map((el) => {
-      return { quantity: el.quantity, item: el.id };
+      return { quantity: el?.quantity ? el.quantity : 1, item: el.id };
     });
 
     async function createOrders() {
@@ -304,7 +302,6 @@ const Delivery = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function saveValue(e: any | string, field: string) {
-    // console.log(e);
     const temp = checkLocalStorage('delivery', {});
     let newArray;
     if (typeof e === 'string') {
@@ -342,10 +339,6 @@ const Delivery = () => {
     if (field === 'office') {
       setOffice(e.value);
     }
-
-    // if (field === 'post' && e.value === 'nova_post') {
-    //   getNPWarehouses(town.Ref);
-    // }
 
     setDelivery(newArray);
   }
