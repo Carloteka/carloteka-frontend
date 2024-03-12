@@ -29,7 +29,7 @@ export const InvoiceInfo = ({ inCart, total }: InvoiceInfoProps) => {
                 {el.name}
                 {el.quantity > 1 && ` (${el.quantity} шт.)`}
               </p>
-              <p>₴ {el.price * el.quantity}</p>
+              <p>₴ {el.price * (el?.quantity ? el.quantity : 1)}</p>
             </div>
           </li>
         ))}

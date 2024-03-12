@@ -11,7 +11,7 @@ export const fetchCategories = async () => {
     // console.log(arrayData);
     return arrayData;
   } catch (error) {
-    console.log(error);
+    console.log(error.response);
   }
 };
 
@@ -22,7 +22,7 @@ export const fetchItemDetails = async (slug) => {
     console.log(arrayData);
     return arrayData;
   } catch (error) {
-    console.log(error);
+    console.log(error.response);
   }
 };
 
@@ -44,7 +44,7 @@ export const fetchPopularGoods = async () => {
     const arrayData = response.data.results;
     return arrayData;
   } catch (error) {
-    console.log(error);
+    console.log(error.response);
   }
 };
 
@@ -58,7 +58,7 @@ export const fetchAllGoods = async (limit) => {
     // console.log(response);
     return { count: response.data.count, data: arrayData };
   } catch (error) {
-    console.log(error);
+    console.log(error.response);
   }
 };
 
@@ -70,7 +70,7 @@ export const fetchFilteredGoods = async (search) => {
     const arrayData = response.data.results;
     return { count: response.data.count, data: arrayData };
   } catch (error) {
-    console.log(error);
+    console.log(error.response);
   }
 };
 
@@ -84,7 +84,7 @@ export const postReview = async (slug, body) => {
     const arrayData = response.data.results;
     return { count: response.data.count, data: arrayData };
   } catch (error) {
-    console.log(error);
+    console.log(error.response);
   }
 };
 
@@ -96,7 +96,7 @@ export const fetchNPAreas = async () => {
     const arrayData = response.data;
     return arrayData;
   } catch (error) {
-    console.log(error);
+    console.log(error.response);
   }
 };
 
@@ -108,7 +108,7 @@ export const fetchNPSettlements = async (Ref) => {
     const arrayData = response.data;
     return arrayData;
   } catch (error) {
-    console.log(error);
+    console.log(error.response);
   }
 };
 
@@ -118,11 +118,13 @@ export const fetchNPWarehouses = async (SettlementRef) => {
   try {
     const response = await axios.get('/shop/np/warehouses/', { params });
     const arrayData = response.data;
-    return arrayData.length === 0
-      ? 'У вибраному населенному пункті не має відділень'
-      : arrayData;
+    // console.log(response.data);
+    return arrayData;
   } catch (error) {
-    console.log(error);
+    console.log(error.response);
+    if (error.response?.data?.detail?.detail[0] === 'To many requests') {
+      return 500;
+    }
     return error.response.status;
   }
 };
@@ -134,7 +136,7 @@ export const createContact = async (body) => {
     // console.log(response);
     return arrayData;
   } catch (error) {
-    console.log(error);
+    console.log(error.response);
     return error.response.status;
   }
 };
@@ -143,32 +145,27 @@ export const createWaybill = async (body) => {
   try {
     const response = await axios.post('/shop/np/waybill/create/', body);
     const arrayData = response.data;
-    // console.log(response);
     return arrayData;
   } catch (error) {
-    console.log(error);
+    console.log(error.response);
+    if (
+      error.response?.data?.detail?.detail[0] ===
+      'Recipient Warehouse max allowed volumeweight: 30'
+    ) {
+      return 'weightError';
+    }
     return error.response.status;
   }
 };
 
 export const createOrder = async (body) => {
-  // let header = new Headers({
-  //   'X-CSRFTOKEN':
-  //     'o0ps1wMeYcG6jzSFdLYEqQOZnKFrO6Yu9Ia5mlFWybSJs68qQ7QeWWLiXdKJ9YYF',
-  // });
-
   try {
-    const response = await axios.post('/shop/np/orders/create/', body, {
-      header: {
-        'X-CSRFTOKEN':
-          'o0ps1wMeYcG6jzSFdLYEqQOZnKFrO6Yu9Ia5mlFWybSJs68qQ7QeWWLiXdKJ9YYF',
-      },
-    });
+    const response = await axios.post('/shop/orders/create/', body);
     const arrayData = response.data;
-    console.log(response);
+    // console.log(response);
     return arrayData;
   } catch (error) {
-    console.log(error);
+    console.log(error.response);
     return error.response.status;
   }
 };
