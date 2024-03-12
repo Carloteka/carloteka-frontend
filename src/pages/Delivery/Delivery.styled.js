@@ -29,9 +29,13 @@ export const DeliveryBox = styled.section`
   }
 
   .error {
-    margin: -20px 0;
+    margin: -15px 0;
     color: red;
     font-size: 0.9rem;
+
+    @media screen and (min-width: 1440px) {
+      margin: -20px 0;
+    }
   }
 `;
 
