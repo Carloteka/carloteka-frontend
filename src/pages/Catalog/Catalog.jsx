@@ -77,6 +77,8 @@ const Catalog = () => {
   const [catalog, setCatalog] = useState([]);
 
   const [quantity, setQuantity] = useState(catalog?.length);
+  const [specOrderQuantity, setSpecOrderQuantity] = useState(0);
+  const [instockQuantity, setInstockQuantity] = useState(0);
   const [limit] = useState(12);
   const [tags, setTags] = useState([]);
 
@@ -97,6 +99,8 @@ const Catalog = () => {
         setIsLoading(true);
         const data = await fetchAllGoods(12);
         setQuantity(data.count);
+        setInstockQuantity(data.in_stock_count);
+        setSpecOrderQuantity(data.specific_order_count);
         setCatalog(data.data);
         setIsLoading(false);
       } catch (error) {
@@ -173,22 +177,6 @@ const Catalog = () => {
     return range;
   }
 
-  function getGoodsInStock() {
-    if (!catalog || catalog?.length === 0) {
-      return;
-    }
-    const amount = catalog.filter((el) => el.stock === 'IN_STOCK');
-    return amount.length;
-  }
-
-  function getGoodsToOrder() {
-    if (catalog === undefined) {
-      return;
-    }
-    const amount = catalog.filter((el) => el.stock === 'SPECIFIC_ORDER');
-    return amount.length;
-  }
-
   function onChangeHandler(field, value) {
     let newparams = {};
     let temp = params[field];
@@ -242,6 +230,8 @@ const Catalog = () => {
       setIsLoading(true);
       const data = await fetchFilteredGoods(filter);
       setQuantity(data.count);
+      setInstockQuantity(data.in_stock_count);
+      setSpecOrderQuantity(data.specific_order_count);
       setCatalog(data.data);
       setIsLoading(false);
     } catch (error) {
@@ -407,7 +397,7 @@ const Catalog = () => {
                     checked={isChecked('stock', 'IN_STOCK')}
                     onChange={() => onChangeHandler('stock', 'IN_STOCK')}
                   />
-                  В наявності ({getGoodsInStock()})
+                  В наявності ({instockQuantity})
                 </label>
 
                 <label>
@@ -418,7 +408,7 @@ const Catalog = () => {
                     checked={isChecked('stock', 'SPECIFIC_ORDER')}
                     onChange={() => onChangeHandler('stock', 'SPECIFIC_ORDER')}
                   />
-                  Під замовлення ({getGoodsToOrder()})
+                  Під замовлення ({specOrderQuantity})
                 </label>
               </fieldset>
 
