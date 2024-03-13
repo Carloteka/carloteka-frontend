@@ -55,8 +55,13 @@ export const fetchAllGoods = async (limit) => {
   try {
     const response = await axios.get('/shop/items/', { params });
     const arrayData = response.data.results;
-    // console.log(response);
-    return { count: response.data.count, data: arrayData };
+    // console.log(arrayData);
+    return {
+      in_stock_count: response.data.in_stock_count,
+      specific_order_count: response.data.specific_order_count,
+      count: response.data.count,
+      data: arrayData,
+    };
   } catch (error) {
     console.log(error.response);
   }
@@ -66,9 +71,14 @@ export const fetchFilteredGoods = async (search) => {
   const params = { limit: 12 };
   try {
     const response = await axios.get(`/shop/items/${search}`, { params });
-    // console.log(response);
+    console.log(response.data);
     const arrayData = response.data.results;
-    return { count: response.data.count, data: arrayData };
+    return {
+      in_stock_count: response.data.in_stock_count,
+      specific_order_count: response.data.specific_order_count,
+      count: response.data.count,
+      data: arrayData,
+    };
   } catch (error) {
     console.log(error.response);
   }
