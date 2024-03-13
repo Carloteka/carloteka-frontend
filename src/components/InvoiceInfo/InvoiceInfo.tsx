@@ -9,7 +9,7 @@ import { Good } from '../../../@types/custom';
 
 interface InvoiceInfoProps {
   inCart: Good[];
-  total: string;
+  total: number;
 }
 
 export const InvoiceInfo = ({ inCart, total }: InvoiceInfoProps) => {
@@ -42,7 +42,7 @@ export const InvoiceInfo = ({ inCart, total }: InvoiceInfoProps) => {
 
       <Total>
         <p>Загальна сума:</p>
-        <p>₴ {total + 95}</p>
+        <p>₴ {(total + 95).toFixed(2)}</p>
       </Total>
 
       <h3>Метод оплати</h3>

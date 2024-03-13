@@ -310,7 +310,7 @@ const Payment = () => {
               </div>
 
               <aside style={{ paddingTop: '0' }}>
-                <InvoiceInfo inCart={inCart} total={getTotalPrice(inCart)} />
+                <InvoiceInfo inCart={inCart} total={+getTotalPrice(inCart)} />
               </aside>
             </DeliveryBox>
           )}

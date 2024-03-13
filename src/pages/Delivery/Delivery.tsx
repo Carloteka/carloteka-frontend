@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CartContext } from '../../components/Layout';
 // import { Loader } from '../../components/Loader/Loader';
 import { PageTitle } from '../../components/pageTitle/PageTitle';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
@@ -45,6 +46,7 @@ type NPItemObject =
 
 const Delivery = () => {
   const navigate = useNavigate();
+  const { amountInCart } = useContext(CartContext);
 
   const [isLoading, setIsLoading] = useState(false);
   const [weightError, setWeightEror] = useState(false);
@@ -152,7 +154,16 @@ const Delivery = () => {
     navigate('/cart');
   }
 
-  const [inCart] = useState<Good[]>(goodsInCart);
+  const [inCart, setInCart] = useState<Good[]>(goodsInCart);
+  useEffect(() => {
+    if (
+      inCart.length !== amountInCart ||
+      JSON.stringify(inCart) !== JSON.stringify(goodsInCart)
+    ) {
+      setInCart(goodsInCart);
+    }
+  }, [inCart, amountInCart]);
+  console.log(inCart);
 
   function submitHandle(e: React.FormEvent) {
     e.preventDefault();
@@ -207,7 +218,6 @@ const Delivery = () => {
       payment: payment_method,
       comment,
     } = deliveryDataForBackend;
-    console.log(office.slice(0, 50));
     // const deliveryDataForBackend = { ...delivery };
     // for (const key in delivery) {
     //   if (typeof delivery[key] === 'object') {
@@ -245,7 +255,7 @@ const Delivery = () => {
           email,
         });
 
-        const waybill = await createWaybill({
+        const waybill_np = await createWaybill({
           description: "Дерев'яні вироби",
           cost,
           volume_general,
@@ -255,20 +265,15 @@ const Delivery = () => {
           recipient_warehouse_index: officeObj.WarehouseIndex,
           recipient_phone: phone,
         });
-        if (waybill === 'weightError') {
+        if (waybill_np === 'weightError') {
           setWeightEror(true);
           return;
         }
-        console.log(waybill, 'waybill');
+        console.log(waybill_np, 'waybill');
 
         const order = await createOrder({
           items,
-          waybill_np: {
-            ref: waybill.Ref,
-            int_doc_number: waybill.IntDocNumber,
-            cost_on_site: waybill.CostOnSite,
-            estimated_delivery_date: '2024-03-20',
-          },
+          waybill_np,
           payment_status: 'None',
           acq_id: 0,
           first_name,
@@ -632,7 +637,7 @@ const Delivery = () => {
               </Form>
             )}
             <aside>
-              <InvoiceInfo inCart={inCart} total={getTotalPrice(inCart)} />
+              <InvoiceInfo inCart={inCart} total={+getTotalPrice(inCart)} />
 
               <button type="submit" form="delivery" className="primaryBtn">
                 продовжити
