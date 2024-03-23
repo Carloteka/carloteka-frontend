@@ -293,6 +293,7 @@ const Delivery = () => {
         });
         console.log(order, 'order');
         if (order?.order_id) {
+          localStorage.setItem('order_id', JSON.stringify(order.order_id));
           navigate('/payment');
           // e.form.reset();
         }
