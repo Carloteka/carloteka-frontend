@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { CartContext } from '../../components/Layout';
 import { useNavigate } from 'react-router-dom';
+import { Loader } from '../../components/Loader/Loader';
 import { PageTitle } from '../../components/pageTitle/PageTitle';
 import { ContainerLimiter } from '../../components/containerLimiter/ContainerLimiter';
 import { InputMask } from 'primereact/inputmask';
@@ -28,6 +29,11 @@ import photo from '../../images/photo.jpg';
 import GooglePayButton from '@google-pay/button-react';
 import { Good } from '../../../@types/custom';
 import { checkLocalStorage, getTotalPrice } from '../../utils';
+import {
+  getLiqpayBtn,
+  getLiqpayStatus,
+  createLiqpayCallback,
+} from '../../api/api';
 
 const Payment = () => {
   const { setAmountInCart } = useContext(CartContext);
@@ -38,6 +44,15 @@ const Payment = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<undefined | string>();
   const [card] = useState<string>('visa');
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [liqpayBtn, setLiqpayBtn] = useState<
+    | {
+        data?: string;
+        signature?: string;
+      }
+    | undefined
+  >();
 
   const goodsInCart: { id: number; amount: number }[] = checkLocalStorage(
     'cart',
@@ -52,7 +67,47 @@ const Payment = () => {
     if (goodsInCart.length === 0 && isSuccess === false) {
       navigate('/cart');
     }
-  }, []);
+    const order_id = localStorage.getItem('order_id');
+    if (order_id) {
+      createLiqpayBtn();
+      fetchLiqpayStatus();
+      createCallback();
+    }
+    async function createLiqpayBtn() {
+      try {
+        setIsLoading(true);
+        const data = await getLiqpayBtn(order_id);
+        setLiqpayBtn(data === 405 ? undefined : data);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    async function fetchLiqpayStatus() {
+      try {
+        setIsLoading(true);
+        const data = await getLiqpayStatus(order_id);
+        setIsSuccess(data === 404 ? false : true);
+        console.log(data === 404 ? undefined : data);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    async function createCallback() {
+      try {
+        setIsLoading(true);
+        const data = await createLiqpayCallback();
+        //  setIsSuccess(data === 404 ? false : true);
+        console.log(data);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, [goodsInCart.length, isSuccess, navigate]);
 
   const goods: [] = checkLocalStorage('goods', []);
 
@@ -306,6 +361,28 @@ const Payment = () => {
                       <use href={`${sprite}#googlePay`} />
                     </svg>
                   </button> */}
+                  {liqpayBtn && (
+                    <form
+                      method="POST"
+                      action="https://www.liqpay.ua/api/3/checkout"
+                      acceptCharset="utf-8"
+                    >
+                      <input type="hidden" name="data" value={liqpayBtn.data} />
+                      <input
+                        type="hidden"
+                        name="signature"
+                        value={liqpayBtn.signature}
+                      />
+                      <button
+                        type="submit"
+                        style={{
+                          borderRadius: '14px',
+                          backgroundColor: 'rgb(95,180,40)',
+                          color: 'white',
+                        }}
+                      >{`>> LiqPay`}</button>
+                    </form>
+                  )}
                 </PaymentMethodDiv>
               </div>
 
@@ -314,6 +391,7 @@ const Payment = () => {
               </aside>
             </DeliveryBox>
           )}
+          {isLoading && <Loader></Loader>}
           {paymentMethod && (
             <Modal onClose={() => setPaymentMethod(undefined)}>
               <HeaderDiv>

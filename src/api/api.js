@@ -4,6 +4,17 @@ axios.defaults.baseURL = import.meta.env.PROD
   ? 'http://carloteka.com/api'
   : 'http://localhost:8000/api';
 
+export const fetchContacts = async () => {
+  try {
+    const response = await axios.get('/shop/contacts/');
+    const arrayData = response.data;
+    // console.log(arrayData);
+    return arrayData;
+  } catch (error) {
+    console.log(error.response);
+  }
+};
+
 export const fetchCategories = async () => {
   try {
     const response = await axios.get('/shop/categories/');
@@ -173,6 +184,50 @@ export const createOrder = async (body) => {
     const response = await axios.post('/shop/orders/create/', body);
     const arrayData = response.data;
     // console.log(response);
+    return arrayData;
+  } catch (error) {
+    console.log(error.response);
+    return error.response.status;
+  }
+};
+
+//  ----------- liqpay --------------
+
+export const getLiqpayBtn = async (id) => {
+  const params = { order_id: id };
+  try {
+    const response = await axios.get('/liqpay/create-liqpay-button/', {
+      params,
+    });
+    const arrayData = response.data;
+    // console.log(response);
+    return arrayData;
+  } catch (error) {
+    console.log(error.response);
+    return error.response.status;
+  }
+};
+
+export const getLiqpayStatus = async (id) => {
+  const params = { order_id: id };
+  try {
+    const response = await axios.get('/liqpay/get-status/', {
+      params,
+    });
+    const arrayData = response.data;
+    // console.log(response);
+    return arrayData;
+  } catch (error) {
+    console.log(error.response);
+    return error.response.status;
+  }
+};
+
+export const createLiqpayCallback = async () => {
+  try {
+    const response = await axios.post('/liqpay/pay-callback/');
+    const arrayData = response.data;
+    console.log(response);
     return arrayData;
   } catch (error) {
     console.log(error.response);
