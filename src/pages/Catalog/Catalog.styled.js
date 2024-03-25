@@ -215,7 +215,7 @@ export const TagsContainer = styled.div`
 
     @media screen and (min-width: 834px) {
       padding: 7.5px 8px;
-      widyh: auto;
+      width: auto;
       height: auto;
       gap: 8px;
     }
