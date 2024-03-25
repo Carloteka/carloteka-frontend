@@ -34,12 +34,14 @@ export const LimiterConatiner = styled.div`
   gap: 5px;
 
   @media screen and (min-width: 834px) {
+    justify-content: flex-start;
     width: 768px;
-    gap: 0px;
+    gap: 26px;
   }
 
   @media screen and (min-width: 1440px) {
     width: 1312px;
+    gap: 0;
   }
 `;
 
@@ -90,7 +92,7 @@ export const Catalog = styled(NavLink)`
     margin-right: 0;
   }
   @media screen and (min-width: 1440px) {
-    margin-right: 131px;
+    margin-right: 147px;
   }
 `;
 
@@ -103,6 +105,10 @@ export const Actions = styled.div`
     @media screen and (max-width: 833px) {
       width: 16px;
       height: 16px;
+    }
+    @media screen and (min-width: 834px) {
+      width: 24px;
+      height: 24px;
     }
     @media screen and (min-width: 1440px) {
       width: 40px;
@@ -139,9 +145,9 @@ export const NavigationLink = styled(NavLink)`
 `;
 
 export const BurgerMenuBtn = styled.button`
-  @media screen and (max-width: 833px) {
-    justify-content: flex-end;
+  justify-content: flex-end;
 
+  @media screen and (max-width: 833px) {
     svg {
       width: 12px;
       height: 8px;

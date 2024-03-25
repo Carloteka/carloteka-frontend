@@ -488,7 +488,23 @@ const Catalog = () => {
             </Form>
           </Aside>
 
-          {!query && catalog?.length > 0 ? (
+          {query && catalog?.length === 0 ? (
+            <NoResultBox>
+              <NoResult>
+                <p>За запитом {query ? `'${query}'` : ''} нічого не знайдено</p>
+                <ul>
+                  <li>Спробуйте ввести назву товару або категорії</li>
+                  <li>Переконайтеся, що в назвах немає граматичних помилок</li>
+                  <li>
+                    Або скористайтесь списком усіх товарів, поділених за
+                    категоріями (ліворуч)
+                  </li>
+                </ul>
+              </NoResult>
+
+              <PopularGoods width={3} />
+            </NoResultBox>
+          ) : (
             <div
               style={{ padding: '0', display: 'flex', flexDirection: 'column' }}
             >
@@ -604,22 +620,6 @@ const Catalog = () => {
                 pageCount={limit !== 12 ? 0 : Math.ceil(quantity / limit)}
               />
             </div>
-          ) : (
-            <NoResultBox>
-              <NoResult>
-                <p>За запитом {query ? `'${query}'` : ''} нічого не знайдено</p>
-                <ul>
-                  <li>Спробуйте ввести назву товару або категорії</li>
-                  <li>Переконайтеся, що в назвах немає граматичних помилок</li>
-                  <li>
-                    Або скористайтесь списком усіх товарів, поділених за
-                    категоріями (ліворуч)
-                  </li>
-                </ul>
-              </NoResult>
-
-              <PopularGoods width={3} />
-            </NoResultBox>
           )}
         </FlexContainer>
       </ContainerLimiter>

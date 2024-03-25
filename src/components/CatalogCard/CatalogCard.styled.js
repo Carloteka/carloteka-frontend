@@ -53,8 +53,6 @@ export const ThumbPhoto = styled.div`
 `;
 
 export const Name = styled.h4`
-  margin: 16px 0;
-
   @media screen and (min-width: 834px) {
     margin: 16px 0 8px;
   }

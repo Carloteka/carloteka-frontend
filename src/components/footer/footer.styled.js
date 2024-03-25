@@ -4,8 +4,9 @@ export const Wrapper = styled.footer`
   padding: 46px 16px;
   display: flex;
   flex-direction: column;
-  gap: 40px;
   justify-content: center;
+
+  gap: 40px;
   background-color: #2d3f24;
   color: white;
 
@@ -15,20 +16,20 @@ export const Wrapper = styled.footer`
     gap: 34px;
   }
   @media screen and (min-width: 1440px) {
-    padding: 80px;
-    gap: 222px;
+    padding: 57px 163px;
+      justify-content: space-between;
   }
 
   div:first-child {
     width: 226px;
   }
   div:nth-child(2) {
-    @media screen and (min-width: 834px) {
+    @media screen and (max-width: 1439px) {
       width: 216px;
     }
   }
   div:last-child {
-    width: 263px;
+    width: 184px;
   }
 
   h3 {
@@ -60,10 +61,11 @@ export const List = styled.ul`
   flex-direction: column;
   gap: 16px;
 
-  & .littleText {
-    font-size: 18px;
-    line-height: calc(25 / 18);
-  }
+
+`;
+
+export const WorkTime = styled.p`
+width:236px
 `;
 
 export const Socials = styled.ul`

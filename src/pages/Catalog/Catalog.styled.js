@@ -6,22 +6,25 @@ export const FlexContainer = styled.div`
   gap: 16px;
   width: 100%;
 
-  @media screen and (min-width: 1440px) {
+  @media screen and (min-width: 834px) {
     flex-direction: row;
+    gap: 24px;
+  }
+  @media screen and (min-width: 1440px) {
     gap: 32px;
   }
 `;
 
 export const ShowFiltersBtn = styled.button`
   display: flex;
-  @media screen and (min-width: 1440px) {
+  @media screen and (min-width: 834px) {
     display: none;
   }
 `;
 
 export const Aside = styled.aside`
   display: ${({ $show }) => ($show ? 'block' : 'none')};
-  @media screen and (min-width: 1440px) {
+  @media screen and (min-width: 834px) {
     display: block;
   }
 `;
@@ -32,6 +35,10 @@ export const Form = styled.form`
   gap: 24px;
   text-align: left;
 
+  @media screen and (min-width: 834px) {
+    width: 240px;
+    gap: 33px;
+  }
   @media screen and (min-width: 1440px) {
     width: 304px;
     gap: 40px;
@@ -41,20 +48,19 @@ export const Form = styled.form`
     display: block;
   }
 
-  fieldset:nth-child(even) {
+  fieldset {
     padding-bottom: 24px;
     border-bottom: 1px solid grey;
+
+    @media screen and (min-width: 834px) {
+      padding-bottom: 33px;
+    }
     @media screen and (min-width: 1440px) {
       padding-bottom: 40px;
     }
 
     legend {
-      padding-top: 24px;
       width: 100%;
-      border-top: 1px solid #a7a5a3;
-      @media screen and (min-width: 1440px) {
-        padding-top: 40px;
-      }
     }
   }
 
@@ -70,12 +76,16 @@ export const Form = styled.form`
     padding: 0 3px;
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 11px;
     width: 100%;
     min-height: 25px;
     cursor: pointer;
+
+    @media screen and (min-width: 1440px) {
+      gap: 19px;
+    }
   }
-  label:lastchild {
+  label:last-child {
     margin-bottom: 0;
   }
   input {
@@ -105,6 +115,7 @@ export const Price = styled.fieldset`
   }
 
   label {
+    margin: 0;
     padding: 0;
     position: relative;
     text-indent: 0px;
@@ -115,6 +126,10 @@ export const Price = styled.fieldset`
     padding: 0;
     justify-content: center;
     height: 28px;
+
+    @media screen and (min-width: 834px) and (max-width: 1439px) {
+      margin: 16px 0 24px;
+    }
 
     & > div {
       gap: 0;
@@ -165,9 +180,12 @@ export const TagsContainer = styled.div`
   flex-wrap: wrap;
   align-items: baseline;
   order: 2;
+  text-align: left;
 
-  @media screen and (min-width: 1440px) {
+  @media screen and (min-width: 834px) {
     margin-bottom: 40px;
+  }
+  @media screen and (min-width: 1440px) {
     padding-right: 148px;
     order: 1;
   }
@@ -175,22 +193,37 @@ export const TagsContainer = styled.div`
   ul {
     display: flex;
     flex-wrap: wrap;
-    column-gap: 24px;
-    row-gap: 16px;
+    row-gap: 8px;
+
+    @media screen and (min-width: 834px) {
+      column-gap: 16px;
+      row-gap: 16px;
+    }
+    @media screen and (min-width: 1440px) {
+      column-gap: 24px;
+    }
   }
 
   li {
     padding: 4px;
+    width: 100%;
     height: 40px;
     display: flex;
     align-items: center;
     gap: 4px;
     background-color: #f2f0ec;
 
-    @media screen and (min-width: 1440px) {
+    @media screen and (min-width: 834px) {
       padding: 7.5px 8px;
+      widyh: auto;
       height: auto;
       gap: 8px;
+    }
+
+    @media screen and (max-width: 833px) {
+      & > p {
+        width: 95%;
+      }
     }
   }
 
@@ -233,15 +266,25 @@ export const TagsContainer = styled.div`
 `;
 
 export const FlexDiv = styled.div`
+  @media screen and (max-width: 833px) {
+    order: 1;
+    margin-bottom: 16px;
+    & > span {
+      display: none;
+    }
+  }
+
   margin-bottom: 40px;
   display: inline-flex;
   text-align: left;
   order: 2;
 
-  @media screen and (max-width: 1439px) {
-    order: 1;
-    margin-bottom: 16px;
-    & > span {
+  @media screen and (min-width: 834px) and (max-width: 1439px) {
+    margin-bottom: 32px;
+    flex-direction: column;
+    gap: 8px;
+
+    & > span:nth-child(2) {
       display: none;
     }
   }
@@ -250,9 +293,14 @@ export const FlexDiv = styled.div`
 export const GoodsList = styled.ul`
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 8px;
   order: 3;
 
+  @media screen and (min-width: 834px) {
+    justify-content: flex-start;
+    gap: 24px;
+  }
   @media screen and (min-width: 1440px) {
     gap: 32px;
   }
@@ -264,6 +312,9 @@ export const GoodsList = styled.ul`
     gap: 16px;
     width: 288px;
     // min-height: 440px;
+    @media screen and (min-width: 834px) {
+      width: 240px;
+    }
     @media screen and (min-width: 1440px) {
       width: 304px;
       // min-height: 456px;
@@ -274,18 +325,27 @@ export const GoodsList = styled.ul`
 
 export const SelectBox = styled.div`
   display: inline-flex;
+  flex-direction: column;
   align-items: baseline;
   gap: 4px;
   position: relative;
+  width: 100%;
   min-height: 25px;
+
+  @media screen and (min-width: 834px) {
+    flex-direction: row;
+    width: fit-content;
+  }
 
   svg {
     position: absolute;
-    top: 6.6px;
     right: 8px;
     transform: rotate(-90deg);
     cursor: pointer;
     pointer-events: none;
+    @media screen and (min-width: 834px) {
+      top: 6.6px;
+    }
   }
   & > p {
     padding-right: 48px;
@@ -295,7 +355,7 @@ export const SelectBox = styled.div`
     line-height: calc(21 / 15);
     cursor: pointer;
 
-    @media screen and (min-width: 1440px) {
+    @media screen and (min-width: 834px) {
       font-size: 18px;
       line-height: calc(23 / 18);
     }
@@ -314,7 +374,7 @@ export const Backdrop = styled.div`
 export const Menu = styled.ul`
   display: block;
   position: absolute;
-  top: 30px;
+  top: 46px;
   left: 0;
   width: 100%;
   background-color: white;
@@ -323,6 +383,10 @@ export const Menu = styled.ul`
   box-shadow: 1px 1px 7px 0 #dad4c870;
   transition: visibility 0.75s;
   visibility: ${({ $show }) => ($show ? `visible` : `hidden`)};
+
+  @media screen and (min-width: 834px) {
+    top: 30px;
+  }
 
   svg {
     position: static;
