@@ -11,17 +11,17 @@ export const SearchBox = styled.div`
     width: auto;
   }
   @media screen and (min-width: 1440px) {
-    margin-right: 106px;
+    margin-right: 134px;
   }
 
   search {
     min-width: 208px;
     width: 100%;
     @media screen and (min-width: 834px) {
-      width: 398px;
+      width: 370px;
     }
     @media screen and (min-width: 1440px) {
-      width: 528px;
+      width: 500px;
     }
   }
 `;
@@ -56,13 +56,9 @@ export const Input = styled.input`
   color: #101010;
   text-indent: 0px;
 
-  @media screen and (min-width: 834px) {
-    width: 342px;
-  }
-
   @media screen and (min-width: 1440px) {
     padding-right: 16px;
-    width: 366px;
+    width: 450px;
   }
 
   &::placeholder {
